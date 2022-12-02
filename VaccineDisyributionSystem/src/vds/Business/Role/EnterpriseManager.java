@@ -8,6 +8,6 @@ package vds.Business.Role;
  *
  * @author JASH,JUBIN,AAYUSH
  */
-public class ManufacturingManager {
+public class EnterpriseManager {
     
 }

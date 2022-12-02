@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/jigne/Documents/NetBeansProjects/VaccineDisyributionSystem/src/vds/UI/SystemAdmin/ManageDistributorForm.java</file>
+            <file>file:/C:/Users/jigne/Documents/NetBeansProjects/VaccineDisyributionSystem/src/vds/UI/SystemAdmin/SysAdminMainFrame.java</file>
+            <file>file:/C:/Users/jigne/Documents/NetBeansProjects/VaccineDisyributionSystem/src/vds/UI/Profile/MyProfile.java</file>
+            <file>file:/C:/Users/jigne/Documents/NetBeansProjects/VaccineDisyributionSystem/src/vds/UI/Patient/PatientMainFrame.java</file>
+            <file>file:/C:/Users/jigne/Documents/NetBeansProjects/VaccineDisyributionSystem/src/vds/UI/SystemAdmin/ManageSupplierForm.java</file>
+            <file>file:/C:/Users/jigne/Documents/NetBeansProjects/VaccineDisyributionSystem/src/vds/UI/SystemAdmin/ManageClinicForm.java</file>
+            <file>file:/C:/Users/jigne/Documents/NetBeansProjects/VaccineDisyributionSystem/src/vds/UI/NGO/NGOMainFrame.java</file>
+            <file>file:/C:/Users/jigne/Documents/NetBeansProjects/VaccineDisyributionSystem/src/vds/UI/SystemAdmin/ManageLogisticsForm.java</file>
+        </group>
     </open-files>
 </project-private>
