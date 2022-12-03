@@ -8,6 +8,8 @@ package vds.Business.Enterprise;
  *
  * @author JASH,JUBIN,AAYUSH
  */
-public class ent_JohnsonAndJohnson {
-    
+public class ent_JohnsonAndJohnson extends Enterprise{
+    public ent_JohnsonAndJohnson(int id, String name, String email, String contact,String city, String state, String country,String Admin,String AdminEmail){
+        super(id,name,email,contact,city,state,country,Admin,AdminEmail);   
+}
 }
