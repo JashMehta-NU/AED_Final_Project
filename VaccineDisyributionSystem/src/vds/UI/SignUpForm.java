@@ -30,10 +30,6 @@ import javax.swing.JOptionPane;
 import vds.Database.DBConnection;
 
 import vds.UI.SysAdmin.SysMainFrame;
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 /**
  *
  * @author 17327
@@ -47,20 +43,12 @@ public class SignUpForm extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs;
     PreparedStatementWrapper pst = null;
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     public SignUpForm() {
         initComponents();
         setLocationRelativeTo(null);
         conn = new DBConnection();
         sqlConn = DBConnection.connectDB();
-<<<<<<< Updated upstream
         System.out.println("Urole from admin page"+ SysMainFrame.Urole);
-=======
-        System.out.println("Urole from admin page" + SysMainFrame.Urole);
->>>>>>> Stashed changes
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
@@ -559,11 +547,7 @@ public class SignUpForm extends javax.swing.JFrame {
 
     private void signUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBtnActionPerformed
         String role = SysMainFrame.Urole;
-<<<<<<< Updated upstream
         if(role == null){
-=======
-        if (role == null) {
->>>>>>> Stashed changes
             role = MainFrame.role;
         }
         System.out.println(role);
@@ -607,7 +591,6 @@ public class SignUpForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Password should contain atleast 1 special character and number", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-<<<<<<< Updated upstream
 
             try {
 
@@ -625,23 +608,6 @@ public class SignUpForm extends javax.swing.JFrame {
                 pst.setString(11,date);
                 pst.setString(12,role);
                 
-=======
-            try {
-                PreparedStatement pst = sqlConn.prepareStatement("INSERT INTO `vds`.`user` (Fname, Lname, Email, Contact, Age, City, State, Country, Password, Gender, DOB, Role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-                pst.setString(1, fName);
-                pst.setString(2, lName);
-                pst.setString(3, email);
-                pst.setString(4, contact);
-                pst.setInt(5, Integer.parseInt(age));
-                pst.setString(6, city);
-                pst.setString(7, state);
-                pst.setString(8, country);
-                pst.setString(9, password);
-                pst.setString(10, gender);
-                pst.setString(11, date);
-                pst.setString(12, role);
-
->>>>>>> Stashed changes
                 pst.executeUpdate();
 
                 sendEmail(email, fName);
@@ -661,11 +627,7 @@ public class SignUpForm extends javax.swing.JFrame {
 
     public static void sendEmail(String toEmail, String fName) {
         String userName = "vaccinematrixx@gmail.com";
-<<<<<<< Updated upstream
         String password = "twcboquzwlglzbfd";
-=======
-        String password = "etvhbqcdmkkqyqfe";
->>>>>>> Stashed changes
 
         Properties properties = System.getProperties();
         properties.put("mail.smtp.auth", "true");
