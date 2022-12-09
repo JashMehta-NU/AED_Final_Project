@@ -10,6 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import vds.Database.DBConnection;
+import vds.UI.Patient.PatientMainFrame;
+import vds.UI.SysAdmin.SysMainFrame;
 
 public class SignInForm extends javax.swing.JFrame {
 
@@ -20,12 +22,13 @@ public class SignInForm extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs;
     PreparedStatementWrapper pst = null;
-
+    public static String Urole;
     public SignInForm() {
         initComponents();
         setLocationRelativeTo(null);
         conn = new DBConnection();
         sqlConn = DBConnection.connectDB();
+        
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
@@ -207,6 +210,8 @@ public class SignInForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String email = emailFeild.getText();
+        String role = MainFrame.role;
+        System.out.println(role);
         String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         String password = new String(passwordField.getPassword());
@@ -214,23 +219,37 @@ public class SignInForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Enter Correct Email ID", "Sign-In", 2);
         } else if (emailFeild.getText().isEmpty() && passwordField.getPassword().length == 0) {
             JOptionPane.showMessageDialog(null, "Enter All Details", "Sign-In", 2);
-        } else{
+        } else {
             try {
-                PreparedStatement pst = sqlConn.prepareStatement("SELECT * from `vds`.`user` WHERE email=? and password=?");
+                PreparedStatement pst = sqlConn.prepareStatement("SELECT * from `vds`.`user` WHERE email=? and password=? and role=?");
                 pst.setString(1, email);
                 pst.setString(2, password);
+                pst.setString(3, role);
                 ResultSet rs = pst.executeQuery();
-                
+
                 if (rs.next()) {
-                    JOptionPane.showMessageDialog(this, "Logged In", "Success", 1);
-                }
-                else{
-                    JOptionPane.showMessageDialog(this, "Invalid Credentials", "Warning", 2);
+                    if (role.equals("SysAdmin")) {
+                        SysMainFrame mf = new SysMainFrame();
+                        SignInForm nl = new SignInForm();
+                        mf.setVisible(true);
+                        nl.setVisible(false);
+                        super.dispose();
+                    }else if(role.equals("Patient")){
+                        SignInForm mf = new SignInForm();
+                        PatientMainFrame nl = new PatientMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Other Role", "Warning", 2);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Acess Denied OR Credentials Do Not Match", "Warning", 2);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -238,6 +257,7 @@ public class SignInForm extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         SignUpForm sr = new SignUpForm();
+        Urole = MainFrame.role;
         sr.setVisible(true);
         super.dispose();
         this.setVisible(false);        // TODO add your handling code here:

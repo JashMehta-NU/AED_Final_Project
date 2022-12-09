@@ -29,6 +29,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 import vds.Database.DBConnection;
 
+import vds.UI.SysAdmin.SysMainFrame;
 /**
  *
  * @author 17327
@@ -42,12 +43,12 @@ public class SignUpForm extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs;
     PreparedStatementWrapper pst = null;
-
     public SignUpForm() {
         initComponents();
         setLocationRelativeTo(null);
         conn = new DBConnection();
         sqlConn = DBConnection.connectDB();
+        System.out.println("Urole from admin page"+ SysMainFrame.Urole);
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
@@ -78,6 +79,7 @@ public class SignUpForm extends javax.swing.JFrame {
         ageFeild = new javax.swing.JTextField();
         cityFeild = new javax.swing.JTextField();
         stateFeild = new javax.swing.JTextField();
+        countryFeild1 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -239,7 +241,7 @@ public class SignUpForm extends javax.swing.JFrame {
         dobDate.setBackground(new java.awt.Color(97, 212, 195));
         dobDate.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Date of Birth", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(36, 47, 65))); // NOI18N
         dobDate.setForeground(new java.awt.Color(36, 47, 65));
-        jPanel1.add(dobDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 200, -1));
+        jPanel1.add(dobDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 170, -1));
 
         signInBtn.setBackground(new java.awt.Color(97, 212, 195));
         signInBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -366,6 +368,32 @@ public class SignUpForm extends javax.swing.JFrame {
         });
         jPanel1.add(stateFeild, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 170, 40));
 
+        countryFeild1.setBackground(new java.awt.Color(97, 212, 195));
+        countryFeild1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        countryFeild1.setForeground(new java.awt.Color(36, 47, 65));
+        countryFeild1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        countryFeild1.setText("Country");
+        countryFeild1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(36, 47, 65), 1, true));
+        countryFeild1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                countryFeild1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                countryFeild1FocusLost(evt);
+            }
+        });
+        countryFeild1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                countryFeild1MouseClicked(evt);
+            }
+        });
+        countryFeild1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                countryFeild1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(countryFeild1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 170, 40));
+
         jPanel2.setBackground(new java.awt.Color(36, 47, 65));
         jPanel2.setForeground(new java.awt.Color(97, 212, 195));
 
@@ -437,28 +465,6 @@ public class SignUpForm extends javax.swing.JFrame {
     private void fNameFeildActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNameFeildActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fNameFeildActionPerformed
-
-    private void countryFeildFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFeildFocusGained
-        if (countryFeild.getText().equals("Country")) {
-            countryFeild.setText(null);
-            countryFeild.requestFocus();
-        } // TODO add your handling code here:
-    }//GEN-LAST:event_countryFeildFocusGained
-
-    private void countryFeildFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFeildFocusLost
-        if (countryFeild.getText().length() == 0) {
-            countryFeild.setText("Country");
-            //            emailFeild.requestFocus();
-        }   // TODO add your handling code here:
-    }//GEN-LAST:event_countryFeildFocusLost
-
-    private void countryFeildMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_countryFeildMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_countryFeildMouseClicked
-
-    private void countryFeildActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countryFeildActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_countryFeildActionPerformed
 
     private void lNameFeildFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lNameFeildFocusGained
         if (lNameFeild.getText().equals("Last Name")) {
@@ -540,6 +546,11 @@ public class SignUpForm extends javax.swing.JFrame {
     }//GEN-LAST:event_signInBtnActionPerformed
 
     private void signUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBtnActionPerformed
+        String role = SysMainFrame.Urole;
+        if(role == null){
+            role = MainFrame.role;
+        }
+        System.out.println(role);
         String fName = fNameFeild.getText();
         String lName = lNameFeild.getText();
         String email = emailFeild.getText();
@@ -595,14 +606,9 @@ public class SignUpForm extends javax.swing.JFrame {
                 pst.setString(9,password);
                 pst.setString(10,gender);
                 pst.setString(11,date);
-                pst.setString(12,"Patient");
+                pst.setString(12,role);
                 
                 pst.executeUpdate();
-//                ResultSet rs = pst.executeQuery();
-//                
-//                while (rs.next()) {
-//                    System.out.println(rs.getString("Fname")); //or rs.getString("column name");
-//                }
 
                 sendEmail(email, fName);
                 JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
@@ -739,6 +745,44 @@ public class SignUpForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_stateFeildActionPerformed
 
+    private void countryFeild1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFeild1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_countryFeild1FocusGained
+
+    private void countryFeild1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFeild1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_countryFeild1FocusLost
+
+    private void countryFeild1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_countryFeild1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_countryFeild1MouseClicked
+
+    private void countryFeild1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countryFeild1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_countryFeild1ActionPerformed
+
+    private void countryFeildActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countryFeildActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_countryFeildActionPerformed
+
+    private void countryFeildMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_countryFeildMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_countryFeildMouseClicked
+
+    private void countryFeildFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFeildFocusLost
+        if (countryFeild.getText().length() == 0) {
+            countryFeild.setText("Country");
+            //            emailFeild.requestFocus();
+        }   // TODO add your handling code here:
+    }//GEN-LAST:event_countryFeildFocusLost
+
+    private void countryFeildFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFeildFocusGained
+        if (countryFeild.getText().equals("Country")) {
+            countryFeild.setText(null);
+            countryFeild.requestFocus();
+        } // TODO add your handling code here:
+    }//GEN-LAST:event_countryFeildFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -780,6 +824,7 @@ public class SignUpForm extends javax.swing.JFrame {
     private javax.swing.JTextField cityFeild;
     private javax.swing.JTextField contactFeild;
     private javax.swing.JTextField countryFeild;
+    private javax.swing.JTextField countryFeild1;
     private com.toedter.calendar.JDateChooser dobDate;
     private javax.swing.JTextField emailFeild;
     private javax.swing.JTextField fNameFeild;
