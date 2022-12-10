@@ -38,7 +38,28 @@ public class HospitalMainFrame extends javax.swing.JFrame {
     public HospitalMainFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        conn = new DBConnection();
+        sqlConn = DBConnection.connectDB();
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
+        } else {
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT * from `distributor` ");
+                ResultSet rs = pst.executeQuery();
 
+                while (rs.next()) {
+                    distributorNameCombo.addItem(rs.getString(2));
+
+                }
+
+                //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
        
 
     }
