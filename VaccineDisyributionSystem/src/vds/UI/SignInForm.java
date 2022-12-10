@@ -10,11 +10,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import vds.Database.DBConnection;
+import vds.UI.Clinic.ClinicMainFrame;
+import vds.UI.Distributor.DistributorMainFrame;
+import vds.UI.Enterprise.EnterpriseMainFrame;
+import vds.UI.Hospital.HospitalMainFrame;
+import vds.UI.NGO.NGOMainFrame;
 import vds.UI.Patient.PatientMainFrame;
+import vds.UI.Supplier.SupplierMainFrame;
 import vds.UI.SysAdmin.SysMainFrame;
 
 public class SignInForm extends javax.swing.JFrame {
-
+ public static String name;
     /**
      * Creates new form SignInForm
      */
@@ -231,7 +237,8 @@ public class SignInForm extends javax.swing.JFrame {
                 pst.setString(3, role);
                 ResultSet rs = pst.executeQuery();
                 
-                if (rs.next()) {
+               
+                 if (rs.next()) {
                     if (role.equals("SysAdmin")) {
                         SysMainFrame mf = new SysMainFrame();
                         SignInForm nl = new SignInForm();
@@ -239,12 +246,53 @@ public class SignInForm extends javax.swing.JFrame {
                         nl.setVisible(false);
                         super.dispose();
                     }else if(role.equals("Patient")){
-                        userFullName = rs.getString("Fname") + " " + rs.getString("Lname");
-                        userEmail = rs.getString("Email");
-                        userContact = "+1 " + rs.getString("Contact");
-                               
                         SignInForm mf = new SignInForm();
                         PatientMainFrame nl = new PatientMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }else if(role.equals("HospitalAdmin")){
+                        SignInForm mf = new SignInForm();
+                        HospitalMainFrame nl = new HospitalMainFrame();
+                        name = rs.getString(4);
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                    else if(role.equals("ClinicAdmin")){
+                        SignInForm mf = new SignInForm();
+                        ClinicMainFrame nl = new ClinicMainFrame();
+                        name = rs.getString(4);
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }else if(role.equals("NgoAdmin")){
+                        SignInForm mf = new SignInForm();
+                        NGOMainFrame nl = new NGOMainFrame();
+                        name = rs.getString(4);
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }else if(role.equals("EnterpriseAdmin")){
+                        SignInForm mf = new SignInForm();
+                        EnterpriseMainFrame nl = new EnterpriseMainFrame();
+                        name = rs.getString(4);
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                    else if(role.equals("DistributorAdmin")){
+                        SignInForm mf = new SignInForm();
+                        DistributorMainFrame nl = new DistributorMainFrame();
+                        name = rs.getString(4);
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                     else if(role.equals("SupplierAdmin")){
+                        SignInForm mf = new SignInForm();
+                        SupplierMainFrame nl = new SupplierMainFrame();
+                        name = rs.getString(4);
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
