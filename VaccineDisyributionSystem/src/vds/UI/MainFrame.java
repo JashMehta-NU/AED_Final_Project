@@ -23,6 +23,8 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    public static String role;
+    
     public MainFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -61,7 +63,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vds/Icons/vaccinated (1).png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/vaccinated (1).png"))); // NOI18N
         jLabel1.setText("WELCOME TO VACCINE MATRIX");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -75,7 +77,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(204, 255, 255));
@@ -106,7 +108,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         patientButton.setBackground(new java.awt.Color(204, 255, 255));
         patientButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        patientButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vds/Icons/patient.png"))); // NOI18N
+        patientButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/patient.png"))); // NOI18N
         patientButton.setText("PATIENT");
         patientButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,7 +118,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         hospitalButton.setBackground(new java.awt.Color(204, 255, 255));
         hospitalButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        hospitalButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vds/Icons/hospital.png"))); // NOI18N
+        hospitalButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/hospital.png"))); // NOI18N
         hospitalButton.setText("HOSPITAL");
         hospitalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +128,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         clinicButton.setBackground(new java.awt.Color(204, 255, 255));
         clinicButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        clinicButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vds/Icons/clinic.png"))); // NOI18N
+        clinicButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/clinic.png"))); // NOI18N
         clinicButton.setText("CLINIC");
         clinicButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,7 +138,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         ngoButton.setBackground(new java.awt.Color(204, 255, 255));
         ngoButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        ngoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vds/Icons/globe.png"))); // NOI18N
+        ngoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/globe.png"))); // NOI18N
         ngoButton.setText("NGO");
         ngoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,7 +148,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         enterpriseButton.setBackground(new java.awt.Color(204, 255, 255));
         enterpriseButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        enterpriseButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vds/Icons/enterprise.png"))); // NOI18N
+        enterpriseButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/enterprise.png"))); // NOI18N
         enterpriseButton.setText("ENTERPRISE");
         enterpriseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,7 +158,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         distributorButton.setBackground(new java.awt.Color(204, 255, 255));
         distributorButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        distributorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vds/Icons/box.png"))); // NOI18N
+        distributorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/box.png"))); // NOI18N
         distributorButton.setText("DISTRIBUTOR");
         distributorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,7 +168,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         supplierButton.setBackground(new java.awt.Color(204, 255, 255));
         supplierButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        supplierButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vds/Icons/supplier.png"))); // NOI18N
+        supplierButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/supplier.png"))); // NOI18N
         supplierButton.setText("SUPPLIER");
         supplierButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,7 +178,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         logisticsButton.setBackground(new java.awt.Color(204, 255, 255));
         logisticsButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        logisticsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vds/Icons/logistics.png"))); // NOI18N
+        logisticsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/logistics.png"))); // NOI18N
         logisticsButton.setText("LOGISTICS");
         logisticsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,8 +188,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         sysAdminButton.setBackground(new java.awt.Color(204, 255, 255));
         sysAdminButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        sysAdminButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vds/Icons/user.png"))); // NOI18N
+        sysAdminButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/user.png"))); // NOI18N
         sysAdminButton.setText("SYSTEM ADMIN");
+        sysAdminButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sysAdminButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -227,7 +234,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(341, 341, 341)
                         .addComponent(sysAdminButton)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {clinicButton, distributorButton, enterpriseButton, hospitalButton, logisticsButton, ngoButton, patientButton, supplierButton, sysAdminButton});
@@ -273,78 +280,76 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    void openSignInForm(){
+        MainFrame mf = new MainFrame();
+        SignInForm nl = new SignInForm();
+        mf.setVisible(false);
+        nl.setVisible(true);
+        super.dispose();
+    }
     private void logisticsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logisticsButtonActionPerformed
         // TODO add your handling code here:
-        MainFrame mf = new MainFrame();
-        LogisticsLandingFrame ll = new LogisticsLandingFrame();
-        mf.setVisible(false);
-        ll.setVisible(true);
-        super.dispose();
+        openSignInForm();
+        role = "LogisticsAdmin";
+        
     }//GEN-LAST:event_logisticsButtonActionPerformed
 
     private void enterpriseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseButtonActionPerformed
         // TODO add your handling code here:
-        MainFrame mf = new MainFrame();
-        EnterpriseLandingFrame el = new EnterpriseLandingFrame();
-        mf.setVisible(false);
-        el.setVisible(true);
-        super.dispose();
+        openSignInForm();
+        role = "ManufacturerAdmin";
+        
     }//GEN-LAST:event_enterpriseButtonActionPerformed
 
     private void patientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientButtonActionPerformed
         // TODO add your handling code here:
-        MainFrame mf = new MainFrame();
-        PatientLandingFrame pl = new PatientLandingFrame();
-        mf.setVisible(false);
-        pl.setVisible(true);
-        super.dispose();
+        openSignInForm();
+        role = "Patient";
+        
     }//GEN-LAST:event_patientButtonActionPerformed
 
     private void hospitalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospitalButtonActionPerformed
         // TODO add your handling code here:
-         MainFrame mf = new MainFrame();
-        HospitalLandingFrame hl = new HospitalLandingFrame();
-        mf.setVisible(false);
-        hl.setVisible(true);
-        super.dispose();
+        openSignInForm();
+        role = "HospitalAdmin";
+        
     }//GEN-LAST:event_hospitalButtonActionPerformed
 
     private void clinicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clinicButtonActionPerformed
         // TODO add your handling code here:
-        ClinicLandingFrame cl = new ClinicLandingFrame();
-        MainFrame mf = new MainFrame();
-        mf.setVisible(false);
-        cl.setVisible(true);
-        super.dispose();
+        openSignInForm();
+        role = "ClinicAdmin";
+        
     }//GEN-LAST:event_clinicButtonActionPerformed
 
     private void distributorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_distributorButtonActionPerformed
         // TODO add your handling code here:
-        DistributorLandingFrame dl = new DistributorLandingFrame();
-        MainFrame mf = new MainFrame();
-        dl.setVisible(true);
-        mf.setVisible(false);
-        super.dispose();
+        openSignInForm();
+        role = "HospitalAdmin";
+        
     }//GEN-LAST:event_distributorButtonActionPerformed
 
     private void ngoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ngoButtonActionPerformed
         // TODO add your handling code here:
-       MainFrame mf = new MainFrame();
-        NGOLandingFrame nl = new NGOLandingFrame();
-        mf.setVisible(false);
-        nl.setVisible(true);
-        super.dispose();
+       openSignInForm();
+        role = "NgoAdmin";
+        
     }//GEN-LAST:event_ngoButtonActionPerformed
 
     private void supplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierButtonActionPerformed
         // TODO add your handling code here:
-         SupplierLandingFrame sl = new SupplierLandingFrame();
-        MainFrame mf = new MainFrame();
-        sl.setVisible(true);
-        mf.setVisible(false);
-        super.dispose();
+         openSignInForm();
+         role = "SupplierAdmin";
+        
     }//GEN-LAST:event_supplierButtonActionPerformed
+
+    private void sysAdminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysAdminButtonActionPerformed
+        // TODO add your handling code here:
+        openSignInForm();
+        role = "SysAdmin";
+        
+    }//GEN-LAST:event_sysAdminButtonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -90,7 +90,7 @@
                           <Component id="sysAdminButton" linkSize="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="24" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -145,7 +145,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -161,7 +161,7 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vds/Icons/vaccinated (1).png"/>
+                  <Image iconType="3" name="/Icons/vaccinated (1).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="WELCOME TO VACCINE MATRIX"/>
               </Properties>
@@ -217,7 +217,7 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/vds/Icons/patient.png"/>
+              <Image iconType="3" name="/Icons/patient.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="PATIENT"/>
           </Properties>
@@ -234,7 +234,7 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/vds/Icons/hospital.png"/>
+              <Image iconType="3" name="/Icons/hospital.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="HOSPITAL"/>
           </Properties>
@@ -251,7 +251,7 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/vds/Icons/clinic.png"/>
+              <Image iconType="3" name="/Icons/clinic.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="CLINIC"/>
           </Properties>
@@ -268,7 +268,7 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/vds/Icons/globe.png"/>
+              <Image iconType="3" name="/Icons/globe.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="NGO"/>
           </Properties>
@@ -285,7 +285,7 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/vds/Icons/enterprise.png"/>
+              <Image iconType="3" name="/Icons/enterprise.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="ENTERPRISE"/>
           </Properties>
@@ -302,7 +302,7 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/vds/Icons/box.png"/>
+              <Image iconType="3" name="/Icons/box.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="DISTRIBUTOR"/>
           </Properties>
@@ -319,7 +319,7 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/vds/Icons/supplier.png"/>
+              <Image iconType="3" name="/Icons/supplier.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="SUPPLIER"/>
           </Properties>
@@ -336,7 +336,7 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/vds/Icons/logistics.png"/>
+              <Image iconType="3" name="/Icons/logistics.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="LOGISTICS"/>
           </Properties>
@@ -353,10 +353,13 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/vds/Icons/user.png"/>
+              <Image iconType="3" name="/Icons/user.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="SYSTEM ADMIN"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sysAdminButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

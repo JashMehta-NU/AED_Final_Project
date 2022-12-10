@@ -4,7 +4,18 @@
  */
 package vds.UI.SystemAdmin;
 
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
+import com.mysql.cj.protocol.Resultset;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import vds.Database.DBConnection;
 
 /**
  *
@@ -15,9 +26,35 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     /**
      * Creates new form ManageDistributorForm
      */
+    DBConnection conn;
+    Connection sqlConn;
+    Resultset rs;
+    PreparedStatementWrapper pst = null;
     public ManageDistributorForm() {
         initComponents();
         setLocationRelativeTo(null);
+        conn = new DBConnection();
+        sqlConn = DBConnection.connectDB();
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
+        }else{
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT * from `vds`.`user` WHERE Role=?");
+                pst.setString(1, "DistributorAdmin");
+                ResultSet rs = pst.executeQuery();
+                ArrayList<String> DistributorAdmins = new ArrayList<String>(); 
+                while(rs.next()){
+                    DistributorAdmins.add(rs.getString(2));
+                    System.out.println(rs.getString(2));
+                }
+                distributorManagerDropDown.setModel(new DefaultComboBoxModel<String>(DistributorAdmins.toArray(new String[0])));
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
     }
 
     /**

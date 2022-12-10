@@ -4,6 +4,9 @@
  */
 package vds.UI.Patient;
 
+import vds.UI.MainFrame;
+import vds.UI.SignInForm;
+
 /**
  *
  * @author JASH,JUBIN,AAYUSH
@@ -13,7 +16,6 @@ public class PatientMainFrame extends javax.swing.JFrame {
     /**
      * Creates new form PatientMainFrame
      */
-    
     public PatientMainFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -36,7 +38,7 @@ public class PatientMainFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        patientLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,7 +49,7 @@ public class PatientMainFrame extends javax.swing.JFrame {
         topLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         topLabel.setForeground(new java.awt.Color(255, 255, 255));
         topLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        topLabel.setText("jLabel1");
+        topLabel.setText("Patient Home Screen");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -88,13 +90,13 @@ public class PatientMainFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(0, 0, 102));
-        jButton4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("BACK");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        patientLogout.setBackground(new java.awt.Color(0, 0, 102));
+        patientLogout.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        patientLogout.setForeground(new java.awt.Color(255, 255, 255));
+        patientLogout.setText("Logout");
+        patientLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                patientLogoutActionPerformed(evt);
             }
         });
 
@@ -114,7 +116,7 @@ public class PatientMainFrame extends javax.swing.JFrame {
                         .addComponent(jButton3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addComponent(jButton4)))
+                        .addComponent(patientLogout)))
                 .addContainerGap(94, Short.MAX_VALUE))
         );
 
@@ -125,7 +127,7 @@ public class PatientMainFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(patientLogout)
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -152,17 +154,26 @@ public class PatientMainFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        PatientViewNearby mf = new PatientViewNearby();
+        PatientMainFrame nl = new PatientMainFrame();
+        mf.setVisible(true);
+        nl.setVisible(false);
+        super.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        // Back to Login Page
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void patientLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientLogoutActionPerformed
+
+        PatientMainFrame mf = new PatientMainFrame();
+        MainFrame nl = new MainFrame();
+        mf.setVisible(false);
+        nl.setVisible(true);
+        super.dispose();
+
+    }//GEN-LAST:event_patientLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,9 +214,9 @@ public class PatientMainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton patientLogout;
     private javax.swing.JLabel topLabel;
     // End of variables declaration//GEN-END:variables
 }

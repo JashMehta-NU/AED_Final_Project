@@ -62,7 +62,7 @@
                               <Component id="jPanel7" linkSize="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jPanel8" linkSize="1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jPanel9" linkSize="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jPanel10" linkSize="1" min="-2" max="-2" attributes="0"/>
@@ -245,7 +245,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                       <Component id="jButton12" min="-2" pref="93" max="-2" attributes="0"/>
-                      <EmptySpace pref="79" max="32767" attributes="0"/>
+                      <EmptySpace pref="81" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -284,6 +284,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="ADMIN"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton12ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -307,7 +310,7 @@
                           <Component id="jButton6" linkSize="7" min="-2" pref="86" max="-2" attributes="0"/>
                           <Component id="jButton5" linkSize="7" min="-2" pref="93" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="78" max="32767" attributes="0"/>
+                      <EmptySpace pref="80" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -365,6 +368,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="ADMIN"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -383,7 +389,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="75" max="32767" attributes="0"/>
+                      <EmptySpace pref="77" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jButton14" linkSize="9" min="-2" pref="93" max="-2" attributes="0"/>
                           <Component id="jButton13" linkSize="9" min="-2" pref="100" max="-2" attributes="0"/>
@@ -446,6 +452,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="ADMIN"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton14ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -464,7 +473,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="74" max="32767" attributes="0"/>
+                      <EmptySpace pref="76" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jButton8" linkSize="11" min="-2" pref="100" max="-2" attributes="0"/>
                           <Component id="jButton7" linkSize="11" min="-2" pref="107" max="-2" attributes="0"/>
@@ -527,6 +536,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="ADMIN"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -545,7 +557,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="69" max="32767" attributes="0"/>
+                      <EmptySpace pref="71" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jButton16" linkSize="14" min="-2" pref="107" max="-2" attributes="0"/>
                           <Component id="jButton15" linkSize="14" min="-2" pref="114" max="-2" attributes="0"/>
@@ -608,6 +620,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="ADMIN"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton16ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -626,7 +641,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                      <EmptySpace pref="69" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jButton10" linkSize="15" min="-2" pref="114" max="-2" attributes="0"/>
                           <Component id="jButton9" linkSize="15" min="-2" pref="121" max="-2" attributes="0"/>
@@ -689,6 +704,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="ADMIN"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton10ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -707,7 +725,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="69" max="32767" attributes="0"/>
+                      <EmptySpace pref="71" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jButton18" linkSize="17" min="-2" pref="121" max="-2" attributes="0"/>
                           <Component id="jButton17" linkSize="17" min="-2" pref="128" max="-2" attributes="0"/>

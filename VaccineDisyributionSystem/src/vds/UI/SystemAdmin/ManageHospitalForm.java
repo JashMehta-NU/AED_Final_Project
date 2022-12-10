@@ -4,7 +4,19 @@
  */
 package vds.UI.SystemAdmin;
 
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
+import com.mysql.cj.protocol.Resultset;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import vds.Database.DBConnection;
 
 /**
  *
@@ -15,9 +27,36 @@ public class ManageHospitalForm extends javax.swing.JFrame {
     /**
      * Creates new form ManageHospitalForm
      */
+    DBConnection conn;
+    Connection sqlConn;
+    Resultset rs;
+    PreparedStatementWrapper pst = null;
+
     public ManageHospitalForm() {
         initComponents();
         setLocationRelativeTo(null);
+        conn = new DBConnection();
+        sqlConn = DBConnection.connectDB();
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
+        } else {
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT * from `vds`.`user` WHERE Role=?");
+                pst.setString(1, "HospitalAdmin");
+                ResultSet rs = pst.executeQuery();
+                ArrayList<String> hospitalAdmins = new ArrayList<String>();
+                while (rs.next()) {
+                    hospitalAdmins.add(rs.getString(2));
+                    System.out.println(rs.getString(2));
+                }
+                hospitalAdminDropDown.setModel(new DefaultComboBoxModel<String>(hospitalAdmins.toArray(new String[0])));
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
 
     /**
@@ -671,11 +710,13 @@ public class ManageHospitalForm extends javax.swing.JFrame {
         String phonePattern = "(0|91)?[6-9][0-9]{9}";
 
         String namePattern = "[a-zA-Z_ ]+";
+        
+        String hAdmin = String.valueOf(hospitalAdminDropDown.getSelectedItem());
 
-        if(hospitalName.isEmpty()|| email.isEmpty()||contact.isEmpty()||street.isEmpty()||city.isEmpty()||state.isEmpty()||country.isBlank()){
+        if (hospitalName.isEmpty() || email.isEmpty() || contact.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty() || country.isBlank()) {
             JOptionPane.showMessageDialog(this, "Enter All Details", "Warning",
                     JOptionPane.ERROR_MESSAGE);
-        }else if (!hospitalName.matches(namePattern)) {
+        } else if (!hospitalName.matches(namePattern)) {
             JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else if (!email.matches(emailPattern)) {
@@ -685,7 +726,20 @@ public class ManageHospitalForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Enter a Valid Phone Number", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else {
+            try {
+                PreparedStatement pst = sqlConn.prepareStatement("INSERT INTO `vds`.`hospital` (Name, Contact, Email, City, State, Country, Admin, AdminEmail) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+                pst.setString(1, hospitalName);
+                pst.setString(2, contact);
+                pst.setString(3, email);
+                pst.setString(4, city);
+                pst.setString(5, state);
+                pst.setString(6, country);
+                pst.setString(7, hAdmin);
+                //pst.setString(7, hAdminEmail);
 
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
             JOptionPane.showMessageDialog(this, "Hospital Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
 

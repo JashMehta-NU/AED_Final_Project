@@ -6,7 +6,7 @@ package vds.UI;
 
 /**
  *
- * @author JASH,JUBIN,AAYUSH
+ * @author jigne
  */
 public class LoadingScreen extends javax.swing.JFrame {
 
