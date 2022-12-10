@@ -27,6 +27,15 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
+import vds.Business.Role.ClinicAdmin.ClinicAdmin;
+import vds.Business.Role.DistributingManager.DistributingManager;
+import vds.Business.Role.EnterpriseManager.EnterpriseManager;
+import vds.Business.Role.HospitalAdmin.HospitalAdmin;
+import vds.Business.Role.LogisticsManager.LogisticsManager;
+import vds.Business.Role.NgoAdmin.NgoAdmin;
+import vds.Business.Role.Patient.Patient;
+import vds.Business.Role.SupplyManager.SupplyManager;
+import vds.Business.Role.SystemAdmin;
 import vds.Database.DBConnection;
 
 import vds.UI.SysAdmin.SysMainFrame;
@@ -552,7 +561,7 @@ public class SignUpForm extends javax.swing.JFrame {
         if (role == null) {
             role = MainFrame.role;
         }
-        System.out.println(role);
+        System.out.println("in sign up"+role);
         String fName = fNameFeild.getText();
         String lName = lNameFeild.getText();
         String email = emailFeild.getText();
@@ -593,72 +602,50 @@ public class SignUpForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Password should contain atleast 1 special character and number", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            try {
-                PreparedStatement pst = sqlConn.prepareStatement("INSERT INTO `vds`.`user` (Fname, Lname, Email, Contact, Age, City, State, Country, Password, Gender, DOB, Role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-                pst.setString(1, fName);
-                pst.setString(2, lName);
-                pst.setString(3, email);
-                pst.setString(4, contact);
-                pst.setInt(5, Integer.parseInt(age));
-                pst.setString(6, city);
-                pst.setString(7, state);
-                pst.setString(8, country);
-                pst.setString(9, password);
-                pst.setString(10, gender);
-                pst.setString(11, date);
-                pst.setString(12, role);
-
-                pst.executeUpdate();
-
-                sendEmail(email, fName);
+            
+                if(role.equals("Patient")){
+                    Patient p = new Patient(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("HospitalAdmin")){
+                    HospitalAdmin p = new HospitalAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+     
+                    p.addToDB();
+                }else if(role.equals("ClinicAdmin")){
+                    ClinicAdmin p = new ClinicAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("NgoAdmin")){
+                    NgoAdmin p = new NgoAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("SystemAdmin")){
+                    SystemAdmin p = new SystemAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("SupplierAdmin")){
+                    SupplyManager p = new SupplyManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("EnterpriseAdmin")){
+                    EnterpriseManager p = new EnterpriseManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("DistributorAdmin")){
+                    DistributingManager p = new DistributingManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else{
+                    LogisticsManager p = new LogisticsManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }
+                
                 JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
                         JOptionPane.INFORMATION_MESSAGE);
                 SignInForm sr = new SignInForm();
                 sr.setVisible(true);
                 super.dispose();
                 this.setVisible(false);
-            } catch (SQLException ex) {
-                Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
+             
 
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_signUpBtnActionPerformed
 
-    public static void sendEmail(String toEmail, String fName) {
-        String userName = "vaccinematrixx@gmail.com";
-        String password = "etvhbqcdmkkqyqfe";
-
-        Properties properties = System.getProperties();
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-        properties.put("mail.smtp.user", userName);
-        properties.put("mail.smtp.password", password);
-        Session session = Session.getDefaultInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(userName, password);
-            }
-        });
-        //Start our mail message
-        Message msg = new MimeMessage(session);
-        try {
-
-            msg.setFrom(new InternetAddress(userName));
-            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-            msg.setSubject("Welcome to Vaccine Matrix");
-            msg.setText("Hii\t" + fName + "\n Welcome to Vaccine Matrix \n We are looking forward to help you in this journey");
-
-            Transport.send(msg);
-            System.out.println("Sent message");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // TODO Auto-generated catch block
-    }
-
+    
 
     private void passwordFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusGained
         if (passwordField.getText().equals("Password")) {

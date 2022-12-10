@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package vds.Business.Enterprise;
+package vds.Business.Organization;
 
 /**
  *
- * @author JASH,JUBIN,AAYUSH
+ * @author jigne
  */
-public class Enterprise {
+public class Organization {
     public int id;
     public String name;
     public String email;
@@ -18,9 +18,11 @@ public class Enterprise {
     public String country;
     public String Admin;
     public String AdminEmail;
-   
+    public String location;
+    public String longitude;
+    public String latitude;
     
-    public Enterprise(int id, String name, String email, String contact,String city, String state, String country,String Admin,String AdminEmail){
+    public Organization(int id, String name, String email, String contact,String city, String state, String country,String Admin,String AdminEmail,String location,String longitude,String latitude){
         this.id = id;
         this.name = name;
         this.email = email;
@@ -29,6 +31,12 @@ public class Enterprise {
         this.state=state;
         this.country=country;
         this.Admin=Admin;
-        this.AdminEmail=AdminEmail;        
+        this.AdminEmail=AdminEmail;
+        this.location=location;
+        this.longitude=longitude;
+        this.latitude=latitude;
+        
     }
+    
 }
+
