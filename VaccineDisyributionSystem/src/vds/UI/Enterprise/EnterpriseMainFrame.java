@@ -470,6 +470,23 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
 
     private void supplierNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_supplierNameItemStateChanged
               
+ rawMaterial.removeAllItems();
+        try {
+            String dName = supplierName.getSelectedItem().toString();
+
+            PreparedStatement ps = sqlConn.prepareStatement("SELECT * from `Supplier` Where Name = ?  ");
+            ps.setString(1, dName);
+            ResultSet rs1 = ps.executeQuery();
+
+            while (rs1.next()) {
+                supplierName.addItem(rs1.getString(5));
+
+            }
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }    
 
 
         // TODO add your handling code here:
