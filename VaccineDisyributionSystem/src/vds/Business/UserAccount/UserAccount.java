@@ -43,7 +43,7 @@ public class UserAccount {
     
    
     
-    public UserAccount(String fname,String lname, String email, String contact, int age, String gender,String city, String state, String country,String dob,String password,String role){
+    public UserAccount(String fname,String lname, String email, String contact, int age, String city, String state, String country,String password,String gender,String dob,String role){
         
         this.fname = fname;
         this.lname=lname;
@@ -90,6 +90,12 @@ public class UserAccount {
         }
                 
     }
+     
+     public void authenticateUser(){
+         
+     }
+     
+     
      
      public static void sendEmail(String toEmail, String fName) {
         String userName = "vaccinematrixx@gmail.com";

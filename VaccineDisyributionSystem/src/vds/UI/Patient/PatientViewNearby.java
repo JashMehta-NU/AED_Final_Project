@@ -147,7 +147,8 @@ public class PatientViewNearby extends javax.swing.JFrame {
                     row[7] = "Not Slots";
                 }
             }
-            row[8] = rs.getString("Location");
+            
+            row[8] = "Show Location";
             orgName = rs.getString("Name");
             orgEmail = rs.getString("Email");
             orgContact = "+1 " + rs.getString("Contact");

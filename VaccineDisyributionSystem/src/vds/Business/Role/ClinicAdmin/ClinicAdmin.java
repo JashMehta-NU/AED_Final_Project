@@ -11,8 +11,8 @@ import vds.Business.UserAccount.UserAccount;
  * @author JASH,JUBIN,AAYUSH
  */
 public class ClinicAdmin extends UserAccount {
-    public ClinicAdmin( String fname,String lname, String email, String contact, int age, String gender,String city, String state, String country,String dob,String password,String role){
-        super(fname,lname,email,contact,age,gender,city,state,country,dob,password,role);
+    public ClinicAdmin(String fname,String lname, String email, String contact, int age, String city, String state, String country,String password,String gender,String dob,String role){
+        super(fname,lname,email,contact,age,city,state,country,password,gender,dob,role);
     }
     public void addToDatabase(){
         super.addToDB();
