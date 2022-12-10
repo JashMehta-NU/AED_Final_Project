@@ -218,7 +218,34 @@ public class SupplierMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-               ParentPanel.removeAll();
+
+        
+
+ PreparedStatement pst;
+        while (storageTable.getRowCount() > 0) {
+            ((DefaultTableModel) storageTable.getModel()).removeRow(0);
+        }
+        try {
+            String aEmail = SignInForm.name;
+            System.out.println("Hello");
+            System.out.println(aEmail);
+            pst = sqlConn.prepareStatement("SELECT * from `Enterprise` WHERE AdminEmail = ?");
+            pst.setString(1, aEmail);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String vName = rs.getString(5);
+                int quan = rs.getInt(6);
+                Object[] rowData = new Object[]{vName, quan};
+                ((DefaultTableModel) storageTable.getModel()).addRow(rowData);
+            }
+
+            //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }          // TODO add your handling code here:
+
+        ParentPanel.removeAll();
         ParentPanel.add(Storage);
         ParentPanel.repaint();
         ParentPanel.revalidate();
