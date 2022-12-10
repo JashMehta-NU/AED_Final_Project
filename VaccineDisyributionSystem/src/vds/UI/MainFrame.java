@@ -4,6 +4,16 @@
  */
 package vds.UI;
 
+import vds.UI.Clinic.ClinicLandingFrame;
+import vds.UI.Distributor.DistributorLandingFrame;
+import vds.UI.Enterprise.EnterpriseLandingFrame;
+import vds.UI.Hospital.HospitalLandingFrame;
+import vds.UI.Logistics.LogisticsLandingFrame;
+import vds.UI.NGO.NGOLandingFrame;
+import vds.UI.Patient.PatientLandingFrame;
+import vds.UI.Supplier.SupplierLandingFrame;
+
+
 /**
  *
  * @author JASH,JUBIN,AAYUSH
@@ -13,8 +23,11 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    public static String role;
+    
     public MainFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -26,21 +39,317 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        patientButton = new javax.swing.JButton();
+        hospitalButton = new javax.swing.JButton();
+        clinicButton = new javax.swing.JButton();
+        ngoButton = new javax.swing.JButton();
+        enterpriseButton = new javax.swing.JButton();
+        distributorButton = new javax.swing.JButton();
+        supplierButton = new javax.swing.JButton();
+        logisticsButton = new javax.swing.JButton();
+        sysAdminButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(97, 212, 195));
+
+        jPanel2.setBackground(new java.awt.Color(36, 47, 65));
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/vaccinated (1).png"))); // NOI18N
+        jLabel1.setText("WELCOME TO VACCINE MATRIX");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(204, 255, 255));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 155, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel5.setBackground(new java.awt.Color(204, 255, 255));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 155, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        patientButton.setBackground(new java.awt.Color(204, 255, 255));
+        patientButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        patientButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/patient.png"))); // NOI18N
+        patientButton.setText("PATIENT");
+        patientButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                patientButtonActionPerformed(evt);
+            }
+        });
+
+        hospitalButton.setBackground(new java.awt.Color(204, 255, 255));
+        hospitalButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        hospitalButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/hospital.png"))); // NOI18N
+        hospitalButton.setText("HOSPITAL");
+        hospitalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hospitalButtonActionPerformed(evt);
+            }
+        });
+
+        clinicButton.setBackground(new java.awt.Color(204, 255, 255));
+        clinicButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        clinicButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/clinic.png"))); // NOI18N
+        clinicButton.setText("CLINIC");
+        clinicButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clinicButtonActionPerformed(evt);
+            }
+        });
+
+        ngoButton.setBackground(new java.awt.Color(204, 255, 255));
+        ngoButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        ngoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/globe.png"))); // NOI18N
+        ngoButton.setText("NGO");
+        ngoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ngoButtonActionPerformed(evt);
+            }
+        });
+
+        enterpriseButton.setBackground(new java.awt.Color(204, 255, 255));
+        enterpriseButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        enterpriseButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/enterprise.png"))); // NOI18N
+        enterpriseButton.setText("ENTERPRISE");
+        enterpriseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterpriseButtonActionPerformed(evt);
+            }
+        });
+
+        distributorButton.setBackground(new java.awt.Color(204, 255, 255));
+        distributorButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        distributorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/box.png"))); // NOI18N
+        distributorButton.setText("DISTRIBUTOR");
+        distributorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                distributorButtonActionPerformed(evt);
+            }
+        });
+
+        supplierButton.setBackground(new java.awt.Color(204, 255, 255));
+        supplierButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        supplierButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/supplier.png"))); // NOI18N
+        supplierButton.setText("SUPPLIER");
+        supplierButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierButtonActionPerformed(evt);
+            }
+        });
+
+        logisticsButton.setBackground(new java.awt.Color(204, 255, 255));
+        logisticsButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        logisticsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/logistics.png"))); // NOI18N
+        logisticsButton.setText("LOGISTICS");
+        logisticsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logisticsButtonActionPerformed(evt);
+            }
+        });
+
+        sysAdminButton.setBackground(new java.awt.Color(204, 255, 255));
+        sysAdminButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        sysAdminButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/user.png"))); // NOI18N
+        sysAdminButton.setText("SYSTEM ADMIN");
+        sysAdminButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sysAdminButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(patientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(enterpriseButton))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(95, 95, 95)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(distributorButton)
+                                    .addComponent(hospitalButton))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(clinicButton))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(supplierButton)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(logisticsButton)
+                            .addComponent(ngoButton)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(341, 341, 341)
+                        .addComponent(sysAdminButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {clinicButton, distributorButton, enterpriseButton, hospitalButton, logisticsButton, ngoButton, patientButton, supplierButton, sysAdminButton});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(clinicButton)
+                    .addComponent(ngoButton)
+                    .addComponent(hospitalButton)
+                    .addComponent(patientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(enterpriseButton)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(distributorButton)
+                        .addComponent(supplierButton)
+                        .addComponent(logisticsButton)))
+                .addGap(18, 18, 18)
+                .addComponent(sysAdminButton)
+                .addGap(0, 29, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {clinicButton, distributorButton, enterpriseButton, hospitalButton, logisticsButton, ngoButton, patientButton, supplierButton, sysAdminButton});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    void openSignInForm(){
+        MainFrame mf = new MainFrame();
+        SignInForm nl = new SignInForm();
+        mf.setVisible(false);
+        nl.setVisible(true);
+        super.dispose();
+    }
+    private void logisticsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logisticsButtonActionPerformed
+        // TODO add your handling code here:
+        openSignInForm();
+        role = "LogisticsAdmin";
+        
+    }//GEN-LAST:event_logisticsButtonActionPerformed
+
+    private void enterpriseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseButtonActionPerformed
+        // TODO add your handling code here:
+        openSignInForm();
+        role = "ManufacturerAdmin";
+        
+    }//GEN-LAST:event_enterpriseButtonActionPerformed
+
+    private void patientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientButtonActionPerformed
+        // TODO add your handling code here:
+        openSignInForm();
+        role = "Patient";
+        
+    }//GEN-LAST:event_patientButtonActionPerformed
+
+    private void hospitalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospitalButtonActionPerformed
+        // TODO add your handling code here:
+        openSignInForm();
+        role = "HospitalAdmin";
+        
+    }//GEN-LAST:event_hospitalButtonActionPerformed
+
+    private void clinicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clinicButtonActionPerformed
+        // TODO add your handling code here:
+        openSignInForm();
+        role = "ClinicAdmin";
+        
+    }//GEN-LAST:event_clinicButtonActionPerformed
+
+    private void distributorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_distributorButtonActionPerformed
+        // TODO add your handling code here:
+        openSignInForm();
+        role = "HospitalAdmin";
+        
+    }//GEN-LAST:event_distributorButtonActionPerformed
+
+    private void ngoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ngoButtonActionPerformed
+        // TODO add your handling code here:
+       openSignInForm();
+        role = "NgoAdmin";
+        
+    }//GEN-LAST:event_ngoButtonActionPerformed
+
+    private void supplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierButtonActionPerformed
+        // TODO add your handling code here:
+         openSignInForm();
+         role = "SupplierAdmin";
+        
+    }//GEN-LAST:event_supplierButtonActionPerformed
+
+    private void sysAdminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysAdminButtonActionPerformed
+        // TODO add your handling code here:
+        openSignInForm();
+        role = "SysAdmin";
+        
+    }//GEN-LAST:event_sysAdminButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +387,19 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton clinicButton;
+    private javax.swing.JButton distributorButton;
+    private javax.swing.JButton enterpriseButton;
+    private javax.swing.JButton hospitalButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JButton logisticsButton;
+    private javax.swing.JButton ngoButton;
+    private javax.swing.JButton patientButton;
+    private javax.swing.JButton supplierButton;
+    private javax.swing.JButton sysAdminButton;
     // End of variables declaration//GEN-END:variables
 }
