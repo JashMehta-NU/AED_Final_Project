@@ -4,6 +4,8 @@
  */
 package vds.UI.SystemAdmin;
 
+import vds.Business.UserAccount.UserAccount;
+import vds.UI.MainFrame;
 import vds.UI.SignUpForm;
 
 /**
@@ -128,7 +130,7 @@ public class SysAdminMainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton4)
                     .addComponent(jButton3))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton3, jButton4});
@@ -517,7 +519,12 @@ public class SysAdminMainFrame extends javax.swing.JFrame {
 
         jButton1.setText("PROFILE");
 
-        jButton2.setText("BACK");
+        jButton2.setText("Logout");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -705,6 +712,16 @@ public class SysAdminMainFrame extends javax.swing.JFrame {
         openSignUpForm();
         Urole = "NgoAdmin";
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        UserAccount.userFullName=("");
+        MainFrame mf = new MainFrame();
+        SysAdminMainFrame sam = new SysAdminMainFrame();
+        mf.setVisible(true);
+        sam.setVisible(false);
+        super.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

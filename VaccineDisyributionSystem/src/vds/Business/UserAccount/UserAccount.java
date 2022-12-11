@@ -73,8 +73,6 @@ public class UserAccount {
         DBConnection conn;
         Connection sqlConn;
         sqlConn = DBConnection.connectDB();
-        Resultset rs;
-        //PreparedStatementWrapper pst = null;
 
         try {
             java.sql.PreparedStatement pst = sqlConn.prepareStatement("INSERT INTO `vds`.`user` (Fname, Lname, Email, Contact, Age, City, State, Country, Password, Gender, DOB, Role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
@@ -117,7 +115,7 @@ public class UserAccount {
             userContact = rs.getString("Contact");
             userCity = rs.getString("City");
         }
-        System.out.println(userFullName+userEmail+userContact);
+       
         
 
     }

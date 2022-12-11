@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import vds.Business.UserAccount.UserAccount;
 import vds.Database.DBConnection;
 import vds.UI.MainFrame;
 import vds.UI.SignInForm;
@@ -506,6 +507,7 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        UserAccount.userFullName=("");
         MainFrame mf = new MainFrame();
         DistributorMainFrame cm = new DistributorMainFrame();
         mf.setVisible(true);

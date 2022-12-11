@@ -4,6 +4,7 @@
  */
 package vds.UI.Logistics;
 
+import vds.Business.UserAccount.UserAccount;
 import vds.UI.MainFrame;
 
 /**
@@ -162,6 +163,7 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        UserAccount.userFullName=("");
         MainFrame mf = new MainFrame();
         LogisticsMainFrame em = new LogisticsMainFrame();
         mf.setVisible(true);
