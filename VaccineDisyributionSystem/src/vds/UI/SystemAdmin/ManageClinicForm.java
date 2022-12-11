@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import vds.Business.Role.ClinicAdmin.ClinicAdmin;
+//import vds.Business.Role.ClinicAdmin.ClinicAdmin;
 import vds.Database.DBConnection;
 
 /**
@@ -660,6 +660,10 @@ public class ManageClinicForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+
+
+
         // TODO add your handling code here:
         ParentPanel.removeAll();
         ParentPanel.add(ViewClinicPanel);
