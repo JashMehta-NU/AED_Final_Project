@@ -34,7 +34,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs;
     PreparedStatementWrapper pst = null;
-
+    String dEmail;
     public ManageDistributorForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -727,7 +727,7 @@ PreparedStatement pst;
 
             while (rs.next()) {
 
-                email = rs.getString(1);
+                dEmail = rs.getString(1);
             }
 
         } catch (SQLException ex) {
@@ -759,7 +759,7 @@ PreparedStatement pst;
                 pst1.setString(5, state);
                 pst1.setString(6, country);
                 pst1.setString(7, distributorManagerDropDown.getSelectedItem().toString());
-                pst1.setString(8, email);
+                pst1.setString(8, dEmail);
                 pst1.setString(9, location.getText());
 //               ResultSet rs =  pst1.ex();
                 pst1.executeUpdate();

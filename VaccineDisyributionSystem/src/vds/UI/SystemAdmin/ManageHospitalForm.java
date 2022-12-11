@@ -33,6 +33,7 @@ public class ManageHospitalForm extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs;
     PreparedStatementWrapper pst = null;
+    String hEmail;
 
     public ManageHospitalForm() {
         initComponents();
@@ -733,7 +734,20 @@ public class ManageHospitalForm extends javax.swing.JFrame {
         String namePattern = "[a-zA-Z_ ]+";
 
         String hAdmin = String.valueOf(hospitalAdminDropDown.getSelectedItem());
+        PreparedStatement pst;
+        try {
+            pst = sqlConn.prepareStatement("SELECT Email from `vds`.`user` WHERE fName =?");
+            pst.setString(1, hAdmin);
+            ResultSet rs = pst.executeQuery();
 
+            while (rs.next()) {
+
+                hEmail = rs.getString(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (hospitalName.isEmpty() || email.isEmpty() || contact.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty() || country.isBlank()) {
             JOptionPane.showMessageDialog(this, "Enter All Details", "Warning",
                     JOptionPane.ERROR_MESSAGE);
@@ -748,16 +762,17 @@ public class ManageHospitalForm extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                PreparedStatement pst = sqlConn.prepareStatement("INSERT INTO `vds`.`hospital` (Name, Contact, Email, City, State, Country, Admin, AdminEmail) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-                pst.setString(1, hospitalName);
-                pst.setString(2, contact);
-                pst.setString(3, email);
-                pst.setString(4, city);
-                pst.setString(5, state);
-                pst.setString(6, country);
-                pst.setString(7, hAdmin);
-                //pst.setString(7, hAdminEmail);
-
+                PreparedStatement pst1 = sqlConn.prepareStatement("INSERT INTO `vds`.`hospital` (Name, Contact, Email, City, State, Country, Admin, AdminEmail,Location) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?);");
+                pst1.setString(1, hospitalName);
+                pst1.setString(2, contact);
+                pst1.setString(3, email);
+                pst1.setString(4, city);
+                pst1.setString(5, state);
+                pst1.setString(6, country);
+                pst1.setString(7, hAdmin);
+                pst1.setString(8, hEmail);
+                pst1.setString(9, location.getText());
+                pst1.executeUpdate();
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -829,7 +844,7 @@ public class ManageHospitalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_hosAdminActionPerformed
 
     private void DeleteHospitalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteHospitalButtonActionPerformed
-String findUpdate = deleteByCombo.getSelectedItem().toString();
+        String findUpdate = deleteByCombo.getSelectedItem().toString();
         if (findUpdate.matches("ID")) {
 
             PreparedStatement pst;
@@ -859,9 +874,9 @@ String findUpdate = deleteByCombo.getSelectedItem().toString();
     }//GEN-LAST:event_DeleteHospitalButtonActionPerformed
 
     private void UpdateHospitalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateHospitalButtonActionPerformed
-PreparedStatement pst;
+        PreparedStatement pst;
         try {
-            pst = sqlConn.prepareStatement("UPDATE hospital SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where ClinicID = ?");
+            pst = sqlConn.prepareStatement("UPDATE hospital SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where HospitalID = ?");
             pst.setString(1, hosName.getText());
             pst.setString(2, hosContact.getText());
             pst.setString(3, hosEmail.getText());
