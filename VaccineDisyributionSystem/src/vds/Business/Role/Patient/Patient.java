@@ -4,13 +4,11 @@
  */
 package vds.Business.Role.Patient;
 
-import com.mysql.cj.protocol.Resultset;
-import java.sql.Connection;
+
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import vds.Business.UserAccount.UserAccount;
-import vds.Database.DBConnection;
+
 
 /**
  *
@@ -23,6 +21,12 @@ public class Patient extends UserAccount {
     
     public void addToDatabase(){
         super.addToDB();
+    }
+   public Patient (String email, String password,String role){
+       super(email,password,role);
+   }
+   public void checkValidUser() throws SQLException{
+        super.authenticateUser(email,password,role);
     }
     
 }

@@ -9,6 +9,15 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import vds.Business.Role.ClinicAdmin.ClinicAdmin;
+import vds.Business.Role.DistributingManager.DistributingManager;
+import vds.Business.Role.EnterpriseManager.EnterpriseManager;
+import vds.Business.Role.HospitalAdmin.HospitalAdmin;
+import vds.Business.Role.NgoAdmin.NgoAdmin;
+import vds.Business.Role.Patient.Patient;
+import vds.Business.Role.SupplyManager.SupplyManager;
+import vds.Business.Role.SystemAdmin;
+import vds.Business.UserAccount.UserAccount;
 import vds.Database.DBConnection;
 import vds.UI.Clinic.ClinicMainFrame;
 import vds.UI.Distributor.DistributorMainFrame;
@@ -17,10 +26,10 @@ import vds.UI.Hospital.HospitalMainFrame;
 import vds.UI.NGO.NGOMainFrame;
 import vds.UI.Patient.PatientMainFrame;
 import vds.UI.Supplier.SupplierMainFrame;
-import vds.UI.SysAdmin.SysMainFrame;
+import vds.UI.SystemAdmin.SysAdminMainFrame;
 
 public class SignInForm extends javax.swing.JFrame {
- public static String name;
+
     /**
      * Creates new form SignInForm
      */
@@ -32,13 +41,14 @@ public class SignInForm extends javax.swing.JFrame {
     public static String userFullName;
     public static String userEmail;
     public static String userContact;
-    
+    public static String orgName;
+
     public SignInForm() {
         initComponents();
         setLocationRelativeTo(null);
         conn = new DBConnection();
         sqlConn = DBConnection.connectDB();
-        
+
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
@@ -66,6 +76,7 @@ public class SignInForm extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,6 +169,14 @@ public class SignInForm extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user (1).png"))); // NOI18N
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 40, 30));
 
+        jButton3.setText("HOME");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -230,82 +249,206 @@ public class SignInForm extends javax.swing.JFrame {
         } else if (emailFeild.getText().isEmpty() && passwordField.getPassword().length == 0) {
             JOptionPane.showMessageDialog(null, "Enter All Details", "Sign-In", 2);
         } else {
-            try {
-                PreparedStatement pst = sqlConn.prepareStatement("SELECT * from `vds`.`user` WHERE email=? and password=? and role=?");
-                pst.setString(1, email);
-                pst.setString(2, password);
-                pst.setString(3, role);
-                ResultSet rs = pst.executeQuery();
-                
-               
-                 if (rs.next()) {
-                    if (role.equals("SysAdmin")) {
-                        SysMainFrame mf = new SysMainFrame();
-                        SignInForm nl = new SignInForm();
-                        mf.setVisible(true);
-                        nl.setVisible(false);
-                        super.dispose();
-                    }else if(role.equals("Patient")){
+            if (role.equals("SysAdmin")) {
+                SystemAdmin sa = new SystemAdmin(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName.isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
                         SignInForm mf = new SignInForm();
-                        PatientMainFrame nl = new PatientMainFrame();
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }else if(role.equals("HospitalAdmin")){
-                        SignInForm mf = new SignInForm();
-                        HospitalMainFrame nl = new HospitalMainFrame();
-                        name = rs.getString(4);
+                        SysAdminMainFrame nl = new  SysAdminMainFrame ();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
                     }
-                    else if(role.equals("ClinicAdmin")){
-                        SignInForm mf = new SignInForm();
-                        ClinicMainFrame nl = new ClinicMainFrame();
-                        name = rs.getString(4);
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }else if(role.equals("NgoAdmin")){
-                        SignInForm mf = new SignInForm();
-                        NGOMainFrame nl = new NGOMainFrame();
-                        name = rs.getString(4);
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }else if(role.equals("EnterpriseAdmin")){
-                        SignInForm mf = new SignInForm();
-                        EnterpriseMainFrame nl = new EnterpriseMainFrame();
-                        name = rs.getString(4);
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }
-                    else if(role.equals("DistributorAdmin")){
-                        SignInForm mf = new SignInForm();
-                        DistributorMainFrame nl = new DistributorMainFrame();
-                        name = rs.getString(4);
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }
-                     else if(role.equals("SupplierAdmin")){
-                        SignInForm mf = new SignInForm();
-                        SupplierMainFrame nl = new SupplierMainFrame();
-                        name = rs.getString(4);
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }else{
-                        JOptionPane.showMessageDialog(this, "Other Role", "Warning", 2);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Acess Denied OR Credentials Do Not Match", "Warning", 2);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
+            } else if (role.equals("Patient")) {
+                Patient sa = new Patient(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        SignInForm mf = new SignInForm();
+                        PatientMainFrame nl = new  PatientMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if (role.equals("HospitalAdmin")) {
+                HospitalAdmin sa = new HospitalAdmin(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        PreparedStatement Hpst = sqlConn.prepareStatement("SELECT Name from `vds`.`hospital` WHERE AdminEmail=?");
+                            Hpst.setString(1, userEmail);
+                            ResultSet Hrs = Hpst.executeQuery();
+
+                            if (Hrs.next()) {
+                                orgName = Hrs.getString("Name");
+                            }
+                        SignInForm mf = new SignInForm();
+                        HospitalMainFrame nl = new  HospitalMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            } else if (role.equals("ClinicAdmin")) {
+                ClinicAdmin sa = new ClinicAdmin(email, password, role);
+                try {
+                   sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        SignInForm mf = new SignInForm();
+                        ClinicMainFrame nl = new  ClinicMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+            } else if (role.equals("NgoAdmin")) {
+                NgoAdmin sa = new NgoAdmin(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        SignInForm mf = new SignInForm();
+                        NGOMainFrame nl = new  NGOMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+            } else if (role.equals("EnterpriseAdmin")) {
+                EnterpriseManager sa = new EnterpriseManager(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        SignInForm mf = new SignInForm();
+                        EnterpriseMainFrame nl = new  EnterpriseMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            } else if (role.equals("DistributorAdmin")) {
+                DistributingManager sa = new DistributingManager(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        PreparedStatement Dpst = sqlConn.prepareStatement("SELECT Name from `vds`.`distributor` WHERE AdminEmail=?");
+                        Dpst.setString(1, userEmail);
+                        ResultSet Drs = Dpst.executeQuery();
+                        if (Drs.next()) {
+                            orgName = Drs.getString("Name");
+                        }
+                        SignInForm mf = new SignInForm();
+                        DistributorMainFrame nl = new  DistributorMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+              
+            } else if (role.equals("SupplierAdmin")) {
+                SupplyManager sa = new SupplyManager(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        SignInForm mf = new SignInForm();
+                        SupplierMainFrame nl = new  SupplierMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Other Role", "Warning", 2);
+            }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -318,6 +461,15 @@ public class SignInForm extends javax.swing.JFrame {
         super.dispose();
         this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        SignInForm sf = new SignInForm();
+        MainFrame mf = new MainFrame();
+        sf.setVisible(false);
+        mf.setVisible(true);
+        super.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,6 +510,7 @@ public class SignInForm extends javax.swing.JFrame {
     private javax.swing.JTextField emailFeild;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

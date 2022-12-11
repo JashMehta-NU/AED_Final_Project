@@ -9,5 +9,6 @@ package vds.Business.Network;
  * @author JASH,JUBIN,AAYUSH
  */
 public class Network {
-    
+    // Contains a network of entities - So Basically Under an Enterprise which is Parent-
+    //who are the Orgs, Patients and Everything
 }

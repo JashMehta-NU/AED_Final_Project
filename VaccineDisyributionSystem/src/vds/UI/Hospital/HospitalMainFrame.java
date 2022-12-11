@@ -17,7 +17,11 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import vds.Business.UserAccount.UserAccount;
 import vds.Database.DBConnection;
+import vds.UI.MainFrame;
+import vds.UI.Patient.PatientMainFrame;
+import vds.UI.Profile.MyProfile;
 import vds.UI.SignInForm;
 import vds.UI.SystemAdmin.ManageHospitalForm;
 
@@ -120,7 +124,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
         appointmentScreen.setLayout(appointmentScreenLayout);
         appointmentScreenLayout.setHorizontalGroup(
             appointmentScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
         );
         appointmentScreenLayout.setVerticalGroup(
             appointmentScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +150,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
         storageScreen.setLayout(storageScreenLayout);
         storageScreenLayout.setHorizontalGroup(
             storageScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
         );
         storageScreenLayout.setVerticalGroup(
             storageScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +205,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
         orderScreen.setLayout(orderScreenLayout);
         orderScreenLayout.setHorizontalGroup(
             orderScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
             .addGroup(orderScreenLayout.createSequentialGroup()
                 .addGroup(orderScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(orderScreenLayout.createSequentialGroup()
@@ -275,7 +279,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Hospital");
 
-        jButton4.setText("Back");
+        jButton4.setText("Logout");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -294,29 +298,27 @@ public class HospitalMainFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4)
+                        .addGap(118, 118, 118))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(appointmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(storageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ordersBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(profileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 51, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton4)))
-                .addContainerGap())
+                            .addComponent(appointmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(storageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ordersBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(profileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(17, 17, 17)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(appointmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -326,9 +328,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
                 .addComponent(ordersBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(profileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(95, 95, 95)
-                .addComponent(jButton4)
-                .addContainerGap())
+                .addGap(124, 124, 124))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -371,7 +371,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
             ((DefaultTableModel) storageTable.getModel()).removeRow(0);
         } 
         try {
-            String aEmail = SignInForm.name;
+            String aEmail = SignInForm.userEmail;
             System.out.println("Hello");
             System.out.println(aEmail);
             pst = sqlConn.prepareStatement("SELECT * from `hospital` WHERE AdminEmail = ?");
@@ -401,45 +401,106 @@ public class HospitalMainFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        UserAccount.userFullName=("");
+        MainFrame mf = new MainFrame();
+        HospitalMainFrame em = new HospitalMainFrame();
+        mf.setVisible(true);
+        em.setVisible(false);
+        super.dispose();
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         // TODO add your handling code here:
+        MyProfile mp = new MyProfile();
+        PatientMainFrame pm = new PatientMainFrame();
+        mp.setVisible(true);
+        pm.setVisible(false);
+        super.dispose();
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void vaccineNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vaccineNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_vaccineNameActionPerformed
+    private void showJtableData(ResultSet rs) throws SQLException {
+        while (myOrderTable.getRowCount() > 0) {
+            ((DefaultTableModel) myOrderTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
 
+        while (rs.next()) {
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+                row[i - 1] = rs.getObject(i);
+
+            }
+
+            ((DefaultTableModel) myOrderTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+    }
     private void orderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderBtnActionPerformed
         DefaultTableModel tableModel = (DefaultTableModel) myOrderTable.getModel();
 
         String VaccineName = vaccineName.getSelectedItem().toString();
-        String Quantity = quantity.getText();
-        int quantity = Integer.parseInt(Quantity);
-        String disName = distributorNameCombo.getSelectedItem().toString();
+        String vaccineQuantity = quantity.getText();
+        int quantity = Integer.parseInt(vaccineQuantity);
+        String distributorName = distributorNameCombo.getSelectedItem().toString();
 
-        Object[] rowData = new Object[]{VaccineName, quantity, disName};
+        try {
+            System.out.println("Here");
+            String q = "INSERT INTO `vds`.`order` (VaccineType, Quantity, DistributorName, OrderBy, OrderByName) VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement ps;
+            ps = sqlConn.prepareStatement(q);
 
-        tableModel.addRow(rowData);
-//        try {
-//            System.out.println("Here");
-//            String q = "UPDATE hospital SET VaccineInStock = VaccineInStock + ? WHERE VaccineType =? ";
-//            PreparedStatement ps;
-//            ps = sqlConn.prepareStatement(q);
-//            ps.setInt(1, quantity);
-//            ps.setString(2, VaccineName);
-//            ps.executeUpdate();
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+            ps.setString(1, VaccineName);
+            ps.setString(2, vaccineQuantity);
+            //ps.setString(3,"Pending");
+            ps.setString(3, distributorName);
+            ps.setString(4, "Hospital");
+            ps.setString(5, SignInForm.orgName);
+
+            int count = ps.executeUpdate();
+
+            if (count > 0) {
+                JOptionPane.showMessageDialog(this, "Order Placed", "Congratulations", 1);
+
+                // fetching data from order table
+                PreparedStatement pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,Status,DistributorName,OrderBy,OrderByName from `vds`.`order` WHERE OrderByName=?");
+                pst.setString(1, SignInForm.orgName);
+
+                ResultSet rs = pst.executeQuery();
+                showJtableData(rs);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Server Error", "Warning", 2);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // TODO add your handling code here:
+    
     }//GEN-LAST:event_orderBtnActionPerformed
 
     private void distributorNameComboKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_distributorNameComboKeyPressed
+            vaccineName.removeAllItems();
+        try {
+            String dName = distributorNameCombo.getSelectedItem().toString();
 
+            PreparedStatement ps = sqlConn.prepareStatement("SELECT * from `distributor` Where Name = ?  ");
+            ps.setString(1, dName);
+            ResultSet rs1 = ps.executeQuery();
+
+            while (rs1.next()) {
+                vaccineName.addItem(rs1.getString(5));
+
+            }
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(HospitalMainFrame.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_distributorNameComboKeyPressed
 

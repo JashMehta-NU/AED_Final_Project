@@ -4,6 +4,7 @@
  */
 package vds.Business.Role.NgoAdmin;
 
+import java.sql.SQLException;
 import vds.Business.UserAccount.UserAccount;
 
 /**
@@ -16,5 +17,11 @@ public class NgoAdmin extends UserAccount {
     }
     public void addToDatabase(){
         super.addToDB();
+    }
+     public NgoAdmin (String email, String password,String role){
+       super(email,password,role);
+   }
+     public void checkValidUser() throws SQLException{
+        super.authenticateUser(email,password,role);
     }
 }

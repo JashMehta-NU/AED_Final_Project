@@ -4,6 +4,7 @@
  */
 package vds.Business.Role.DistributingManager;
 
+import java.sql.SQLException;
 import vds.Business.UserAccount.UserAccount;
 
 /**
@@ -16,5 +17,11 @@ public class DistributingManager extends UserAccount {
     }
     public void addToDatabase(){
         super.addToDB();
+    }
+     public DistributingManager (String email, String password,String role){
+       super(email,password,role);
+   }
+    public void checkValidUser() throws SQLException{
+        super.authenticateUser(email,password,role);
     }
 }

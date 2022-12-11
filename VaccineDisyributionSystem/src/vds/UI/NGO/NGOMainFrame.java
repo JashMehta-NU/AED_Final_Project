@@ -14,8 +14,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import vds.Business.UserAccount.UserAccount;
 import vds.Database.DBConnection;
 import vds.UI.Clinic.ClinicMainFrame;
+import vds.UI.MainFrame;
+import vds.UI.Patient.PatientMainFrame;
+import vds.UI.Profile.MyProfile;
 import vds.UI.SignInForm;
 import vds.UI.SystemAdmin.ManageHospitalForm;
 
@@ -351,7 +355,7 @@ PreparedStatement pst;
             ((DefaultTableModel) storageTable.getModel()).removeRow(0);
         }
         try {
-            String aEmail = SignInForm.name;
+            String aEmail = SignInForm.userEmail;
             System.out.println("Hello");
             System.out.println(aEmail);
             pst = sqlConn.prepareStatement("SELECT * from `NGO` WHERE AdminEmail = ?");
@@ -385,10 +389,21 @@ PreparedStatement pst;
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        UserAccount.userFullName=("");
+        MainFrame mf = new MainFrame();
+        NGOMainFrame em = new NGOMainFrame();
+        mf.setVisible(true);
+        em.setVisible(false);
+        super.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         // TODO add your handling code here:
+        MyProfile mp = new MyProfile();
+        PatientMainFrame pm = new PatientMainFrame();
+        mp.setVisible(true);
+        pm.setVisible(false);
+        super.dispose();
     }//GEN-LAST:event_profileBtnActionPerformed
 
     private void orderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderBtnActionPerformed

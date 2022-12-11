@@ -618,7 +618,7 @@ public class ManagePatientForm extends javax.swing.JFrame {
                     .addComponent(uage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21))
                 .addGap(18, 18, 18)
-                .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ucity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel23))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -866,7 +866,7 @@ public class ManagePatientForm extends javax.swing.JFrame {
         } else {
             PreparedStatement pst;
             try {
-                pst = sqlConn.prepareStatement("DELETE from user Where Email = ? AND Role =  Role = ?");
+                pst = sqlConn.prepareStatement("DELETE from user Where Email = ? AND Role = ?");
                 pst.setString(1, deleteBy.getText());
                 pst.setString(2, "Patient");
                 pst.executeUpdate();

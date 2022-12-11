@@ -4,6 +4,7 @@
  */
 package vds.Business.Role.ClinicAdmin;
 
+import java.sql.SQLException;
 import vds.Business.UserAccount.UserAccount;
 
 /**
@@ -16,5 +17,11 @@ public class ClinicAdmin extends UserAccount {
     }
     public void addToDatabase(){
         super.addToDB();
+    }
+     public ClinicAdmin (String email, String password,String role){
+       super(email,password,role);
+   }
+    public void checkValidUser() throws SQLException{
+        super.authenticateUser(email,password,role);
     }
 }
