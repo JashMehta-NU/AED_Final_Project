@@ -21,6 +21,7 @@ import vds.UI.MainFrame;
 import vds.UI.Patient.PatientMainFrame;
 import vds.UI.Profile.MyProfile;
 import vds.UI.SignInForm;
+import vds.UI.SystemAdmin.ManageHospitalForm;
 
 /**
  *
@@ -35,7 +36,7 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs = null;
     PreparedStatementWrapper pst;
-    
+
     public LogisticsMainFrame() {
         initComponents();
         conn = new DBConnection();
@@ -57,11 +58,11 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
             }
 
         }
-        
+
     }
-    
+
     private void showJtableData(ResultSet rs) throws SQLException {
-        
+
         PreparedStatement pst;
 
         while (logisticsTable.getRowCount() > 0) {
@@ -80,7 +81,7 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
             ((DefaultTableModel) logisticsTable.getModel()).insertRow(rs.getRow() - 1, row);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,6 +125,11 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending ", "FullFilled" }));
 
         UpdateStatusButton.setText("UPDATE");
+        UpdateStatusButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateStatusButtonActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("BACK");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -238,41 +244,119 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
         int column = logisticsTable.getColumnCount();
         String logEmail = logisticsTable.getValueAt(row, 1).toString();
         String logID = logisticsTable.getValueAt(row, 0).toString();
-        
-        try{
-            if(column == 6){
-            PreparedStatement ps = sqlConn.prepareStatement("UPDATE logistics SET DeliveryStatus=? WHERE LogisticsID=?");
-            ps.setString(1, "Delivered");
-            ps.setString(2,logID);
-            ps.executeUpdate();
-            
-            JOptionPane.showMessageDialog(this,
-                    "Vaccine Delivered Successfully", "SucCess", JOptionPane.INFORMATION_MESSAGE);
-            PreparedStatement pst;
-            try {
-                pst = sqlConn.prepareStatement("SELECT LogisticsID,DistributorName,DistributorEmail,VaccineType,VaccineQuantity,DeliveryStatus from `vds`.`logistics`");
-                ResultSet rs = pst.executeQuery();
 
-                showJtableData(rs);
+        try {
+            if (column == 6) {
+                PreparedStatement ps = sqlConn.prepareStatement("UPDATE logistics SET DeliveryStatus=? WHERE LogisticsID=?");
+                ps.setString(1, "Delivered");
+                ps.setString(2, logID);
+                ps.executeUpdate();
 
-            } catch (SQLException ex) {
-                Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this,
+                        "Vaccine Delivered Successfully", "SucCess", JOptionPane.INFORMATION_MESSAGE);
+                PreparedStatement pst;
+                try {
+                    pst = sqlConn.prepareStatement("SELECT LogisticsID,DistributorName,DistributorEmail,VaccineType,VaccineQuantity,DeliveryStatus,OrderID from `vds`.`logistics`");
+                    ResultSet rs = pst.executeQuery();
+                    while (rs.next()) {
+
+                        String vaccineQuantity = rs.getString(5);
+                        String vaccine = rs.getString(4);
+                        String orderID = rs.getString(7);
+                        System.out.println("here" + vaccineQuantity);
+                        checkAndUpdate(vaccineQuantity, vaccine);
+                        update(vaccineQuantity, vaccine);
+                        ordersUpdate(orderID);
+                        showJtableData(rs);
+
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }//GEN-LAST:event_logisticsTableMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        UserAccount.userFullName=("");
+        UserAccount.userFullName = ("");
         MainFrame mf = new MainFrame();
         LogisticsMainFrame lm = new LogisticsMainFrame();
         lm.setVisible(false);
         mf.setVisible(true);
         super.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+    public void checkAndUpdate(String vaccineQuantity, String vaccine) {
+        System.out.println("Valed checkup" + vaccineQuantity);
+        try {
+            PreparedStatement pst = sqlConn.prepareStatement("SELECT * from `vds`.`hospital`");
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                String vaccineName = rs.getString(5);
+                System.out.println("hhere" + vaccineName);
+
+                try {
+                    PreparedStatement pS = sqlConn.prepareStatement("UPDATE hospital SET VaccineInStock = VaccineInStock + ?  WHERE  VaccineType = ?");
+                    pS.setString(1, vaccineQuantity);
+                    pS.setString(2, vaccine);
+                    pS.executeUpdate();
+                } catch (SQLException e) {
+                    Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void ordersUpdate(String orderID) {
+        try {
+            System.out.println("kk"+orderID);
+            PreparedStatement pd = sqlConn.prepareStatement("UPDATE `vds`.`order` SET `Status` = ? WHERE `OrderID` = ?");
+
+            pd.setString(1, "Delivered");
+            pd.setString(2, orderID);
+            System.out.println("update");
+            pd.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void update(String vaccineQuantity, String vaccine) {
+
+        try {
+            PreparedStatement pst = sqlConn.prepareStatement("SELECT * from `vds`.`distributor`");
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                String vaccineName = rs.getString(5);
+                System.out.println("hhere" + vaccineName);
+
+                try {
+                    PreparedStatement pS = sqlConn.prepareStatement("UPDATE distributor SET VaccineInStock = VaccineInStock - ?  WHERE  VaccineType = ?");
+                    pS.setString(1, vaccineQuantity);
+                    pS.setString(2, vaccine);
+                    pS.executeUpdate();
+                } catch (SQLException e) {
+                    Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+
+    private void UpdateStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateStatusButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UpdateStatusButtonActionPerformed
 
     /**
      * @param args the command line arguments

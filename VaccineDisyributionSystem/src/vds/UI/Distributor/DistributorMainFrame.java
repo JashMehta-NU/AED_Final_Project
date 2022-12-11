@@ -32,7 +32,7 @@ public class DistributorMainFrame extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs = null;
     PreparedStatementWrapper pst;
-
+    String orderID;
     /**
      * Creates new form DistributorMainFrame
      */
@@ -50,7 +50,8 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 
             PreparedStatement pst;
             try {
-                pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status from `vds`.`order` WHERE DistributorName=?");
+                System.out.println(SignInForm.orgName);
+                pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status,OrderID from `vds`.`order` WHERE DistributorName=?");
                 pst.setString(1, SignInForm.orgName);
                 ResultSet rs = pst.executeQuery();
 
@@ -206,7 +207,7 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Vaccine", "Quantity", "Ordered By", "Status", "Dispatch Order"
+                "Vaccine", "Quantity", "Ordered By", "Status", "Dispatch Order", "Order lD"
             }
         ));
         orderTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -445,14 +446,18 @@ public class DistributorMainFrame extends javax.swing.JFrame {
             ((DefaultTableModel) orderTable.getModel()).removeRow(0);
         }
         int columns = rs.getMetaData().getColumnCount();
-
+        System.out.println("cols" + columns);
         while (rs.next()) {
+            orderID = rs.getString("OrderID");
             Object[] row = new Object[columns + 1];
             for (int i = 1; i <= columns; i++) {
+
                 row[i - 1] = rs.getObject(i);
 
             }
             row[4] = "Send Order";
+            row[5] = rs.getString("OrderID");
+            //row[5] =rs.getString("OrderID");
 
             ((DefaultTableModel) orderTable.getModel()).insertRow(rs.getRow() - 1, row);
         }
@@ -482,17 +487,17 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-         PreparedStatement pst;
-            try {
-                pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status from `vds`.`order` WHERE DistributorName=?");
-                pst.setString(1, SignInForm.orgName);
-                ResultSet rs = pst.executeQuery();
+        PreparedStatement pst;
+        try {
+            pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status from `vds`.`order` WHERE DistributorName=?");
+            pst.setString(1, SignInForm.orgName);
+            ResultSet rs = pst.executeQuery();
 
-                showJtableData(rs);
+            showJtableData(rs);
 
-            } catch (SQLException ex) {
-                Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ParentPanel.removeAll();
         ParentPanel.add(Orders);
         ParentPanel.repaint();
@@ -570,7 +575,6 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 //
 //                    ((DefaultTableModel) orderTable.getModel()).insertRow(rs.getRow() - 1, row);
 //                }
-
             } else {
                 JOptionPane.showMessageDialog(this, "Server Error", "Warning", 2);
             }
@@ -624,12 +628,12 @@ public class DistributorMainFrame extends javax.swing.JFrame {
                 if (Integer.parseInt(CurrentQuantity) < Integer.parseInt(rs.getString("VaccineInStock"))) {
                     System.out.println("In here");
                     String distributorName = SignInForm.orgName;
-                    PreparedStatement Lpst = sqlConn.prepareStatement("INSERT INTO `vds`.`logistics` (DistributorName, DistributorEmail, VaccineType, VaccineQuantity) VALUES (?, ?, ?, ?);");
+                    PreparedStatement Lpst = sqlConn.prepareStatement("INSERT INTO `vds`.`logistics` (DistributorName, DistributorEmail, VaccineType, VaccineQuantity, OrderID) VALUES (?, ?, ?, ?,?);");
                     Lpst.setString(1, distributorName);
                     Lpst.setString(2, aEmail);
-
                     Lpst.setString(3, VaccineName);
                     Lpst.setString(4, CurrentQuantity);
+                    Lpst.setString(5, orderID);
 
                     Lpst.executeUpdate();
 
@@ -653,7 +657,7 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        UserAccount.userFullName=("");
+        UserAccount.userFullName = ("");
         MainFrame mf = new MainFrame();
         DistributorMainFrame dm = new DistributorMainFrame();
         mf.setVisible(true);

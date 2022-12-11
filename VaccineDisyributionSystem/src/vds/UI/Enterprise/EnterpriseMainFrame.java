@@ -44,21 +44,60 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
         } else {
             PreparedStatement pst;
+            PreparedStatement upst;
             try {
                 pst = sqlConn.prepareStatement("SELECT * from `Supplier` ");
                 ResultSet rs = pst.executeQuery();
 
                 while (rs.next()) {
                     supplierName.addItem(rs.getString(2));
-
                 }
+           
+                upst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status from `vds`.`order` WHERE DistributorName=?");
+                upst.setString(1, SignInForm.orgName);
+                ResultSet prs = upst.executeQuery();
 
-                //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
+                showtableData(prs);
+
+                           //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
             } catch (SQLException ex) {
-                Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EnterpriseMainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }    }
+    private void showJtableData(ResultSet rs) throws SQLException {
+        while (myOrderTable.getRowCount() > 0) {
+            ((DefaultTableModel) myOrderTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
+
+        while (rs.next()) {
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+                row[i - 1] = rs.getObject(i);
+
+            }
+
+            ((DefaultTableModel) myOrderTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+     }
+    
+    private void showtableData(ResultSet rs) throws SQLException {
+        while (myorderTable.getRowCount() > 0) {
+            ((DefaultTableModel) myorderTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
+
+        while (rs.next()) {
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+                row[i - 1] = rs.getObject(i);
+
+            }
+
+            ((DefaultTableModel) myorderTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,7 +123,7 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
         FindOrderButton = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        myorderTable = new javax.swing.JTable();
         Storage = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         storageTable = new javax.swing.JTable();
@@ -198,18 +237,18 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
 
         FindOrderButton.setText("FIND");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        myorderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Vaccine", "Amount", "Ordered By", "Date"
+                "Vaccine", "Amount", "Ordered By", "Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(myorderTable);
 
         javax.swing.GroupLayout OrdersLayout = new javax.swing.GroupLayout(Orders);
         Orders.setLayout(OrdersLayout);
@@ -509,14 +548,46 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
     private void OrderVaccineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderVaccineButtonActionPerformed
         DefaultTableModel tableModel = (DefaultTableModel) myOrderTable.getModel();
 
-        String VaccineName = rawMaterial.getSelectedItem().toString();
-        String Quantity = quantity.getText();
-        int quantity = Integer.parseInt(Quantity);
-        String disName = supplierName.getSelectedItem().toString();
+//        String VaccineName = rawMaterial.getSelectedItem().toString();
+//        String Quantity = quantity.getText();
+//        int quantity = Integer.parseInt(Quantity);
+//        String disName = supplierName.getSelectedItem().toString();
+//
+//        Object[] rowData = new Object[]{VaccineName, quantity, disName};
+//
+//        tableModel.addRow(rowData);           
+          
+        try {
+            System.out.println("Here");
+            String q = "INSERT INTO `vds`.`order` (VaccineType, Quantity, DistributorName, OrderBy, OrderByName) VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement ps;
+            ps = sqlConn.prepareStatement(q);
 
-        Object[] rowData = new Object[]{VaccineName, quantity, disName};
+            ps.setString(1, rawMaterial.getSelectedItem().toString());
+            ps.setString(2, quantity.getText());
+            ps.setString(3, supplierName.getSelectedItem().toString());
+            ps.setString(4, "Enterprise");
+            ps.setString(5, SignInForm.orgName);
 
-        tableModel.addRow(rowData);           // TODO add your handling code here:
+            int count = ps.executeUpdate();
+
+            if (count > 0) {
+                JOptionPane.showMessageDialog(this, "Order Placed", "Congratulations", 1);
+
+                // fetching data from order table
+                PreparedStatement pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,Status,DistributorName,OrderBy,OrderByName from `vds`.`order` WHERE OrderByName=?");
+                pst.setString(1, SignInForm.orgName);
+
+                ResultSet rs = pst.executeQuery();
+                showJtableData(rs);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Server Error", "Warning", 2);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EnterpriseMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_OrderVaccineButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -601,10 +672,10 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTable myOrderTable;
+    private javax.swing.JTable myorderTable;
     private javax.swing.JTextField quantity;
     private javax.swing.JComboBox<String> rawMaterial;
     private javax.swing.JTable storageTable;

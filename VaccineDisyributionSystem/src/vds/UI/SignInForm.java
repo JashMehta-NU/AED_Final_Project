@@ -400,12 +400,13 @@ public class SignInForm extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
                                 JOptionPane.INFORMATION_MESSAGE);
-                        PreparedStatement Hpst = sqlConn.prepareStatement("SELECT Name from `enterprise`.`hospital` WHERE AdminEmail=?");
+                        PreparedStatement Hpst = sqlConn.prepareStatement("SELECT Name from `vds`.`enterprise` WHERE AdminEmail=?");
                         Hpst.setString(1, userEmail);
                         ResultSet Hrs = Hpst.executeQuery();
 
                         if (Hrs.next()) {
                             orgName = Hrs.getString("Name");
+                            System.out.println(orgName);
                         }
                         SignInForm mf = new SignInForm();
                         EnterpriseMainFrame nl = new EnterpriseMainFrame();
@@ -434,7 +435,7 @@ public class SignInForm extends javax.swing.JFrame {
                         Dpst.setString(1, userEmail);
                         ResultSet Drs = Dpst.executeQuery();
                         if (Drs.next()) {
-                            orgName = Drs.getString("Name");
+                            orgName = Drs.getString("Name");  
                         }
                         SignInForm mf = new SignInForm();
                         DistributorMainFrame nl = new DistributorMainFrame();
