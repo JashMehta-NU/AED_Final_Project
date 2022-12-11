@@ -45,6 +45,7 @@ public class UserAccount {
     public static String userEmail;
     public static String userContact;
     public static String userCity;
+    
 
     public UserAccount(String fname, String lname, String email, String contact, int age, String city, String state, String country, String password, String gender, String dob, String role) {
 
@@ -104,18 +105,19 @@ public class UserAccount {
         DBConnection conn;
         Connection sqlConn;
         sqlConn = DBConnection.connectDB();
-
+        
         java.sql.PreparedStatement pst = sqlConn.prepareStatement("SELECT * from `vds`.`user` WHERE email=? and password=? and role=?");
         pst.setString(1, email);
         pst.setString(2, password);
         pst.setString(3, role);
         ResultSet rs = pst.executeQuery();
-        if (rs.next()) {
+        if (rs.next()) {    
             userFullName = rs.getString("Fname") + rs.getString("Lname");
             userEmail = rs.getString("Email");
             userContact = rs.getString("Contact");
             userCity = rs.getString("City");
         }
+        System.out.println(userFullName+userEmail+userContact);
         
 
     }

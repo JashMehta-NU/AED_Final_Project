@@ -29,7 +29,7 @@ import vds.UI.Supplier.SupplierMainFrame;
 import vds.UI.SystemAdmin.SysAdminMainFrame;
 
 public class SignInForm extends javax.swing.JFrame {
- 
+
     /**
      * Creates new form SignInForm
      */
@@ -41,13 +41,13 @@ public class SignInForm extends javax.swing.JFrame {
     public static String userFullName;
     public static String userEmail;
     public static String userContact;
-    
+
     public SignInForm() {
         initComponents();
         setLocationRelativeTo(null);
         conn = new DBConnection();
         sqlConn = DBConnection.connectDB();
-        
+
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
@@ -248,140 +248,193 @@ public class SignInForm extends javax.swing.JFrame {
         } else if (emailFeild.getText().isEmpty() && passwordField.getPassword().length == 0) {
             JOptionPane.showMessageDialog(null, "Enter All Details", "Sign-In", 2);
         } else {
-                    if (role.equals("SysAdmin")) {
-                        SystemAdmin sa = new SystemAdmin (email,password,role);
-                        try {
-                            sa.checkValidUser();
-                            userFullName = UserAccount.userFullName;
-                            userEmail = UserAccount.userEmail;
-                            userContact = UserAccount.userContact;
-                            SysAdminMainFrame mf = new SysAdminMainFrame();
-                            SignInForm nl = new SignInForm();
-                            mf.setVisible(true);
-                            nl.setVisible(false);
-                            super.dispose();
-                        } catch (SQLException ex) {
-                            Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        
-                    }else if(role.equals("Patient")){
-                        Patient sa = new Patient (email,password,role);
-                        try {
-                            sa.checkValidUser();
-                            userFullName = UserAccount.userFullName;
-                            userEmail = UserAccount.userEmail;
-                            userContact = UserAccount.userContact;
-                        } catch (SQLException ex) {
-                            Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+            if (role.equals("SysAdmin")) {
+                SystemAdmin sa = new SystemAdmin(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName.isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
                         SignInForm mf = new SignInForm();
-                        PatientMainFrame nl = new PatientMainFrame();
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }else if(role.equals("HospitalAdmin")){
-                        HospitalAdmin sa = new HospitalAdmin (email,password,role);
-                        try {
-                            sa.checkValidUser();
-                            userFullName = UserAccount.userFullName;
-                            userEmail = UserAccount.userEmail;
-                            userContact = UserAccount.userContact;
-                        } catch (SQLException ex) {
-                            Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        SignInForm mf = new SignInForm();
-                        HospitalMainFrame nl = new HospitalMainFrame();
-                        
+                        SysAdminMainFrame nl = new  SysAdminMainFrame ();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
                     }
-                    else if(role.equals("ClinicAdmin")){
-                        ClinicAdmin sa = new ClinicAdmin (email,password,role);
-                        try {
-                            sa.checkValidUser();
-                            userFullName = UserAccount.userFullName;
-                            userEmail = UserAccount.userEmail;
-                            userContact = UserAccount.userContact;
-                        } catch (SQLException ex) {
-                            Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if (role.equals("Patient")) {
+                Patient sa = new Patient(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
                         SignInForm mf = new SignInForm();
-                        ClinicMainFrame nl = new ClinicMainFrame();
-                        
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }else if(role.equals("NgoAdmin")){
-                        NgoAdmin sa = new NgoAdmin (email,password,role);
-                        try {
-                            sa.checkValidUser();
-                            userFullName = UserAccount.userFullName;
-                            userEmail = UserAccount.userEmail;
-                            userContact = UserAccount.userContact;
-                        } catch (SQLException ex) {
-                            Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        SignInForm mf = new SignInForm();
-                        NGOMainFrame nl = new NGOMainFrame();
-                        
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }else if(role.equals("EnterpriseAdmin")){
-                        EnterpriseManager sa = new EnterpriseManager (email,password,role);
-                        try {
-                            sa.checkValidUser();
-                            userFullName = UserAccount.userFullName;
-                            userEmail = UserAccount.userEmail;
-                            userContact = UserAccount.userContact;
-                        } catch (SQLException ex) {
-                            Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        SignInForm mf = new SignInForm();
-                        EnterpriseMainFrame nl = new EnterpriseMainFrame();
-                        
+                        PatientMainFrame nl = new  PatientMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
                     }
-                    else if(role.equals("DistributorAdmin")){
-                        DistributingManager sa = new DistributingManager (email,password,role);
-                        try {
-                            sa.checkValidUser();
-                            userFullName = UserAccount.userFullName;
-                            userEmail = UserAccount.userEmail;
-                            userContact = UserAccount.userContact;
-                        } catch (SQLException ex) {
-                            Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if (role.equals("HospitalAdmin")) {
+                HospitalAdmin sa = new HospitalAdmin(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
                         SignInForm mf = new SignInForm();
-                        DistributorMainFrame nl = new DistributorMainFrame();
-                        
+                        HospitalMainFrame nl = new  HospitalMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
                     }
-                     else if(role.equals("SupplierAdmin")){
-                         SupplyManager sa = new SupplyManager (email,password,role);
-                        try {
-                            sa.checkValidUser();
-                            userFullName = UserAccount.userFullName;
-                            userEmail = UserAccount.userEmail;
-                            userContact = UserAccount.userContact;  
-                            
-                        } catch (SQLException ex) {
-                            Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            } else if (role.equals("ClinicAdmin")) {
+                ClinicAdmin sa = new ClinicAdmin(email, password, role);
+                try {
+                   sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
                         SignInForm mf = new SignInForm();
-                        SupplierMainFrame nl = new SupplierMainFrame();
-                        
+                        ClinicMainFrame nl = new  ClinicMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
-                    }else{
-                        JOptionPane.showMessageDialog(this, "Other Role", "Warning", 2);
                     }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+            } else if (role.equals("NgoAdmin")) {
+                NgoAdmin sa = new NgoAdmin(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        SignInForm mf = new SignInForm();
+                        NGOMainFrame nl = new  NGOMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+            } else if (role.equals("EnterpriseAdmin")) {
+                EnterpriseManager sa = new EnterpriseManager(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        SignInForm mf = new SignInForm();
+                        EnterpriseMainFrame nl = new  EnterpriseMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            } else if (role.equals("DistributorAdmin")) {
+                DistributingManager sa = new DistributingManager(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        SignInForm mf = new SignInForm();
+                        DistributorMainFrame nl = new  DistributorMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+              
+            } else if (role.equals("SupplierAdmin")) {
+                SupplyManager sa = new SupplyManager(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        SignInForm mf = new SignInForm();
+                        SupplierMainFrame nl = new  SupplierMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Other Role", "Warning", 2);
+            }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
