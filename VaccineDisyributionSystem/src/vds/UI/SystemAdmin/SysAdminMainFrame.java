@@ -609,11 +609,11 @@ public class SysAdminMainFrame extends javax.swing.JFrame {
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
-        ManageLogisticsForm mp = new ManageLogisticsForm();
-        SysAdminMainFrame sa = new SysAdminMainFrame();
-        mp.setVisible(true);
-        sa.setVisible(false);
-        super.dispose();
+//        ManageLogisticsForm mp = new ManageLogisticsForm();
+//        SysAdminMainFrame sa = new SysAdminMainFrame();
+//        mp.setVisible(true);
+//        sa.setVisible(false);
+//        super.dispose();
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
