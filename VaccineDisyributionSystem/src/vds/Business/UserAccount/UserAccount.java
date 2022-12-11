@@ -45,6 +45,7 @@ public class UserAccount {
     public static String userEmail;
     public static String userContact;
     public static String userCity;
+    public static String userRole;
     
 
     public UserAccount(String fname, String lname, String email, String contact, int age, String city, String state, String country, String password, String gender, String dob, String role) {
@@ -114,7 +115,7 @@ public class UserAccount {
             userEmail = rs.getString("Email");
             userContact = rs.getString("Contact");
             userCity = rs.getString("City");
-            
+            userRole = rs.getString("Role");
         }
        
         

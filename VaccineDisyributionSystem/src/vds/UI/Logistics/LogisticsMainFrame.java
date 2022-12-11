@@ -14,8 +14,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import vds.Business.UserAccount.UserAccount;
 import vds.Database.DBConnection;
 import vds.UI.Distributor.DistributorMainFrame;
+import vds.UI.MainFrame;
+import vds.UI.Patient.PatientMainFrame;
+import vds.UI.Profile.MyProfile;
 import vds.UI.SignInForm;
 
 /**
@@ -122,6 +126,11 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
         UpdateStatusButton.setText("UPDATE");
 
         jButton2.setText("BACK");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("PROFILE");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -216,6 +225,11 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        MyProfile mp = new MyProfile();
+        PatientMainFrame pm = new PatientMainFrame();
+        mp.setVisible(true);
+        pm.setVisible(false);
+        super.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void logisticsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logisticsTableMouseClicked
@@ -249,6 +263,16 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
             System.out.println(e);
         }
     }//GEN-LAST:event_logisticsTableMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        UserAccount.userFullName=("");
+        MainFrame mf = new MainFrame();
+        LogisticsMainFrame lm = new LogisticsMainFrame();
+        lm.setVisible(false);
+        mf.setVisible(true);
+        super.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

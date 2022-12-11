@@ -11,9 +11,27 @@ import java.sql.*;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import vds.Business.Role.ClinicAdmin.ClinicAdmin;
+import vds.Business.Role.DistributingManager.DistributingManager;
+import vds.Business.Role.EnterpriseManager.EnterpriseManager;
+import vds.Business.Role.HospitalAdmin.HospitalAdmin;
+import vds.Business.Role.LogisticsManager.LogisticsManager;
+import vds.Business.Role.NgoAdmin.NgoAdmin;
+import vds.Business.Role.Patient.Patient;
+import vds.Business.Role.SupplyManager.SupplyManager;
+import vds.Business.Role.SystemAdmin;
 import vds.Business.UserAccount.UserAccount;
 import vds.Database.DBConnection;
+import vds.UI.Clinic.ClinicMainFrame;
+import vds.UI.Distributor.DistributorMainFrame;
+import vds.UI.Enterprise.EnterpriseMainFrame;
+import vds.UI.Hospital.HospitalMainFrame;
+import vds.UI.Logistics.LogisticsMainFrame;
 import vds.UI.MainFrame;
+import vds.UI.NGO.NGOMainFrame;
+import vds.UI.Patient.PatientMainFrame;
+import vds.UI.Supplier.SupplierMainFrame;
+import vds.UI.SystemAdmin.SysAdminMainFrame;
 
 /**
  *
@@ -108,6 +126,7 @@ public class MyProfile extends javax.swing.JFrame {
         maleRadio = new javax.swing.JRadioButton();
         femaleRadio = new javax.swing.JRadioButton();
         userDOB = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -198,22 +217,32 @@ public class MyProfile extends javax.swing.JFrame {
         femaleRadio.setForeground(new java.awt.Color(153, 255, 255));
         femaleRadio.setText("Female");
 
+        jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(203, 203, 203)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel12)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel2)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                                .addComponent(jLabel2)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(firstName)
@@ -249,7 +278,7 @@ public class MyProfile extends javax.swing.JFrame {
                                 .addComponent(maleRadio)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(femaleRadio)))))
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(UpdateProfileButton)
@@ -267,8 +296,9 @@ public class MyProfile extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(userState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                    .addComponent(userState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -347,6 +377,66 @@ public class MyProfile extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_UpdateProfileButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String role = UserAccount.userRole;
+                if(role.equals("Patient")){
+                    PatientMainFrame pm = new PatientMainFrame();
+                    MyProfile mp = new MyProfile();
+                    mp.setVisible(false);
+                    pm.setVisible(true);
+                    super.dispose();
+                }else if(role.equals("HospitalAdmin")){
+                    HospitalMainFrame pm = new HospitalMainFrame();
+                    MyProfile mp = new MyProfile();
+                    mp.setVisible(false);
+                    pm.setVisible(true);
+                    super.dispose();
+                }else if(role.equals("ClinicAdmin")){
+                    ClinicMainFrame pm = new ClinicMainFrame();
+                    MyProfile mp = new MyProfile();
+                    mp.setVisible(false);
+                    pm.setVisible(true);
+                    super.dispose();
+                }else if(role.equals("NgoAdmin")){
+                   NGOMainFrame pm = new NGOMainFrame();
+                    MyProfile mp = new MyProfile();
+                    mp.setVisible(false);
+                    pm.setVisible(true);
+                    super.dispose();
+                }else if(role.equals("SystemAdmin")){
+                    SysAdminMainFrame pm = new SysAdminMainFrame();
+                    MyProfile mp = new MyProfile();
+                    mp.setVisible(false);
+                    pm.setVisible(true);
+                    super.dispose();
+                }else if(role.equals("SupplierAdmin")){
+                   SupplierMainFrame pm = new SupplierMainFrame();
+                    MyProfile mp = new MyProfile();
+                    mp.setVisible(false);
+                    pm.setVisible(true);
+                    super.dispose();
+                }else if(role.equals("EnterpriseAdmin")){
+                    EnterpriseMainFrame pm = new EnterpriseMainFrame();
+                    MyProfile mp = new MyProfile();
+                    mp.setVisible(false);
+                    pm.setVisible(true);
+                    super.dispose();
+                }else if(role.equals("DistributorAdmin")){
+                    DistributorMainFrame pm = new DistributorMainFrame();
+                    MyProfile mp = new MyProfile();
+                    mp.setVisible(false);
+                    pm.setVisible(true);
+                    super.dispose();
+                }else{
+                    LogisticsMainFrame pm = new LogisticsMainFrame();
+                    MyProfile mp = new MyProfile();
+                    mp.setVisible(false);
+                    pm.setVisible(true);
+                    super.dispose();
+                }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -386,6 +476,7 @@ public class MyProfile extends javax.swing.JFrame {
     private javax.swing.JButton UpdateProfileButton;
     private javax.swing.JRadioButton femaleRadio;
     private javax.swing.JTextField firstName;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
