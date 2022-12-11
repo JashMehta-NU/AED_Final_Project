@@ -758,7 +758,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
                 pst1.setString(7, ngoAdmin);
                 pst1.setString(8, ngoAdminEmail);
                 pst1.setString(9, location.getText());
-                
+
                 pst1.executeUpdate();
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -786,8 +786,16 @@ public class ManageNGOForm extends javax.swing.JFrame {
             try {
                 pst = sqlConn.prepareStatement("Delete from ngo Where NgoID = ?");
                 pst.setString(1, deleteBy.getText());
-                pst.executeUpdate();
+                int deleted = pst.executeUpdate();
+                deleteBy.setText("");
 
+                if (deleted == 0) {
+                    JOptionPane.showMessageDialog(this, "Error Deleting", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
                         .getName()).log(Level.SEVERE, null, ex);
@@ -817,8 +825,10 @@ public class ManageNGOForm extends javax.swing.JFrame {
                 pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from ngo Where NgoID = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
-
-                while (rs.next()) {
+                if (rs.next() == false) {
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
                     ngoName.setText(rs.getString(1));
                     ngoContact.setText(rs.getString(2));
                     ngoEmail.setText(rs.getString(3));
@@ -841,8 +851,10 @@ public class ManageNGOForm extends javax.swing.JFrame {
                 pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from ngo Where Email = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
-
-                while (rs.next()) {
+                if (rs.next() == false) {
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
                     ngoName.setText(rs.getString(1));
                     ngoContact.setText(rs.getString(2));
                     ngoEmail.setText(rs.getString(3));
@@ -868,7 +880,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
     }//GEN-LAST:event_ngoAdminActionPerformed
 
     private void UpdateNGOButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateNGOButtonActionPerformed
-   PreparedStatement pst;
+        PreparedStatement pst;
         try {
             pst = sqlConn.prepareStatement("UPDATE ngo SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where NgoID = ?");
             pst.setString(1, ngoName.getText());

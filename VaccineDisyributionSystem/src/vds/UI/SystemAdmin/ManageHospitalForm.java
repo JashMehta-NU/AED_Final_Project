@@ -797,8 +797,11 @@ public class ManageHospitalForm extends javax.swing.JFrame {
                 pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from hospital Where HospitalID = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
+                if (rs.next() == false) {
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
 
-                while (rs.next()) {
                     hosName.setText(rs.getString(1));
                     hosContact.setText(rs.getString(2));
                     hosEmail.setText(rs.getString(3));
@@ -821,8 +824,10 @@ public class ManageHospitalForm extends javax.swing.JFrame {
                 pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from distributor Where Email = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
-
-                while (rs.next()) {
+                if (rs.next() == false) {
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
                     hosName.setText(rs.getString(1));
                     hosContact.setText(rs.getString(2));
                     hosEmail.setText(rs.getString(3));
@@ -856,8 +861,16 @@ public class ManageHospitalForm extends javax.swing.JFrame {
             try {
                 pst = sqlConn.prepareStatement("Delete from hospital Where HospitalID = ?");
                 pst.setString(1, deleteBy.getText());
-                pst.executeUpdate();
+                int deleted = pst.executeUpdate();
                 deleteBy.setText("");
+
+                if (deleted == 0) {
+                    JOptionPane.showMessageDialog(this, "Error Deleting", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class

@@ -52,6 +52,8 @@ public class ManagePatientForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -117,11 +119,15 @@ public class ManagePatientForm extends javax.swing.JFrame {
         ucountry = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
         maleradio = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        femaleRadio = new javax.swing.JRadioButton();
         jLabel29 = new javax.swing.JLabel();
         UpdatePatientButton = new javax.swing.JButton();
         uage = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        userDOB = new com.toedter.calendar.JDateChooser();
+        jLabel28 = new javax.swing.JLabel();
+        upass = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -259,10 +265,12 @@ public class ManagePatientForm extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(97, 212, 195));
         jLabel12.setText("PASSWORD:");
 
+        buttonGroup2.add(maleRadio);
         maleRadio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         maleRadio.setForeground(new java.awt.Color(97, 212, 195));
         maleRadio.setText("MALE");
 
+        buttonGroup2.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jRadioButton2.setForeground(new java.awt.Color(97, 212, 195));
         jRadioButton2.setText("FEMALE");
@@ -516,13 +524,15 @@ public class ManagePatientForm extends javax.swing.JFrame {
         jLabel26.setForeground(new java.awt.Color(97, 212, 195));
         jLabel26.setText("GENDER:");
 
+        buttonGroup1.add(maleradio);
         maleradio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         maleradio.setForeground(new java.awt.Color(97, 212, 195));
         maleradio.setText("MALE");
 
-        jRadioButton4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jRadioButton4.setForeground(new java.awt.Color(97, 212, 195));
-        jRadioButton4.setText("FEMALE");
+        buttonGroup1.add(femaleRadio);
+        femaleRadio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        femaleRadio.setForeground(new java.awt.Color(97, 212, 195));
+        femaleRadio.setText("FEMALE");
 
         jLabel29.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -539,15 +549,19 @@ public class ManagePatientForm extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(97, 212, 195));
         jLabel22.setText("EMAIL:");
 
+        jLabel27.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(97, 212, 195));
+        jLabel27.setText("DOB:");
+
+        jLabel28.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(97, 212, 195));
+        jLabel28.setText("PASSOWRD:");
+
         javax.swing.GroupLayout UpdatePatientsPanelLayout = new javax.swing.GroupLayout(UpdatePatientsPanel);
         UpdatePatientsPanel.setLayout(UpdatePatientsPanelLayout);
         UpdatePatientsPanelLayout.setHorizontalGroup(
             UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdatePatientsPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(UpdatePatientButton)
-                .addGap(363, 363, 363))
             .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
                 .addGap(206, 206, 206)
                 .addComponent(jLabel17)
@@ -574,6 +588,23 @@ public class ManagePatientForm extends javax.swing.JFrame {
                             .addGap(21, 21, 21)
                             .addComponent(ucity, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 422, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdatePatientsPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdatePatientsPanelLayout.createSequentialGroup()
+                        .addComponent(UpdatePatientButton)
+                        .addGap(363, 363, 363))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdatePatientsPanelLayout.createSequentialGroup()
+                        .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel28)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(upass, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel27)
+                                .addGap(18, 18, 18)
+                                .addComponent(userDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(164, 164, 164))))
             .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
                     .addGap(161, 161, 161)
@@ -596,21 +627,30 @@ public class ManagePatientForm extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(maleradio)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jRadioButton4)
+                    .addComponent(femaleRadio)
                     .addContainerGap(161, Short.MAX_VALUE)))
         );
         UpdatePatientsPanelLayout.setVerticalGroup(
             UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
+                .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
+                        .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(findByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17)
+                            .addComponent(findBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FindPatientUpdate))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel29)
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel27))
+                    .addComponent(userDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(findByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17)
-                    .addComponent(findBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FindPatientUpdate))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel29)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                    .addComponent(upass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -633,7 +673,7 @@ public class ManagePatientForm extends javax.swing.JFrame {
                         .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel26)
                         .addComponent(maleradio)
-                        .addComponent(jRadioButton4))
+                        .addComponent(femaleRadio))
                     .addGap(18, 18, 18)
                     .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel19)
@@ -869,11 +909,16 @@ public class ManagePatientForm extends javax.swing.JFrame {
                 pst = sqlConn.prepareStatement("Delete from user Where UID = ? AND Role = ?");
                 pst.setString(1, deleteBy.getText());
                 pst.setString(2, "Patient");
-                pst.executeUpdate();
+                int deleted = pst.executeUpdate();
                 deleteBy.setText("");
                
-                JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
+                if(deleted == 0){
+                    JOptionPane.showMessageDialog(this, "Error Deleting", "Warning",
+                        JOptionPane.ERROR_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
                         JOptionPane.INFORMATION_MESSAGE);
+                }
                 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
@@ -912,19 +957,28 @@ public class ManagePatientForm extends javax.swing.JFrame {
                 pst.setString(1, findBy.getText());
                 pst.setString(2, "Patient");
                 ResultSet rs = pst.executeQuery();
-
-                while (rs.next()) {
+               
+                if(rs.next()==false){
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                        JOptionPane.ERROR_MESSAGE);
+                }else{
                     fname.setText(rs.getString(2));
                     lname.setText(rs.getString(3));
-                    ucontact.setText(rs.getString(4));
-                    uemail.setText(rs.getString(5));
+                    uemail.setText(rs.getString(4));
+                    ucontact.setText(rs.getString(5));
                     uage.setText(rs.getString(6));
                     ucity.setText(rs.getString(7));
                     ustate.setText(rs.getString(8));
                     ucountry.setText(rs.getString(9));
-                    maleradio.setSelected(true);
-
-                }
+                    upass.setText(rs.getString(10));
+                    if(rs.getString(11).equals("Male")){
+                        maleradio.setSelected(true);
+                    }else{
+                        femaleRadio.setSelected(false);
+                    }
+                    userDOB.setDate(rs.getDate(12));
+                    
+            }
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -939,18 +993,27 @@ public class ManagePatientForm extends javax.swing.JFrame {
                 pst.setString(2, "Patient");
                 ResultSet rs = pst.executeQuery();
 
-                while (rs.next()) {
+                if(rs.next()==false){
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                        JOptionPane.ERROR_MESSAGE);
+                }else{
                     fname.setText(rs.getString(2));
                     lname.setText(rs.getString(3));
-                    ucontact.setText(rs.getString(5));
                     uemail.setText(rs.getString(4));
+                    ucontact.setText(rs.getString(5));
                     uage.setText(rs.getString(6));
                     ucity.setText(rs.getString(7));
                     ustate.setText(rs.getString(8));
                     ucountry.setText(rs.getString(9));
-                    maleradio.setSelected(true);
-
-                }
+                    upass.setText(rs.getString(10));
+                    if(rs.getString(11).equals("Male")){
+                        maleradio.setSelected(true);
+                    }else{
+                        femaleRadio.setSelected(false);
+                    }
+                    userDOB.setDate(rs.getDate(12));
+                    
+            }
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -1006,6 +1069,8 @@ public class ManagePatientForm extends javax.swing.JFrame {
     private javax.swing.JPanel UpdatePatientsPanel;
     private javax.swing.JPanel ViewPatientsPanel;
     private javax.swing.JTextField age;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JTextField city;
     private javax.swing.JTextField contact;
     private javax.swing.JTextField country;
@@ -1014,6 +1079,7 @@ public class ManagePatientForm extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dob;
     private javax.swing.JTextField email;
     private javax.swing.JTextField fName;
+    private javax.swing.JRadioButton femaleRadio;
     private javax.swing.JTextField findBy;
     private javax.swing.JComboBox<String> findByCombo;
     private javax.swing.JTextField fname;
@@ -1040,6 +1106,8 @@ public class ManagePatientForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1051,7 +1119,6 @@ public class ManagePatientForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField lName;
     private javax.swing.JTextField lname;
@@ -1065,6 +1132,8 @@ public class ManagePatientForm extends javax.swing.JFrame {
     private javax.swing.JTextField ucontact;
     private javax.swing.JTextField ucountry;
     private javax.swing.JTextField uemail;
+    private javax.swing.JTextField upass;
+    private com.toedter.calendar.JDateChooser userDOB;
     private javax.swing.JTextField ustate;
     // End of variables declaration//GEN-END:variables
 }

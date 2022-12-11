@@ -35,6 +35,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     Resultset rs;
     PreparedStatementWrapper pst = null;
     String dEmail;
+
     public ManageDistributorForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -717,9 +718,9 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         //String date = dateFormat.format(dobDate.getDate());
         String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-String distributionAdmin = distributorManagerDropDown.getSelectedItem().toString();
+        String distributionAdmin = distributorManagerDropDown.getSelectedItem().toString();
         String phonePattern = "(0|91)?[6-9][0-9]{9}";
-PreparedStatement pst;
+        PreparedStatement pst;
         try {
             pst = sqlConn.prepareStatement("SELECT Email from `vds`.`user` WHERE fName =?");
             pst.setString(1, distributionAdmin);
@@ -748,7 +749,7 @@ PreparedStatement pst;
             JOptionPane.showMessageDialog(this, "Enter a Valid Phone Number", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-             PreparedStatement pst1;
+            PreparedStatement pst1;
             try {
                 pst1 = sqlConn.prepareStatement("INSERT INTO `distributor`( `Name`, `Contact`, `Email`,  `City`, `State`, `Country`, `Admin`, `AdminEmail`, `Location`)  VALUES  (?,?,?,?,?,?,?,?,?)");
                 pst1.setString(1, distributorName);
@@ -766,7 +767,6 @@ PreparedStatement pst;
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-
 
             JOptionPane.showMessageDialog(this, "Distributor Company Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -789,8 +789,11 @@ PreparedStatement pst;
                 pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from distributor Where DistributorID = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
+                if (rs.next() == false) {
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
 
-                while (rs.next()) {
                     dissName.setText(rs.getString(1));
                     disContact.setText(rs.getString(2));
                     disEmail.setText(rs.getString(3));
@@ -813,8 +816,10 @@ PreparedStatement pst;
                 pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from distributor Where Email = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
-
-                while (rs.next()) {
+                if (rs.next() == false) {
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
                     dissName.setText(rs.getString(1));
                     disContact.setText(rs.getString(2));
                     disEmail.setText(rs.getString(3));
@@ -841,15 +846,15 @@ PreparedStatement pst;
     }//GEN-LAST:event_disAdminActionPerformed
 
     private void UpdateDistributorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateDistributorButtonActionPerformed
-PreparedStatement pst;
+        PreparedStatement pst;
         try {
             pst = sqlConn.prepareStatement("UPDATE distributor SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where DistributorID = ?");
             pst.setString(1, dissName.getText());
-            pst.setString(2,disContact.getText());
+            pst.setString(2, disContact.getText());
             pst.setString(3, disEmail.getText());
             pst.setString(4, disCity.getText());
             pst.setString(5, disState.getText());
-            pst.setString(6,disCountry.getText());
+            pst.setString(6, disCountry.getText());
             pst.setString(7, disAdmin.getText());
             pst.setString(8, disLocation.getText());
             pst.setString(9, findBy.getText());
@@ -892,8 +897,17 @@ PreparedStatement pst;
             try {
                 pst = sqlConn.prepareStatement("DELETE from distributor Where Email = ?");
                 pst.setString(1, deleteBy.getText());
-                pst.executeUpdate();
+                int deleted = pst.executeUpdate();
                 deleteBy.setText("");
+
+                if (deleted == 0) {
+                    JOptionPane.showMessageDialog(this, "Error Deleting", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
                         .getName()).log(Level.SEVERE, null, ex);

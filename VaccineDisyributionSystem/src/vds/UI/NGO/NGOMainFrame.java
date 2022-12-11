@@ -257,8 +257,6 @@ public class NGOMainFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Vaccine Name : ");
 
-        vaccineName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "XYZ" }));
-
         jLabel3.setText("Quantity : ");
 
         orderBtn.setText("Order");

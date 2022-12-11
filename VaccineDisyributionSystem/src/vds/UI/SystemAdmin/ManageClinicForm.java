@@ -661,9 +661,6 @@ public class ManageClinicForm extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
-
-
-
         // TODO add your handling code here:
         ParentPanel.removeAll();
         ParentPanel.add(ViewClinicPanel);
@@ -803,7 +800,11 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 pst.setString(1, findClinicBy.getText());
                 ResultSet rs = pst.executeQuery();
 
-                while (rs.next()) {
+                if (rs.next() == false) {
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+
                     clinicName.setText(rs.getString(1));
                     clinicContact.setText(rs.getString(2));
                     email.setText(rs.getString(3));
@@ -826,8 +827,10 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from clinic Where Email = ?");
                 pst.setString(1, findClinicBy.getText());
                 ResultSet rs = pst.executeQuery();
-
-                while (rs.next()) {
+                if (rs.next() == false) {
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
                     clinicName.setText(rs.getString(1));
                     clinicContact.setText(rs.getString(2));
                     email.setText(rs.getString(3));
@@ -855,9 +858,17 @@ public class ManageClinicForm extends javax.swing.JFrame {
             try {
                 pst = sqlConn.prepareStatement("Delete from clinic Where ClinicID = ?");
                 pst.setString(1, clinicDelete.getText());
-                 pst.executeUpdate();
+                int deleted = pst.executeUpdate();
+                clinicDelete.setText("");
 
-               clinicDelete.setText("");
+                if (deleted == 0) {
+                    JOptionPane.showMessageDialog(this, "Error Deleting", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Clinic Deleted Successfully", "Welcome",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+                clinicDelete.setText("");
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }

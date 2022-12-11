@@ -634,7 +634,7 @@ public class ManageSupplierForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-PreparedStatement pst;
+        PreparedStatement pst;
         while (storageTable.getRowCount() > 0) {
             ((DefaultTableModel) storageTable.getModel()).removeRow(0);
         }
@@ -653,7 +653,6 @@ PreparedStatement pst;
                 String country = rs.getString(6);
                 String admin = rs.getString(7);
                 String adminEmail = rs.getString(8);
-                
 
                 Object[] rowData = new Object[]{Name, contact, email, city, state, country, admin, adminEmail};
                 ((DefaultTableModel) storageTable.getModel()).addRow(rowData);
@@ -742,7 +741,7 @@ PreparedStatement pst;
             }
             JOptionPane.showMessageDialog(this, "Supplier Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
-            
+
             supplierNameField.setText("");
             emailField.setText("");
             contactField.setText("");
@@ -760,10 +759,16 @@ PreparedStatement pst;
             try {
                 pst = sqlConn.prepareStatement("Delete from supplier Where SupplierID = ?");
                 pst.setString(1, deleteBy.getText());
-                pst.executeUpdate();
+                int deleted = pst.executeUpdate();
                 deleteBy.setText("");
-                JOptionPane.showMessageDialog(this, "Supplier Deleted Successfully", "Welcome",
-                        JOptionPane.INFORMATION_MESSAGE);
+
+                if (deleted == 0) {
+                    JOptionPane.showMessageDialog(this, "Error Deleting", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
@@ -789,7 +794,7 @@ PreparedStatement pst;
     }//GEN-LAST:event_DeleteSupplierButtonActionPerformed
 
     private void FindSupplierUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindSupplierUpdateActionPerformed
-         String findUpdate = findByCombo.getSelectedItem().toString();
+        String findUpdate = findByCombo.getSelectedItem().toString();
         if (findUpdate.matches("ID")) {
 
             PreparedStatement pst;
@@ -797,8 +802,10 @@ PreparedStatement pst;
                 pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin from supplier Where SupplierID = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
-
-                while (rs.next()) {
+                if (rs.next() == false) {
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
                     supName.setText(rs.getString(1));
                     supContact.setText(rs.getString(2));
                     supEmail.setText(rs.getString(3));
@@ -820,8 +827,10 @@ PreparedStatement pst;
                 pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin from supplier Where Email = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
-
-                while (rs.next()) {
+                if (rs.next() == false) {
+                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
                     supName.setText(rs.getString(1));
                     supContact.setText(rs.getString(2));
                     supEmail.setText(rs.getString(3));
@@ -829,7 +838,7 @@ PreparedStatement pst;
                     supState.setText(rs.getString(5));
                     supCountry.setText(rs.getString(6));
                     supAdmin.setText(rs.getString(7));
-                    
+
                 }
 
             } catch (SQLException ex) {
@@ -841,7 +850,7 @@ PreparedStatement pst;
     }//GEN-LAST:event_FindSupplierUpdateActionPerformed
 
     private void UpdateSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateSupplierButtonActionPerformed
-       PreparedStatement pst;
+        PreparedStatement pst;
         try {
             pst = sqlConn.prepareStatement("UPDATE supplier SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?  Where SupplierID = ?");
             pst.setString(1, supName.getText());
@@ -851,7 +860,7 @@ PreparedStatement pst;
             pst.setString(5, supState.getText());
             pst.setString(6, supCountry.getText());
             pst.setString(7, supAdmin.getText());
-             pst.setString(8, findBy.getText());
+            pst.setString(8, findBy.getText());
             pst.executeUpdate();
             JOptionPane.showMessageDialog(this, "NGO Updated Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -862,7 +871,6 @@ PreparedStatement pst;
             supState.setText("");
             supCountry.setText("");
             supAdmin.setText("");
-           
 
         } catch (SQLException ex) {
             Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
