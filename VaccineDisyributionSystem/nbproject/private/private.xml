@@ -3,14 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jubin%20Kamdar/Documents/NetBeansProjects/Final%20Project/AED_Final_Project-Jubin/VaccineDisyributionSystem/src/vds/UI/MainFrame.java</file>
-<<<<<<< HEAD
-=======
-            <file>file:/C:/Users/Jubin%20Kamdar/Documents/NetBeansProjects/Final%20Project/AED_Final_Project-Jubin/VaccineDisyributionSystem/src/vds/UI/Patient/PatientViewNearby.java</file>
-            <file>file:/C:/Users/Jubin%20Kamdar/Documents/NetBeansProjects/Final%20Project/AED_Final_Project-Jubin/VaccineDisyributionSystem/src/vds/UI/SignUpForm.java</file>
-            <file>file:/C:/Users/Jubin%20Kamdar/Documents/NetBeansProjects/Final%20Project/AED_Final_Project-Jubin/VaccineDisyributionSystem/src/vds/UI/Patient/PatientBookingFrame.java</file>
-            <file>file:/C:/Users/Jubin%20Kamdar/Documents/NetBeansProjects/Final%20Project/AED_Final_Project-Jubin/VaccineDisyributionSystem/src/vds/UI/Patient/PatientMainFrame.java</file>
->>>>>>> 6a9c0a498da8a6a42b8ae2cdfb65c0a0aba3a86b
+            <file>file:/C:/Users/Jubin%20Kamdar/Documents/NetBeansProjects/Final%20Project/AED_Final_Project/VaccineDisyributionSystem/src/vds/UI/SystemAdmin/SysAdminMainFrame.java</file>
+            <file>file:/C:/Users/Jubin%20Kamdar/Documents/NetBeansProjects/Final%20Project/AED_Final_Project/VaccineDisyributionSystem/src/vds/UI/SystemAdmin/ManageHospitalForm.java</file>
         </group>
     </open-files>
 </project-private>

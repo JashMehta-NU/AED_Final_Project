@@ -578,9 +578,20 @@ public class DistributorMainFrame extends javax.swing.JFrame {
             ResultSet rs1 = ps.executeQuery();
 
             while (rs1.next()) {
+<<<<<<< HEAD
                 vaccineNameComboBox.addItem(rs1.getString(5));
             }
 
+=======
+                vaccineName.addItem(rs1.getString(5));
+<<<<<<< HEAD
+            }
+
+=======
+
+            }
+>>>>>>> 7fc9aa20a475cd8f3f807f0da5f77095d1119108
+>>>>>>> 8f5d7e83efbd6ef98e584a00bd6a8779996104c1
             // TODO add your handling code here:
         } catch (SQLException ex) {
             Logger.getLogger(DistributorMainFrame.class
@@ -589,7 +600,48 @@ public class DistributorMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_enterpriseNameComboBoxItemStateChanged
 
     private void orderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseClicked
+<<<<<<< HEAD
         // TODO add your handling code here: 
+=======
+        // TODO add your handling code here:
+<<<<<<< HEAD
+         
+        
+        int row = orderTable.getSelectedRow();
+        int column = orderTable.getColumnCount();
+        String CurrentQuantity = orderTable.getValueAt(row, 1).toString();
+        String VaccineName = orderTable.getValueAt(row, 0).toString();
+        
+        System.out.println("Curr QTY:- "+ CurrentQuantity + "VaccineName:- "+ VaccineName);
+        
+        String aEmail = SignInForm.name;
+            
+        try {
+            PreparedStatement ps = sqlConn.prepareStatement("SELECT VaccineInStock from `vds`.`distributor` WHERE AdminEmail = ? AND VaccineType=?");
+            ps.setString(1, aEmail);
+            ps.setString(2,VaccineName);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                System.out.println(rs.getString("VaccineInStock"));
+                if(Integer.parseInt(CurrentQuantity) < Integer.parseInt(rs.getString("VaccineInStock"))){
+                    JOptionPane.showMessageDialog(this, "Order Dispatched", "Congratualations", 1);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Not Enough Quantity", "Warning", 2);
+                }
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
+
+        
+
+
+=======
+>>>>>>> 8f5d7e83efbd6ef98e584a00bd6a8779996104c1
         int row = orderTable.getSelectedRow();
         int column = orderTable.getColumnCount();
         String CurrentQuantity = orderTable.getValueAt(row, 1).toString();
@@ -629,8 +681,12 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 7fc9aa20a475cd8f3f807f0da5f77095d1119108
+>>>>>>> 8f5d7e83efbd6ef98e584a00bd6a8779996104c1
     }//GEN-LAST:event_orderTableMouseClicked
 
     private void PurchaseFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PurchaseFocusLost
