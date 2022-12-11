@@ -496,6 +496,11 @@ public class ManageHospitalForm extends javax.swing.JFrame {
         jLabel27.setText("ADMIN:");
 
         UpdateHospitalButton.setText("UPDATE");
+        UpdateHospitalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateHospitalButtonActionPerformed(evt);
+            }
+        });
 
         hosAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -852,6 +857,36 @@ String findUpdate = deleteByCombo.getSelectedItem().toString();
             }
         }        // TODO add your handling code here:
     }//GEN-LAST:event_DeleteHospitalButtonActionPerformed
+
+    private void UpdateHospitalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateHospitalButtonActionPerformed
+PreparedStatement pst;
+        try {
+            pst = sqlConn.prepareStatement("UPDATE hospital SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where ClinicID = ?");
+            pst.setString(1, hosName.getText());
+            pst.setString(2, hosContact.getText());
+            pst.setString(3, hosEmail.getText());
+            pst.setString(4, hosCity.getText());
+            pst.setString(5, hosState.getText());
+            pst.setString(6, hosCountry.getText());
+            pst.setString(7, hosAdmin.getText());
+            pst.setString(8, hosLocation.getText());
+            pst.setString(9, findBy.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Hospital Updated Successfully", "Welcome",
+                    JOptionPane.INFORMATION_MESSAGE);
+            hosName.setText("");
+            hosContact.setText("");
+            hosEmail.setText("");
+            hosCity.setText("");
+            hosState.setText("");
+            hosCountry.setText("");
+            hosAdmin.setText("");
+            hosLocation.setText("");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_UpdateHospitalButtonActionPerformed
 
     /**
      * @param args the command line arguments

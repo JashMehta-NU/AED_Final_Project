@@ -82,7 +82,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        streetField = new javax.swing.JTextField();
+        location = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cityField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -234,7 +234,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel7.setText("STREET:");
+        jLabel7.setText("Location:");
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(97, 212, 195));
@@ -257,6 +257,11 @@ public class ManageNGOForm extends javax.swing.JFrame {
         jLabel11.setText("ADMIN:");
 
         ngoAdminDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " " }));
+        ngoAdminDropDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ngoAdminDropDownActionPerformed(evt);
+            }
+        });
 
         AddNGOButton.setText("ADD");
         AddNGOButton.addActionListener(new java.awt.event.ActionListener() {
@@ -299,7 +304,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
                     .addGroup(AddNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(contactField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                        .addComponent(streetField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                        .addComponent(location, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(cityField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(stateField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(countryField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
@@ -334,7 +339,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
                     .addGap(18, 18, 18)
                     .addGroup(AddNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
-                        .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(location, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(AddNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
@@ -680,7 +685,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
         String ngoName = ngoNameField.getText();
         String email = emailField.getText();
         String contact = contactField.getText();
-        String street = streetField.getText();
+        String street = location.getText();
         String city = cityField.getText();
         String state = stateField.getText();
         String country = countryField.getText();
@@ -711,6 +716,10 @@ public class ManageNGOForm extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_AddNGOButtonActionPerformed
+
+    private void ngoAdminDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ngoAdminDropDownActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ngoAdminDropDownActionPerformed
 
     /**
      * @param args the command line arguments
@@ -808,9 +817,9 @@ public class ManageNGOForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField location;
     private javax.swing.JComboBox<String> ngoAdminDropDown;
     private javax.swing.JTextField ngoNameField;
     private javax.swing.JTextField stateField;
-    private javax.swing.JTextField streetField;
     // End of variables declaration//GEN-END:variables
 }

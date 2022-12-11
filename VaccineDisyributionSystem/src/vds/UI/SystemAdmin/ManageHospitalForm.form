@@ -925,6 +925,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="UPDATE"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UpdateHospitalButtonActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="hosAdmin">
                   <Events>
