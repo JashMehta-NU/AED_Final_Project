@@ -96,11 +96,11 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         myOrderTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        vaccineName = new javax.swing.JComboBox<>();
+        vaccineNameComboBox = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        enterpriseName = new javax.swing.JComboBox<>();
+        enterpriseNameComboBox = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        quantity = new javax.swing.JTextField();
+        quantityTextfield = new javax.swing.JTextField();
         OrderVaccineButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -289,6 +289,11 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         ParentPanel.add(Storage, "card3");
 
         Purchase.setBackground(new java.awt.Color(0, 0, 204));
+        Purchase.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                PurchaseFocusLost(evt);
+            }
+        });
 
         myOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -316,9 +321,9 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(97, 212, 195));
         jLabel6.setText("Enterprise:");
 
-        enterpriseName.addItemListener(new java.awt.event.ItemListener() {
+        enterpriseNameComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                enterpriseNameItemStateChanged(evt);
+                enterpriseNameComboBoxItemStateChanged(evt);
             }
         });
 
@@ -358,9 +363,9 @@ public class DistributorMainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addGap(18, 18, 18)
                         .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(quantity)
-                            .addComponent(vaccineName, 0, 130, Short.MAX_VALUE)
-                            .addComponent(enterpriseName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(quantityTextfield)
+                            .addComponent(vaccineNameComboBox, 0, 130, Short.MAX_VALUE)
+                            .addComponent(enterpriseNameComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PurchaseLayout.setVerticalGroup(
@@ -373,14 +378,14 @@ public class DistributorMainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(enterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(enterpriseNameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(vaccineName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(vaccineNameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addComponent(OrderVaccineButton)
@@ -419,7 +424,7 @@ public class DistributorMainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void showJtableData(ResultSet rs) throws SQLException {
-        String vaccineAvailableStock;
+
         PreparedStatement pst;
 
         while (orderTable.getRowCount() > 0) {
@@ -441,6 +446,20 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+
+        System.out.println("here");
+        try {
+            PreparedStatement Epst = sqlConn.prepareStatement("SELECT * from `vds`.`enterprise`");
+
+            ResultSet Ers = Epst.executeQuery();
+            while (Ers.next()) {
+                enterpriseNameComboBox.addItem(Ers.getString("Name"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         ParentPanel.removeAll();
         ParentPanel.add(Purchase);
         ParentPanel.repaint();
@@ -449,6 +468,17 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+         PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status from `vds`.`order` WHERE DistributorName=?");
+                pst.setString(1, SignInForm.orgName);
+                ResultSet rs = pst.executeQuery();
+
+                showJtableData(rs);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         ParentPanel.removeAll();
         ParentPanel.add(Orders);
         ParentPanel.repaint();
@@ -488,47 +518,124 @@ public class DistributorMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void OrderVaccineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderVaccineButtonActionPerformed
+        try {
+            System.out.println("Here");
+            String q = "INSERT INTO `vds`.`order` (VaccineType, Quantity, DistributorName, OrderBy, OrderByName) VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement ps;
+            ps = sqlConn.prepareStatement(q);
 
-        DefaultTableModel tableModel = (DefaultTableModel) myOrderTable.getModel();
+            ps.setString(1, vaccineNameComboBox.getSelectedItem().toString());
+            ps.setString(2, quantityTextfield.getText());
+            ps.setString(3, enterpriseNameComboBox.getSelectedItem().toString());
+            ps.setString(4, "Distributor");
+            ps.setString(5, SignInForm.orgName);
 
-        String VaccineName = vaccineName.getSelectedItem().toString();
-        String Quantity = quantity.getText();
-        int quantity = Integer.parseInt(Quantity);
-        String disName = enterpriseName.getSelectedItem().toString();
+            int count = ps.executeUpdate();
 
-        Object[] rowData = new Object[]{VaccineName, quantity, disName};
+            if (count > 0) {
+                JOptionPane.showMessageDialog(this, "Order Placed", "Congratulations", 1);
 
-        tableModel.addRow(rowData);         // TODO add your handling code here:
+                // fetching data from order table
+                PreparedStatement pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,Status,DistributorName,OrderBy,OrderByName from `vds`.`order` WHERE OrderByName=?");
+                pst.setString(1, SignInForm.orgName);
+
+                ResultSet rs = pst.executeQuery();
+
+//                while (orderTable.getRowCount() > 0) {
+//                    ((DefaultTableModel) myOrderTable.getModel()).removeRow(0);
+//                }
+//                int columns = rs.getMetaData().getColumnCount();
+//
+//                while (rs.next()) {
+//                    Object[] row = new Object[columns + 1];
+//                    for (int i = 1; i <= columns; i++) {
+//                        row[i - 1] = rs.getObject(i);
+//
+//                    }
+//                    row[4] = "Send Order";
+//
+//                    ((DefaultTableModel) orderTable.getModel()).insertRow(rs.getRow() - 1, row);
+//                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Server Error", "Warning", 2);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // TODO add your handling code here:
     }//GEN-LAST:event_OrderVaccineButtonActionPerformed
 
-    private void enterpriseNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_enterpriseNameItemStateChanged
-        vaccineName.removeAllItems();
+    private void enterpriseNameComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_enterpriseNameComboBoxItemStateChanged
+        vaccineNameComboBox.removeAllItems();
         try {
-            String dName = enterpriseName.getSelectedItem().toString();
+            String dName = enterpriseNameComboBox.getSelectedItem().toString();
 
             PreparedStatement ps = sqlConn.prepareStatement("SELECT * from `Enterprise` Where Name = ?  ");
             ps.setString(1, dName);
             ResultSet rs1 = ps.executeQuery();
 
             while (rs1.next()) {
-                vaccineName.addItem(rs1.getString(5));
-
+                vaccineNameComboBox.addItem(rs1.getString(5));
             }
+
             // TODO add your handling code here:
         } catch (SQLException ex) {
             Logger.getLogger(DistributorMainFrame.class
                     .getName()).log(Level.SEVERE, null, ex);
         }              // TODO add your handling code here:
-    }//GEN-LAST:event_enterpriseNameItemStateChanged
+    }//GEN-LAST:event_enterpriseNameComboBoxItemStateChanged
 
     private void orderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseClicked
-        // TODO add your handling code here:
+        // TODO add your handling code here: 
         int row = orderTable.getSelectedRow();
         int column = orderTable.getColumnCount();
-        for (int i = 0; i < column; i++) {
-            System.out.println(orderTable.getValueAt(row, i));
+        String CurrentQuantity = orderTable.getValueAt(row, 1).toString();
+        String VaccineName = orderTable.getValueAt(row, 0).toString();
+
+        System.out.println("Curr QTY:- " + CurrentQuantity + "VaccineName:- " + VaccineName);
+
+        String aEmail = SignInForm.name;
+
+        try {
+            PreparedStatement ps = sqlConn.prepareStatement("SELECT VaccineInStock from `vds`.`distributor` WHERE AdminEmail = ? AND VaccineType=?");
+            ps.setString(1, aEmail);
+            ps.setString(2, VaccineName);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                System.out.println(rs.getString("VaccineInStock"));
+                if (Integer.parseInt(CurrentQuantity) < Integer.parseInt(rs.getString("VaccineInStock"))) {
+                    System.out.println("In here");
+                    String distributorName = SignInForm.orgName;
+                    PreparedStatement Lpst = sqlConn.prepareStatement("INSERT INTO `vds`.`logistics` (DistributorName, DistributorEmail, VaccineType, VaccineQuantity) VALUES (?, ?, ?, ?);");
+                    Lpst.setString(1, distributorName);
+                    Lpst.setString(2, aEmail);
+
+                    Lpst.setString(3, VaccineName);
+                    Lpst.setString(4, CurrentQuantity);
+
+                    Lpst.executeUpdate();
+
+                    JOptionPane.showMessageDialog(this, "Order Dispatched", "Congratualations", 1);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Not Enough Quantity", "Warning", 2);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+
     }//GEN-LAST:event_orderTableMouseClicked
+
+    private void PurchaseFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PurchaseFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PurchaseFocusLost
 
     /**
      * @param args the command line arguments
@@ -573,7 +680,7 @@ public class DistributorMainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel ParentPanel;
     private javax.swing.JPanel Purchase;
     private javax.swing.JPanel Storage;
-    private javax.swing.JComboBox<String> enterpriseName;
+    private javax.swing.JComboBox<String> enterpriseNameComboBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -597,8 +704,8 @@ public class DistributorMainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTable myOrderTable;
     private javax.swing.JTable orderTable;
-    private javax.swing.JTextField quantity;
+    private javax.swing.JTextField quantityTextfield;
     private javax.swing.JTable storageTable;
-    private javax.swing.JComboBox<String> vaccineName;
+    private javax.swing.JComboBox<String> vaccineNameComboBox;
     // End of variables declaration//GEN-END:variables
 }

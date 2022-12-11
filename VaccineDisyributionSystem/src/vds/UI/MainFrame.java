@@ -13,7 +13,6 @@ import vds.UI.NGO.NGOLandingFrame;
 import vds.UI.Patient.PatientLandingFrame;
 import vds.UI.Supplier.SupplierLandingFrame;
 
-
 /**
  *
  * @author JASH,JUBIN,AAYUSH
@@ -24,7 +23,7 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public static String role;
-    
+
     public MainFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -280,8 +279,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    void openSignInForm(){
+
+    void openSignInForm() {
         MainFrame mf = new MainFrame();
         SignInForm nl = new SignInForm();
         mf.setVisible(false);
@@ -292,62 +291,62 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         openSignInForm();
         role = "LogisticsAdmin";
-        
+
     }//GEN-LAST:event_logisticsButtonActionPerformed
 
     private void enterpriseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseButtonActionPerformed
         // TODO add your handling code here:
         openSignInForm();
-        role = "ManufacturerAdmin";
-        
+        role = "EnterpriseAdmin";
+
     }//GEN-LAST:event_enterpriseButtonActionPerformed
 
     private void patientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientButtonActionPerformed
         // TODO add your handling code here:
         openSignInForm();
         role = "Patient";
-        
+
     }//GEN-LAST:event_patientButtonActionPerformed
 
     private void hospitalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospitalButtonActionPerformed
         // TODO add your handling code here:
         openSignInForm();
         role = "HospitalAdmin";
-        
+
     }//GEN-LAST:event_hospitalButtonActionPerformed
 
     private void clinicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clinicButtonActionPerformed
         // TODO add your handling code here:
         openSignInForm();
         role = "ClinicAdmin";
-        
+
     }//GEN-LAST:event_clinicButtonActionPerformed
 
     private void distributorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_distributorButtonActionPerformed
         // TODO add your handling code here:
         openSignInForm();
         role = "DistributorAdmin";
-        
+
     }//GEN-LAST:event_distributorButtonActionPerformed
 
     private void ngoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ngoButtonActionPerformed
         // TODO add your handling code here:
-       openSignInForm();
+        openSignInForm();
         role = "NgoAdmin";
     }//GEN-LAST:event_ngoButtonActionPerformed
 
     private void supplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierButtonActionPerformed
         // TODO add your handling code here:
-         openSignInForm();
-         role = "SupplierAdmin";
-        
+        openSignInForm();
+        role = "SupplierAdmin";
+
     }//GEN-LAST:event_supplierButtonActionPerformed
 
     private void sysAdminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysAdminButtonActionPerformed
         // TODO add your handling code here:
         openSignInForm();
         role = "SysAdmin";
-        
+
     }//GEN-LAST:event_sysAdminButtonActionPerformed
 
     /**

@@ -422,6 +422,9 @@
                   <Color blue="cc" green="0" red="0" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="PurchaseFocusLost"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
                   <CardConstraints cardName="card4"/>
@@ -456,9 +459,9 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="quantity" max="32767" attributes="0"/>
-                                      <Component id="vaccineName" pref="130" max="32767" attributes="0"/>
-                                      <Component id="enterpriseName" max="32767" attributes="0"/>
+                                      <Component id="quantityTextfield" max="32767" attributes="0"/>
+                                      <Component id="vaccineNameComboBox" pref="130" max="32767" attributes="0"/>
+                                      <Component id="enterpriseNameComboBox" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -476,16 +479,16 @@
                           <EmptySpace pref="36" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="enterpriseName" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="enterpriseNameComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="vaccineName" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="vaccineNameComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="quantity" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="quantityTextfield" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -563,7 +566,7 @@
                     <Property name="text" type="java.lang.String" value="Vaccine:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="vaccineName">
+                <Component class="javax.swing.JComboBox" name="vaccineNameComboBox">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="0"/>
@@ -584,14 +587,14 @@
                     <Property name="text" type="java.lang.String" value="Enterprise:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="enterpriseName">
+                <Component class="javax.swing.JComboBox" name="enterpriseNameComboBox">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="0"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="enterpriseNameItemStateChanged"/>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="enterpriseNameComboBoxItemStateChanged"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -608,7 +611,7 @@
                     <Property name="text" type="java.lang.String" value="Quantity:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="quantity">
+                <Component class="javax.swing.JTextField" name="quantityTextfield">
                 </Component>
                 <Component class="javax.swing.JButton" name="OrderVaccineButton">
                   <Properties>

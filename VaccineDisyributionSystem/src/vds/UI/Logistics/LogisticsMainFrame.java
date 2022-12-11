@@ -4,19 +4,79 @@
  */
 package vds.UI.Logistics;
 
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
+import com.mysql.cj.protocol.Resultset;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import vds.Database.DBConnection;
+import vds.UI.Distributor.DistributorMainFrame;
+import vds.UI.SignInForm;
+
 /**
  *
- * @author jigne
+ * @author Jubin, Jash, Aayush
  */
 public class LogisticsMainFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form LogisticsMainFrame
      */
+    DBConnection conn;
+    Connection sqlConn;
+    Resultset rs = null;
+    PreparedStatementWrapper pst;
+    
     public LogisticsMainFrame() {
         initComponents();
-    }
+        conn = new DBConnection();
+        sqlConn = DBConnection.connectDB();
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
+        } else {
 
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT LogisticsID,DistributorName,DistributorEmail,VaccineType,VaccineQuantity,DeliveryStatus from `vds`.`logistics`");
+                ResultSet rs = pst.executeQuery();
+
+                showJtableData(rs);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        
+    }
+    
+    private void showJtableData(ResultSet rs) throws SQLException {
+        
+        PreparedStatement pst;
+
+        while (logisticsTable.getRowCount() > 0) {
+            ((DefaultTableModel) logisticsTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
+
+        while (rs.next()) {
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+                row[i - 1] = rs.getObject(i);
+
+            }
+            row[4] = "Send Order";
+
+            ((DefaultTableModel) logisticsTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,7 +97,7 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        logisticsTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,7 +177,7 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        logisticsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -125,10 +185,15 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Vaccine ID", "Vaccine", "Amount", "Status", "Ordered By"
+                "Logistics ID", "Distributor", "Email", "Vaccine", "Quantity", "Delivery Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        logisticsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logisticsTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(logisticsTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,6 +217,38 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void logisticsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logisticsTableMouseClicked
+        // TODO add your handling code here:
+        int row = logisticsTable.getSelectedRow();
+        int column = logisticsTable.getColumnCount();
+        String logEmail = logisticsTable.getValueAt(row, 1).toString();
+        String logID = logisticsTable.getValueAt(row, 0).toString();
+        
+        try{
+            if(column == 6){
+            PreparedStatement ps = sqlConn.prepareStatement("UPDATE logistics SET DeliveryStatus=? WHERE LogisticsID=?");
+            ps.setString(1, "Delivered");
+            ps.setString(2,logID);
+            ps.executeUpdate();
+            
+            JOptionPane.showMessageDialog(this,
+                    "Vaccine Delivered Successfully", "SucCess", JOptionPane.INFORMATION_MESSAGE);
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT LogisticsID,DistributorName,DistributorEmail,VaccineType,VaccineQuantity,DeliveryStatus from `vds`.`logistics`");
+                ResultSet rs = pst.executeQuery();
+
+                showJtableData(rs);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_logisticsTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -199,7 +296,7 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable logisticsTable;
     // End of variables declaration//GEN-END:variables
 }
