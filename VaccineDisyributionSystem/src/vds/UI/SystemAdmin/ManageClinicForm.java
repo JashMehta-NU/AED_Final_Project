@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import vds.Business.Role.ClinicAdmin.ClinicAdmin;
 import vds.Database.DBConnection;
 
 /**
@@ -31,6 +32,8 @@ public class ManageClinicForm extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs;
     PreparedStatementWrapper pst = null;
+    String clinicEmail;
+
     public ManageClinicForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -39,14 +42,14 @@ public class ManageClinicForm extends javax.swing.JFrame {
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
-        }else{
+        } else {
             PreparedStatement pst;
             try {
                 pst = sqlConn.prepareStatement("SELECT * from `vds`.`user` WHERE Role=?");
                 pst.setString(1, "ClinicAdmin");
                 ResultSet rs = pst.executeQuery();
-                ArrayList<String> clinicAdmins = new ArrayList<String>(); 
-                while(rs.next()){
+                ArrayList<String> clinicAdmins = new ArrayList<String>();
+                while (rs.next()) {
                     clinicAdmins.add(rs.getString(2));
                     System.out.println(rs.getString(2));
                 }
@@ -54,7 +57,7 @@ public class ManageClinicForm extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
     }
 
@@ -81,8 +84,6 @@ public class ManageClinicForm extends javax.swing.JFrame {
         contactField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        streetField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cityField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -95,42 +96,40 @@ public class ManageClinicForm extends javax.swing.JFrame {
         clinicAdminDropDown = new javax.swing.JComboBox<>();
         AddClinicButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        locationTextField = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
         DeleteClinicPanel = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField9 = new javax.swing.JTextField();
+        findClinicDelete = new javax.swing.JComboBox<>();
+        clinicDelete = new javax.swing.JTextField();
         DeleteClinicButton = new javax.swing.JButton();
         ViewClinicPanel = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField10 = new javax.swing.JTextField();
-        FindClinicButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         UpdateClinicPanel = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jTextField11 = new javax.swing.JTextField();
+        findClinic = new javax.swing.JComboBox<>();
+        findClinicBy = new javax.swing.JTextField();
         FindClinicUpdate = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
+        clinicContact = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        clinicCity = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
+        clinicState = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
+        clinicCountry = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        clinicName = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
         UpdateClinicButton = new javax.swing.JButton();
+        location = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        clinicAdmin = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -228,10 +227,6 @@ public class ManageClinicForm extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(97, 212, 195));
         jLabel6.setText("EMAIL:");
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel7.setText("STREET:");
-
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(97, 212, 195));
         jLabel8.setText("CITY:");
@@ -266,6 +261,10 @@ public class ManageClinicForm extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ADD CLINIC FORM");
 
+        jLabel25.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(97, 212, 195));
+        jLabel25.setText("Location :");
+
         javax.swing.GroupLayout AddClinicPanelLayout = new javax.swing.GroupLayout(AddClinicPanel);
         AddClinicPanel.setLayout(AddClinicPanelLayout);
         AddClinicPanelLayout.setHorizontalGroup(
@@ -273,17 +272,19 @@ public class ManageClinicForm extends javax.swing.JFrame {
             .addGroup(AddClinicPanelLayout.createSequentialGroup()
                 .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AddClinicPanelLayout.createSequentialGroup()
+                        .addGap(277, 277, 277)
+                        .addComponent(AddClinicButton))
+                    .addGroup(AddClinicPanelLayout.createSequentialGroup()
                         .addGap(183, 183, 183)
                         .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel11))
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(locationTextField)
                             .addComponent(clinicNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                            .addComponent(clinicAdminDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(AddClinicPanelLayout.createSequentialGroup()
-                        .addGap(277, 277, 277)
-                        .addComponent(AddClinicButton)))
+                            .addComponent(clinicAdminDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(228, Short.MAX_VALUE))
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,14 +294,12 @@ public class ManageClinicForm extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addComponent(jLabel9)
                         .addComponent(jLabel8)
-                        .addComponent(jLabel7)
                         .addComponent(jLabel6)
                         .addComponent(jLabel5))
                     .addGap(18, 18, 18)
                     .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(contactField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                        .addComponent(streetField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(cityField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(stateField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(countryField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
@@ -315,7 +314,11 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(clinicNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
+                .addGap(97, 97, 97)
+                .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(locationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
                 .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(clinicAdminDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -332,11 +335,7 @@ public class ManageClinicForm extends javax.swing.JFrame {
                     .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
                         .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
+                    .addGap(53, 53, 53)
                     .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
                         .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -348,7 +347,7 @@ public class ManageClinicForm extends javax.swing.JFrame {
                     .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
                         .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(132, Short.MAX_VALUE)))
+                    .addContainerGap(244, Short.MAX_VALUE)))
         );
 
         ParentPanel.add(AddClinicPanel, "card2");
@@ -363,9 +362,14 @@ public class ManageClinicForm extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(97, 212, 195));
         jLabel15.setText("SELECT:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
+        findClinicDelete.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
 
         DeleteClinicButton.setText("DELETE");
+        DeleteClinicButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteClinicButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DeleteClinicPanelLayout = new javax.swing.GroupLayout(DeleteClinicPanel);
         DeleteClinicPanel.setLayout(DeleteClinicPanelLayout);
@@ -377,9 +381,9 @@ public class ManageClinicForm extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DeleteClinicPanelLayout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(findClinicDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(clinicDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(154, 154, 154))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DeleteClinicPanelLayout.createSequentialGroup()
                         .addComponent(jLabel14)
@@ -395,35 +399,27 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addGap(26, 26, 26)
                 .addGroup(DeleteClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(findClinicDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clinicDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
                 .addGap(32, 32, 32)
                 .addComponent(DeleteClinicButton)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addContainerGap(372, Short.MAX_VALUE))
         );
 
         ParentPanel.add(DeleteClinicPanel, "card3");
 
         ViewClinicPanel.setBackground(new java.awt.Color(0, 0, 102));
 
-        jLabel16.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel16.setText("FIND BY-");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
-
-        FindClinicButton.setText("FIND");
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Clinic Name", "Contact", "Email", "Street", "City", "State", "Country", "Admin"
+                "Clinic Name", "Contact", "Email", "Location", "City", "State", "Country", "Admin", "Admin Email"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -432,29 +428,11 @@ public class ManageClinicForm extends javax.swing.JFrame {
         ViewClinicPanel.setLayout(ViewClinicPanelLayout);
         ViewClinicPanelLayout.setHorizontalGroup(
             ViewClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ViewClinicPanelLayout.createSequentialGroup()
-                .addContainerGap(110, Short.MAX_VALUE)
-                .addComponent(jLabel16)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(FindClinicButton)
-                .addGap(81, 81, 81))
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
         );
         ViewClinicPanelLayout.setVerticalGroup(
             ViewClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ViewClinicPanelLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(ViewClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FindClinicButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
         );
 
         ParentPanel.add(ViewClinicPanel, "card4");
@@ -465,9 +443,19 @@ public class ManageClinicForm extends javax.swing.JFrame {
         jLabel17.setForeground(new java.awt.Color(97, 212, 195));
         jLabel17.setText("FIND BY-");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
+        findClinic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
+        findClinic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                findClinicActionPerformed(evt);
+            }
+        });
 
         FindClinicUpdate.setText("FIND");
+        FindClinicUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FindClinicUpdateActionPerformed(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(97, 212, 195));
@@ -481,10 +469,6 @@ public class ManageClinicForm extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(97, 212, 195));
         jLabel13.setText("EMAIL:");
 
-        jLabel19.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel19.setText("STREET:");
-
         jLabel20.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(97, 212, 195));
         jLabel20.setText("CITY:");
@@ -497,9 +481,9 @@ public class ManageClinicForm extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(97, 212, 195));
         jLabel22.setText("COUNTRY:");
 
-        jTextField17.addActionListener(new java.awt.event.ActionListener() {
+        clinicCountry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField17ActionPerformed(evt);
+                clinicCountryActionPerformed(evt);
             }
         });
 
@@ -511,16 +495,23 @@ public class ManageClinicForm extends javax.swing.JFrame {
         jLabel23.setForeground(new java.awt.Color(97, 212, 195));
         jLabel23.setText("ADMIN:");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " " }));
-
         UpdateClinicButton.setText("UPDATE");
+        UpdateClinicButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateClinicButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel24.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(97, 212, 195));
+        jLabel24.setText("Location:");
 
         javax.swing.GroupLayout UpdateClinicPanelLayout = new javax.swing.GroupLayout(UpdateClinicPanel);
         UpdateClinicPanel.setLayout(UpdateClinicPanelLayout);
         UpdateClinicPanelLayout.setHorizontalGroup(
             UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UpdateClinicPanelLayout.createSequentialGroup()
-                .addContainerGap(112, Short.MAX_VALUE)
+                .addContainerGap(116, Short.MAX_VALUE)
                 .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdateClinicPanelLayout.createSequentialGroup()
                         .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -528,9 +519,9 @@ public class ManageClinicForm extends javax.swing.JFrame {
                             .addGroup(UpdateClinicPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel17)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(findClinic, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(findClinicBy, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(FindClinicUpdate)
                         .addGap(79, 79, 79))
@@ -541,30 +532,25 @@ public class ManageClinicForm extends javax.swing.JFrame {
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel12)
                                     .addComponent(jLabel13)
-                                    .addComponent(jLabel19)
                                     .addComponent(jLabel20)
-                                    .addComponent(jLabel21))
-                                .addGap(18, 18, 18)
-                                .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField16)
-                                    .addComponent(jTextField15, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField14, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField13, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField12, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)))
-                            .addGroup(UpdateClinicPanelLayout.createSequentialGroup()
-                                .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel21)
+                                    .addComponent(jLabel22)
                                     .addComponent(jLabel23)
-                                    .addComponent(jLabel22))
+                                    .addComponent(jLabel24))
                                 .addGap(18, 18, 18)
                                 .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField17, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))))
+                                    .addComponent(clinicState)
+                                    .addComponent(clinicCity, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(email, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(clinicContact, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(clinicName)
+                                    .addComponent(clinicCountry)
+                                    .addComponent(location)
+                                    .addComponent(clinicAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)))
+                            .addGroup(UpdateClinicPanelLayout.createSequentialGroup()
+                                .addComponent(UpdateClinicButton)
+                                .addGap(53, 53, 53)))
                         .addGap(206, 206, 206))))
-            .addGroup(UpdateClinicPanelLayout.createSequentialGroup()
-                .addGap(273, 273, 273)
-                .addComponent(UpdateClinicButton)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         UpdateClinicPanelLayout.setVerticalGroup(
             UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -572,49 +558,49 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(findClinic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(findClinicBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(FindClinicUpdate))
                 .addGap(26, 26, 26)
                 .addComponent(jLabel18)
                 .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(UpdateClinicPanelLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(clinicName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdateClinicPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(clinicContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(clinicCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(clinicState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(clinicCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(clinicAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(UpdateClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel24)
+                    .addComponent(location, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                 .addComponent(UpdateClinicButton)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(63, 63, 63))
         );
 
         ParentPanel.add(UpdateClinicPanel, "card5");
@@ -689,16 +675,16 @@ public class ManageClinicForm extends javax.swing.JFrame {
         ParentPanel.revalidate();
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
+    private void clinicCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clinicCountryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField17ActionPerformed
+    }//GEN-LAST:event_clinicCountryActionPerformed
 
     private void AddClinicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddClinicButtonActionPerformed
         // TODO add your handling code here:
         String clinicName = clinicNameField.getText();
         String email = emailField.getText();
         String contact = contactField.getText();
-        String street = streetField.getText();
+//        String street = streetField.getText();
         String city = cityField.getText();
         String state = stateField.getText();
         String country = countryField.getText();
@@ -707,13 +693,27 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
         String phonePattern = "(0|91)?[6-9][0-9]{9}";
+        String clinicAdmin = clinicAdminDropDown.getSelectedItem().toString();
+        PreparedStatement pst;
+        try {
+            pst = sqlConn.prepareStatement("SELECT Email from `vds`.`user` WHERE fName =?");
+            pst.setString(1, clinicAdmin);
+            ResultSet rs = pst.executeQuery();
 
+            while (rs.next()) {
+
+                clinicEmail = rs.getString(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String namePattern = "[a-zA-Z_ ]+";
 
-        if(clinicName.isEmpty()|| email.isEmpty()||contact.isEmpty()||street.isEmpty()||city.isEmpty()||state.isEmpty()||country.isBlank()){
+        if (clinicName.isEmpty() || email.isEmpty() || contact.isEmpty() || city.isEmpty() || state.isEmpty() || country.isBlank()) {
             JOptionPane.showMessageDialog(this, "Enter All Details", "Warning",
                     JOptionPane.ERROR_MESSAGE);
-        }else if (!clinicName.matches(namePattern)) {
+        } else if (!clinicName.matches(namePattern)) {
             JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else if (!email.matches(emailPattern)) {
@@ -723,6 +723,24 @@ public class ManageClinicForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Enter a Valid Phone Number", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else {
+            PreparedStatement pst1;
+            try {
+                pst1 = sqlConn.prepareStatement("INSERT INTO `clinic`( `Name`, `Contact`, `Email`,  `City`, `State`, `Country`, `Admin`, `AdminEmail`, `Location`)  VALUES  (?,?,?,?,?,?,?,?,?)");
+                pst1.setString(1, clinicName);
+                System.out.println("here");
+                pst1.setString(2, contact);
+                pst1.setString(3, email);
+                pst1.setString(4, city);
+                pst1.setString(5, state);
+                pst1.setString(6, country);
+                pst1.setString(7, clinicAdminDropDown.getSelectedItem().toString());
+                pst1.setString(8, clinicEmail);
+                pst1.setString(9, locationTextField.getText());
+//               ResultSet rs =  pst1.ex();
+                pst1.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             JOptionPane.showMessageDialog(this, "Clinic Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -730,6 +748,127 @@ public class ManageClinicForm extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_AddClinicButtonActionPerformed
+
+    private void UpdateClinicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateClinicButtonActionPerformed
+        PreparedStatement pst;
+        try {
+            pst = sqlConn.prepareStatement("UPDATE clinic SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where ClinicID = ?");
+            pst.setString(1, clinicName.getText());
+            pst.setString(2, clinicContact.getText());
+            pst.setString(3, email.getText());
+            pst.setString(4, clinicCity.getText());
+            pst.setString(5, clinicState.getText());
+            pst.setString(6, clinicCountry.getText());
+            pst.setString(7, clinicAdmin.getText());
+            pst.setString(8, location.getText());
+            pst.setString(9, findClinicBy.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Clinic Updated Successfully", "Welcome",
+                    JOptionPane.INFORMATION_MESSAGE);
+            clinicName.setText("");
+            clinicContact.setText("");
+            email.setText("");
+            clinicCity.setText("");
+            clinicState.setText("");
+            clinicCountry.setText("");
+            clinicAdmin.setText("");
+            location.setText("");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UpdateClinicButtonActionPerformed
+
+    private void findClinicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findClinicActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_findClinicActionPerformed
+
+    private void FindClinicUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindClinicUpdateActionPerformed
+        String findUpdate = findClinic.getSelectedItem().toString();
+        if (findUpdate.matches("ID")) {
+
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from clinic Where ClinicID = ?");
+                pst.setString(1, findClinicBy.getText());
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    clinicName.setText(rs.getString(1));
+                    clinicContact.setText(rs.getString(2));
+                    email.setText(rs.getString(3));
+                    clinicCity.setText(rs.getString(4));
+                    clinicState.setText(rs.getString(5));
+                    clinicCountry.setText(rs.getString(6));
+                    clinicAdmin.setText(rs.getString(7));
+                    location.setText(rs.getString(8));
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+//                clinicAdminDropDown.setModel(new DefaultComboBoxModel<String>(clinicAdmins.toArray(new String[0])));
+        } else {
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from clinic Where Email = ?");
+                pst.setString(1, findClinicBy.getText());
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    clinicName.setText(rs.getString(1));
+                    clinicContact.setText(rs.getString(2));
+                    email.setText(rs.getString(3));
+                    clinicCity.setText(rs.getString(4));
+                    clinicState.setText(rs.getString(5));
+                    clinicCountry.setText(rs.getString(6));
+                    clinicAdmin.setText(rs.getString(7));
+                    location.setText(rs.getString(8));
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(this, "Clinic Delete Successfully", "Welcome",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }// TODO add your handling code here:
+    }//GEN-LAST:event_FindClinicUpdateActionPerformed
+
+    private void DeleteClinicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteClinicButtonActionPerformed
+        String findUpdate = findClinicDelete.getSelectedItem().toString();
+        if (findUpdate.matches("ID")) {
+
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("Delete from clinic Where ClinicID = ?");
+                pst.setString(1, clinicDelete.getText());
+                 pst.executeUpdate();
+
+               
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+//                clinicAdminDropDown.setModel(new DefaultComboBoxModel<String>(clinicAdmins.toArray(new String[0])));
+        } else {
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("DELETE from clinic Where Email = ?");
+                pst.setString(1, clinicDelete.getText());
+                pst.executeUpdate();
+
+                
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+// TODO add your handling code here:
+    }//GEN-LAST:event_DeleteClinicButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -771,27 +910,33 @@ public class ManageClinicForm extends javax.swing.JFrame {
     private javax.swing.JPanel AddClinicPanel;
     private javax.swing.JButton DeleteClinicButton;
     private javax.swing.JPanel DeleteClinicPanel;
-    private javax.swing.JButton FindClinicButton;
     private javax.swing.JButton FindClinicUpdate;
     private javax.swing.JPanel ParentPanel;
     private javax.swing.JButton UpdateClinicButton;
     private javax.swing.JPanel UpdateClinicPanel;
     private javax.swing.JPanel ViewClinicPanel;
     private javax.swing.JTextField cityField;
+    private javax.swing.JTextField clinicAdmin;
     private javax.swing.JComboBox<String> clinicAdminDropDown;
+    private javax.swing.JTextField clinicCity;
+    private javax.swing.JTextField clinicContact;
+    private javax.swing.JTextField clinicCountry;
+    private javax.swing.JTextField clinicDelete;
+    private javax.swing.JTextField clinicName;
     private javax.swing.JTextField clinicNameField;
+    private javax.swing.JTextField clinicState;
     private javax.swing.JTextField contactField;
     private javax.swing.JTextField countryField;
+    private javax.swing.JTextField email;
     private javax.swing.JTextField emailField;
+    private javax.swing.JComboBox<String> findClinic;
+    private javax.swing.JTextField findClinicBy;
+    private javax.swing.JComboBox<String> findClinicDelete;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -799,37 +944,27 @@ public class ManageClinicForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField location;
+    private javax.swing.JTextField locationTextField;
     private javax.swing.JTextField stateField;
-    private javax.swing.JTextField streetField;
     // End of variables declaration//GEN-END:variables
 }

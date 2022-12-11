@@ -27,9 +27,19 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
+import vds.Business.Role.ClinicAdmin.ClinicAdmin;
+import vds.Business.Role.DistributingManager.DistributingManager;
+import vds.Business.Role.EnterpriseManager.EnterpriseManager;
+import vds.Business.Role.HospitalAdmin.HospitalAdmin;
+import vds.Business.Role.LogisticsManager.LogisticsManager;
+import vds.Business.Role.NgoAdmin.NgoAdmin;
+import vds.Business.Role.Patient.Patient;
+import vds.Business.Role.SupplyManager.SupplyManager;
+import vds.Business.Role.SystemAdmin;
 import vds.Database.DBConnection;
 
 import vds.UI.SysAdmin.SysMainFrame;
+
 /**
  *
  * @author 17327
@@ -43,12 +53,13 @@ public class SignUpForm extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs;
     PreparedStatementWrapper pst = null;
+
     public SignUpForm() {
         initComponents();
         setLocationRelativeTo(null);
         conn = new DBConnection();
         sqlConn = DBConnection.connectDB();
-        System.out.println("Urole from admin page"+ SysMainFrame.Urole);
+        System.out.println("Urole from admin page" + SysMainFrame.Urole);
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
@@ -420,9 +431,9 @@ public class SignUpForm extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addGap(98, 98, 98))
         );
 
@@ -431,7 +442,7 @@ public class SignUpForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -547,10 +558,10 @@ public class SignUpForm extends javax.swing.JFrame {
 
     private void signUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBtnActionPerformed
         String role = SysMainFrame.Urole;
-        if(role == null){
+        if (role == null) {
             role = MainFrame.role;
         }
-        System.out.println(role);
+        System.out.println("in sign up"+role);
         String fName = fNameFeild.getText();
         String lName = lNameFeild.getText();
         String email = emailFeild.getText();
@@ -591,43 +602,50 @@ public class SignUpForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Password should contain atleast 1 special character and number", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-
-            try {
-
-                PreparedStatement pst = sqlConn.prepareStatement("INSERT INTO `vds`.`user` (Fname, Lname, Email, Contact, Age, City, State, Country, Password, Gender, DOB, Role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-                pst.setString(1,fName);
-                pst.setString(2,lName);
-                pst.setString(3,email);
-                pst.setString(4,contact);
-                pst.setInt(5,Integer.parseInt(age));
-                pst.setString(6,city);
-                pst.setString(7,state);
-                pst.setString(8,country);
-                pst.setString(9,password);
-                pst.setString(10,gender);
-                pst.setString(11,date);
-                pst.setString(12,role);
+            
+                if(role.equals("Patient")){
+                    Patient p = new Patient(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("HospitalAdmin")){
+                    HospitalAdmin p = new HospitalAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+     
+                    p.addToDB();
+                }else if(role.equals("ClinicAdmin")){
+                    ClinicAdmin p = new ClinicAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("NgoAdmin")){
+                    NgoAdmin p = new NgoAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("SystemAdmin")){
+                    SystemAdmin p = new SystemAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("SupplierAdmin")){
+                    SupplyManager p = new SupplyManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("EnterpriseAdmin")){
+                    EnterpriseManager p = new EnterpriseManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else if(role.equals("DistributorAdmin")){
+                    DistributingManager p = new DistributingManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }else{
+                    LogisticsManager p = new LogisticsManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
+                    p.addToDB();
+                }
                 
-                pst.executeUpdate();
-
-               // sendEmail(email, fName);
                 JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
                         JOptionPane.INFORMATION_MESSAGE);
                 SignInForm sr = new SignInForm();
                 sr.setVisible(true);
                 super.dispose();
                 this.setVisible(false);
-            } catch (SQLException ex) {
-                Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
+             
 
-        VerifyCode vc = new VerifyCode();
-        vc.setVisible(true);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_signUpBtnActionPerformed
 
-
+    
 
     private void passwordFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusGained
         if (passwordField.getText().equals("Password")) {

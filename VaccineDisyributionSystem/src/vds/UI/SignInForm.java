@@ -20,7 +20,7 @@ import vds.UI.Supplier.SupplierMainFrame;
 import vds.UI.SysAdmin.SysMainFrame;
 
 public class SignInForm extends javax.swing.JFrame {
-public static String name;
+ public static String name;
     /**
      * Creates new form SignInForm
      */
@@ -29,6 +29,10 @@ public static String name;
     Resultset rs;
     PreparedStatementWrapper pst = null;
     public static String Urole;
+    public static String userFullName;
+    public static String userEmail;
+    public static String userContact;
+    
     public SignInForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -232,8 +236,9 @@ public static String name;
                 pst.setString(2, password);
                 pst.setString(3, role);
                 ResultSet rs = pst.executeQuery();
-
-                if (rs.next()) {
+                
+               
+                 if (rs.next()) {
                     if (role.equals("SysAdmin")) {
                         SysMainFrame mf = new SysMainFrame();
                         SignInForm nl = new SignInForm();

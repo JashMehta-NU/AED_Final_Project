@@ -24,16 +24,8 @@ public class DBConnection {
             System.out.println("Connected To Database");
             return conn;
         }catch(Exception e){
-            System.out.println("Error Connecting to Database" +e);
+            System.out.println("Error Connecting to Database");
             return null;
         }
-    }
-
-    public com.mysql.cj.xdevapi.Statement createStatement() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public PreparedStatement prepareStatement(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
