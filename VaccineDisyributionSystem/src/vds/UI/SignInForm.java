@@ -20,7 +20,8 @@ import vds.UI.Supplier.SupplierMainFrame;
 import vds.UI.SysAdmin.SysMainFrame;
 
 public class SignInForm extends javax.swing.JFrame {
- public static String name;
+
+    public static String name;
     /**
      * Creates new form SignInForm
      */
@@ -32,13 +33,14 @@ public class SignInForm extends javax.swing.JFrame {
     public static String userFullName;
     public static String userEmail;
     public static String userContact;
-    
+    public static String orgName;
+
     public SignInForm() {
         initComponents();
         setLocationRelativeTo(null);
         conn = new DBConnection();
         sqlConn = DBConnection.connectDB();
-        
+
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
@@ -236,67 +238,88 @@ public class SignInForm extends javax.swing.JFrame {
                 pst.setString(2, password);
                 pst.setString(3, role);
                 ResultSet rs = pst.executeQuery();
-                
-               
-                 if (rs.next()) {
+
+                if (rs.next()) {
+                    userFullName = rs.getString("Fname") + rs.getString("Lname");
+                    userEmail = rs.getString("Email");
+                    userContact = rs.getString("Contact");
+                    System.out.println("logged in");
                     if (role.equals("SysAdmin")) {
                         SysMainFrame mf = new SysMainFrame();
                         SignInForm nl = new SignInForm();
                         mf.setVisible(true);
                         nl.setVisible(false);
                         super.dispose();
-                    }else if(role.equals("Patient")){
+                    } else if (role.equals("Patient")) {
                         SignInForm mf = new SignInForm();
                         PatientMainFrame nl = new PatientMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
-                    }else if(role.equals("HospitalAdmin")){
-                        SignInForm mf = new SignInForm();
-                        HospitalMainFrame nl = new HospitalMainFrame();
-                        name = rs.getString(4);
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }
-                    else if(role.equals("ClinicAdmin")){
+                    } else if (role.equals("HospitalAdmin")) {
+                        try {
+                            PreparedStatement Hpst = sqlConn.prepareStatement("SELECT Name from `vds`.`hospital` WHERE AdminEmail=?");
+                            Hpst.setString(1, userEmail);
+                            ResultSet Hrs = Hpst.executeQuery();
+
+                            if (Hrs.next()) {
+                                orgName = Hrs.getString("Name");
+                                SignInForm mf = new SignInForm();
+                                HospitalMainFrame nl = new HospitalMainFrame();
+                                name = rs.getString(4);
+                                mf.setVisible(false);
+                                nl.setVisible(true);
+                                super.dispose();
+                            }
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+
+                    } else if (role.equals("ClinicAdmin")) {
                         SignInForm mf = new SignInForm();
                         ClinicMainFrame nl = new ClinicMainFrame();
                         name = rs.getString(4);
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
-                    }else if(role.equals("NgoAdmin")){
+                    } else if (role.equals("NgoAdmin")) {
                         SignInForm mf = new SignInForm();
                         NGOMainFrame nl = new NGOMainFrame();
                         name = rs.getString(4);
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
-                    }else if(role.equals("EnterpriseAdmin")){
+                    } else if (role.equals("EnterpriseAdmin")) {
                         SignInForm mf = new SignInForm();
                         EnterpriseMainFrame nl = new EnterpriseMainFrame();
                         name = rs.getString(4);
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
-                    }
-                    else if(role.equals("DistributorAdmin")){
-                        SignInForm mf = new SignInForm();
-                        DistributorMainFrame nl = new DistributorMainFrame();
-                        name = rs.getString(4);
-                        mf.setVisible(false);
-                        nl.setVisible(true);
-                        super.dispose();
-                    }
-                     else if(role.equals("SupplierAdmin")){
+                    } else if (role.equals("DistributorAdmin")) {
+                        
+                        System.out.println("inside dis at admin");
+                        PreparedStatement Dpst = sqlConn.prepareStatement("SELECT Name from `vds`.`distributor` WHERE AdminEmail=?");
+                        Dpst.setString(1, userEmail);
+                        ResultSet Drs = Dpst.executeQuery();
+                        if (Drs.next()) {
+                            orgName = Drs.getString("Name");
+                            SignInForm mf = new SignInForm();
+                            DistributorMainFrame nl = new DistributorMainFrame();
+                            name = rs.getString(4);
+                            mf.setVisible(false);
+                            nl.setVisible(true);
+                            super.dispose();
+                        }
+
+                    } else if (role.equals("SupplierAdmin")) {
                         SignInForm mf = new SignInForm();
                         SupplierMainFrame nl = new SupplierMainFrame();
                         name = rs.getString(4);
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(this, "Other Role", "Warning", 2);
                     }
                 } else {

@@ -32,6 +32,8 @@ public class DistributorMainFrame extends javax.swing.JFrame {
     /**
      * Creates new form DistributorMainFrame
      */
+    public static String VaccineType;
+
     public DistributorMainFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -41,17 +43,15 @@ public class DistributorMainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
         } else {
+
             PreparedStatement pst;
             try {
-                pst = sqlConn.prepareStatement("SELECT * from `Enterprise` ");
+                pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status from `vds`.`order` WHERE DistributorName=?");
+                pst.setString(1, SignInForm.orgName);
                 ResultSet rs = pst.executeQuery();
 
-                while (rs.next()) {
-                    enterpriseName.addItem(rs.getString(2));
+                showJtableData(rs);
 
-                }
-
-                //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
             } catch (SQLException ex) {
                 Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -83,7 +83,7 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         FindOrderButton = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        orderTable = new javax.swing.JTable();
         Storage = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         storageTable = new javax.swing.JTable();
@@ -187,18 +187,20 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 
         FindOrderButton.setText("FIND");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        orderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Vaccine", "Amount", "Ordered By", "Date"
+                "Vaccine", "Quantity", "Ordered By", "Status", "Dispatch Order"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        orderTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                orderTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(orderTable);
 
         javax.swing.GroupLayout OrdersLayout = new javax.swing.GroupLayout(Orders);
         Orders.setLayout(OrdersLayout);
@@ -416,6 +418,27 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void showJtableData(ResultSet rs) throws SQLException {
+        String vaccineAvailableStock;
+        PreparedStatement pst;
+
+        while (orderTable.getRowCount() > 0) {
+            ((DefaultTableModel) orderTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
+
+        while (rs.next()) {
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+                row[i - 1] = rs.getObject(i);
+
+            }
+            row[4] = "Send Order";
+
+            ((DefaultTableModel) orderTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+    }
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         ParentPanel.removeAll();
@@ -498,6 +521,15 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         }              // TODO add your handling code here:
     }//GEN-LAST:event_enterpriseNameItemStateChanged
 
+    private void orderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseClicked
+        // TODO add your handling code here:
+        int row = orderTable.getSelectedRow();
+        int column = orderTable.getColumnCount();
+        for (int i = 0; i < column; i++) {
+            System.out.println(orderTable.getValueAt(row, i));
+        }
+    }//GEN-LAST:event_orderTableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -561,10 +593,10 @@ public class DistributorMainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTable myOrderTable;
+    private javax.swing.JTable orderTable;
     private javax.swing.JTextField quantity;
     private javax.swing.JTable storageTable;
     private javax.swing.JComboBox<String> vaccineName;

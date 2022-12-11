@@ -18,6 +18,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import vds.Database.DBConnection;
+import vds.UI.Patient.MainMap;
+import vds.UI.Patient.PatientBookingFrame;
+import vds.UI.Patient.PatientViewNearby;
 import vds.UI.SignInForm;
 import vds.UI.SystemAdmin.ManageHospitalForm;
 
@@ -26,7 +29,7 @@ import vds.UI.SystemAdmin.ManageHospitalForm;
  * @author JASH,JUBIN,AAYUSH
  */
 public class HospitalMainFrame extends javax.swing.JFrame {
- 
+
     /**
      * Creates new form HospitalMainframe
      */
@@ -44,6 +47,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
         } else {
+            System.out.println("Org name toh hai: " + SignInForm.orgName);
             PreparedStatement pst;
             try {
                 pst = sqlConn.prepareStatement("SELECT * from `distributor` ");
@@ -60,7 +64,6 @@ public class HospitalMainFrame extends javax.swing.JFrame {
             }
 
         }
-       
 
     }
 
@@ -162,7 +165,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Vaccine Name", "Quantity", "Distributor"
+                "Vaccine Name", "Vaccine Quantity", "Delivery Status", "Distributor Name"
             }
         ));
         jScrollPane3.setViewportView(myOrderTable);
@@ -365,22 +368,22 @@ public class HospitalMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_appointmentBtnActionPerformed
 
     private void storageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storageBtnActionPerformed
-      
+
         PreparedStatement pst;
-        while(storageTable.getRowCount()>0){
+        while (storageTable.getRowCount() > 0) {
             ((DefaultTableModel) storageTable.getModel()).removeRow(0);
-        } 
+        }
         try {
             String aEmail = SignInForm.name;
             System.out.println("Hello");
             System.out.println(aEmail);
             pst = sqlConn.prepareStatement("SELECT * from `hospital` WHERE AdminEmail = ?");
-            pst.setString(1,aEmail );
+            pst.setString(1, aEmail);
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
-                
-    //                tableStorageModel.setRowCount(-);
+
+                //                tableStorageModel.setRowCount(-);
                 String vName = rs.getString(5);
                 int quan = rs.getInt(6);
                 Object[] rowData = new Object[]{vName, quan};
@@ -411,29 +414,63 @@ public class HospitalMainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_vaccineNameActionPerformed
 
+    private void showJtableData(ResultSet rs) throws SQLException {
+        while (myOrderTable.getRowCount() > 0) {
+            ((DefaultTableModel) myOrderTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
+
+        while (rs.next()) {
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+                row[i - 1] = rs.getObject(i);
+
+            }
+
+            ((DefaultTableModel) myOrderTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+    }
+
     private void orderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderBtnActionPerformed
         DefaultTableModel tableModel = (DefaultTableModel) myOrderTable.getModel();
 
         String VaccineName = vaccineName.getSelectedItem().toString();
-        String Quantity = quantity.getText();
-        int quantity = Integer.parseInt(Quantity);
-        String disName = distributorNameCombo.getSelectedItem().toString();
+        String vaccineQuantity = quantity.getText();
+        int quantity = Integer.parseInt(vaccineQuantity);
+        String distributorName = distributorNameCombo.getSelectedItem().toString();
 
-        Object[] rowData = new Object[]{VaccineName, quantity, disName};
+        try {
+            System.out.println("Here");
+            String q = "INSERT INTO `vds`.`order` (VaccineType, Quantity, DistributorName, OrderBy, OrderByName) VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement ps;
+            ps = sqlConn.prepareStatement(q);
 
-        tableModel.addRow(rowData);
-//        try {
-//            System.out.println("Here");
-//            String q = "UPDATE hospital SET VaccineInStock = VaccineInStock + ? WHERE VaccineType =? ";
-//            PreparedStatement ps;
-//            ps = sqlConn.prepareStatement(q);
-//            ps.setInt(1, quantity);
-//            ps.setString(2, VaccineName);
-//            ps.executeUpdate();
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+            ps.setString(1, VaccineName);
+            ps.setString(2, vaccineQuantity);
+            //ps.setString(3,"Pending");
+            ps.setString(3, distributorName);
+            ps.setString(4, "Hospital");
+            ps.setString(5, SignInForm.orgName);
+
+            int count = ps.executeUpdate();
+
+            if (count > 0) {
+                JOptionPane.showMessageDialog(this, "Order Placed", "Congratulations", 1);
+
+                // fetching data from order table
+                PreparedStatement pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,Status,DistributorName,OrderBy,OrderByName from `vds`.`order` WHERE OrderByName=?");
+                pst.setString(1, SignInForm.orgName);
+
+                ResultSet rs = pst.executeQuery();
+                showJtableData(rs);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Server Error", "Warning", 2);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_orderBtnActionPerformed

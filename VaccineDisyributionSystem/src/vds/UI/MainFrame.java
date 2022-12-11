@@ -326,7 +326,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void distributorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_distributorButtonActionPerformed
         // TODO add your handling code here:
         openSignInForm();
-        role = "HospitalAdmin";
+        role = "DistributorAdmin";
         
     }//GEN-LAST:event_distributorButtonActionPerformed
 
@@ -334,7 +334,6 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
        openSignInForm();
         role = "NgoAdmin";
-        
     }//GEN-LAST:event_ngoButtonActionPerformed
 
     private void supplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierButtonActionPerformed
