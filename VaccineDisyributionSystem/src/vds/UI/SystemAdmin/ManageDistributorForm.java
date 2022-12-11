@@ -15,7 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import vds.Database.DBConnection;
+import vds.UI.Distributor.DistributorMainFrame;
+import vds.UI.SystemAdmin.ManageHospitalForm;
+import vds.UI.SystemAdmin.SysAdminMainFrame;
 
 /**
  *
@@ -30,6 +34,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs;
     PreparedStatementWrapper pst = null;
+    String dEmail;
     public ManageDistributorForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -38,14 +43,14 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
-        }else{
+        } else {
             PreparedStatement pst;
             try {
                 pst = sqlConn.prepareStatement("SELECT * from `vds`.`user` WHERE Role=?");
                 pst.setString(1, "DistributorAdmin");
                 ResultSet rs = pst.executeQuery();
-                ArrayList<String> DistributorAdmins = new ArrayList<String>(); 
-                while(rs.next()){
+                ArrayList<String> DistributorAdmins = new ArrayList<String>();
+                while (rs.next()) {
                     DistributorAdmins.add(rs.getString(2));
                     System.out.println(rs.getString(2));
                 }
@@ -53,7 +58,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
     }
 
@@ -82,7 +87,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        streetField = new javax.swing.JTextField();
+        location = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cityField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -97,39 +102,35 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         DeleteDistributorPanel = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField9 = new javax.swing.JTextField();
+        deleteByCombo = new javax.swing.JComboBox<>();
+        deleteBy = new javax.swing.JTextField();
         DeleteDistributorButton = new javax.swing.JButton();
         ViewDistributorsPanel = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField10 = new javax.swing.JTextField();
-        FindDistributorButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        storageTable = new javax.swing.JTable();
         UpdateDistributorPanel = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jTextField11 = new javax.swing.JTextField();
+        findByCombo = new javax.swing.JComboBox<>();
+        findBy = new javax.swing.JTextField();
         FindDistributorUpdate = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
+        disContact = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        disEmail = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        disLocation = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        disCity = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
+        disState = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
+        disCountry = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        dissName = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
         UpdateDistributorButton = new javax.swing.JButton();
+        disAdmin = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -234,7 +235,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel7.setText("STREET:");
+        jLabel7.setText("Location:");
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(97, 212, 195));
@@ -289,7 +290,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                             .addComponent(distributorNameField)
                             .addComponent(contactField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(streetField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(location, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cityField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(stateField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(countryField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
@@ -318,7 +319,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(AddDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(location, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(AddDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -352,9 +353,14 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(97, 212, 195));
         jLabel15.setText("SELECT:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
+        deleteByCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
 
         DeleteDistributorButton.setText("DELETE");
+        DeleteDistributorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteDistributorButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DeleteDistributorPanelLayout = new javax.swing.GroupLayout(DeleteDistributorPanel);
         DeleteDistributorPanel.setLayout(DeleteDistributorPanelLayout);
@@ -368,9 +374,9 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DeleteDistributorPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(deleteByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(deleteBy, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DeleteDistributorPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addGap(60, 60, 60)))
@@ -386,8 +392,8 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addGap(26, 26, 26)
                 .addGroup(DeleteDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
                 .addGap(31, 31, 31)
                 .addComponent(DeleteDistributorButton)
@@ -398,56 +404,30 @@ public class ManageDistributorForm extends javax.swing.JFrame {
 
         ViewDistributorsPanel.setBackground(new java.awt.Color(0, 0, 102));
 
-        jLabel16.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel16.setText("FIND BY-");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
-
-        FindDistributorButton.setText("FIND");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        storageTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Company Name", "Contact", "Email", "Street", "City", "State", "Country", "Manager"
+                "Company Name", "Contact", "Email", "Location", "City", "State", "Country", "Manager", "Manager Email"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(storageTable);
 
         javax.swing.GroupLayout ViewDistributorsPanelLayout = new javax.swing.GroupLayout(ViewDistributorsPanel);
         ViewDistributorsPanel.setLayout(ViewDistributorsPanelLayout);
         ViewDistributorsPanelLayout.setHorizontalGroup(
             ViewDistributorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ViewDistributorsPanelLayout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addComponent(jLabel16)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(FindDistributorButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(ViewDistributorsPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 739, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
         );
         ViewDistributorsPanelLayout.setVerticalGroup(
             ViewDistributorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ViewDistributorsPanelLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(ViewDistributorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FindDistributorButton))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE))
         );
 
         ParentPanel.add(ViewDistributorsPanel, "card4");
@@ -458,9 +438,14 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         jLabel17.setForeground(new java.awt.Color(97, 212, 195));
         jLabel17.setText("FIND BY-");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
+        findByCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
 
         FindDistributorUpdate.setText("FIND");
+        FindDistributorUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FindDistributorUpdateActionPerformed(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(97, 212, 195));
@@ -476,7 +461,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
 
         jLabel19.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel19.setText("STREET:");
+        jLabel19.setText("Location");
 
         jLabel20.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(97, 212, 195));
@@ -490,9 +475,9 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(97, 212, 195));
         jLabel22.setText("COUNTRY:");
 
-        jTextField17.addActionListener(new java.awt.event.ActionListener() {
+        disCountry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField17ActionPerformed(evt);
+                disCountryActionPerformed(evt);
             }
         });
 
@@ -504,9 +489,18 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         jLabel23.setForeground(new java.awt.Color(97, 212, 195));
         jLabel23.setText("MANAGER:");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " " }));
-
         UpdateDistributorButton.setText("UPDATE");
+        UpdateDistributorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateDistributorButtonActionPerformed(evt);
+            }
+        });
+
+        disAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                disAdminActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout UpdateDistributorPanelLayout = new javax.swing.GroupLayout(UpdateDistributorPanel);
         UpdateDistributorPanel.setLayout(UpdateDistributorPanelLayout);
@@ -530,17 +524,14 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                             .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField17)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, UpdateDistributorPanelLayout.createSequentialGroup()
-                        .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField14, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(dissName, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                    .addComponent(disCountry)
+                    .addComponent(disState, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(disLocation, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(disCity, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(disContact)
+                    .addComponent(disEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(disAdmin))
                 .addGap(240, 240, 240))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdateDistributorPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -551,9 +542,9 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                         .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18)
                             .addGroup(UpdateDistributorPanelLayout.createSequentialGroup()
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(findByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(findBy, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(FindDistributorUpdate)))
                         .addGap(120, 120, 120))
@@ -567,43 +558,43 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(findByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(findBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(FindDistributorUpdate))
                 .addGap(28, 28, 28)
                 .addComponent(jLabel18)
                 .addGap(26, 26, 26)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dissName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(disContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(disEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(disLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(disCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(disState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(disCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23))
+                    .addComponent(jLabel23)
+                    .addComponent(disAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(UpdateDistributorButton)
                 .addContainerGap(36, Short.MAX_VALUE))
@@ -666,6 +657,35 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        PreparedStatement pst;
+        while (storageTable.getRowCount() > 0) {
+            ((DefaultTableModel) storageTable.getModel()).removeRow(0);
+        }
+        try {
+
+            pst = sqlConn.prepareStatement("SELECT `Name`, `Contact`, `Email`,  `City`, `State`, `Country`, `Admin`, `AdminEmail`, `Location` from `distributor` ");
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String Name = rs.getString(1);
+                String contact = rs.getString(2);
+                String email = rs.getString(3);
+                String city = rs.getString(4);
+                String state = rs.getString(5);
+                String country = rs.getString(6);
+                String admin = rs.getString(7);
+                String adminEmail = rs.getString(8);
+                String Location = rs.getString(9);
+
+                Object[] rowData = new Object[]{Name, contact, email, Location, city, state, country, admin, adminEmail};
+                ((DefaultTableModel) storageTable.getModel()).addRow(rowData);
+            }
+
+            //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // TODO add your handling code here:
         ParentPanel.removeAll();
         ParentPanel.add(ViewDistributorsPanel);
@@ -681,31 +701,44 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         ParentPanel.revalidate();
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
+    private void disCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disCountryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField17ActionPerformed
+    }//GEN-LAST:event_disCountryActionPerformed
 
     private void AddDistributorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddDistributorButtonActionPerformed
         // TODO add your handling code here:
         String distributorName = distributorNameField.getText();
         String email = emailField.getText();
         String contact = contactField.getText();
-        String street = streetField.getText();
+        String street = location.getText();
         String city = cityField.getText();
         String state = stateField.getText();
         String country = countryField.getText();
         //String date = dateFormat.format(dobDate.getDate());
         String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
+String distributionAdmin = distributorManagerDropDown.getSelectedItem().toString();
         String phonePattern = "(0|91)?[6-9][0-9]{9}";
+PreparedStatement pst;
+        try {
+            pst = sqlConn.prepareStatement("SELECT Email from `vds`.`user` WHERE fName =?");
+            pst.setString(1, distributionAdmin);
+            ResultSet rs = pst.executeQuery();
 
+            while (rs.next()) {
+
+                dEmail = rs.getString(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String namePattern = "[a-zA-Z_ ]+";
 
-        if(distributorName.isEmpty()|| email.isEmpty()||contact.isEmpty()||street.isEmpty()||city.isEmpty()||state.isEmpty()||country.isBlank()){
+        if (distributorName.isEmpty() || email.isEmpty() || contact.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty() || country.isBlank()) {
             JOptionPane.showMessageDialog(this, "Enter All Details", "Warning",
                     JOptionPane.ERROR_MESSAGE);
-        }else if (!distributorName.matches(namePattern)) {
+        } else if (!distributorName.matches(namePattern)) {
             JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else if (!email.matches(emailPattern)) {
@@ -715,6 +748,25 @@ public class ManageDistributorForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Enter a Valid Phone Number", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else {
+             PreparedStatement pst1;
+            try {
+                pst1 = sqlConn.prepareStatement("INSERT INTO `distributor`( `Name`, `Contact`, `Email`,  `City`, `State`, `Country`, `Admin`, `AdminEmail`, `Location`)  VALUES  (?,?,?,?,?,?,?,?,?)");
+                pst1.setString(1, distributorName);
+                System.out.println("here");
+                pst1.setString(2, contact);
+                pst1.setString(3, email);
+                pst1.setString(4, city);
+                pst1.setString(5, state);
+                pst1.setString(6, country);
+                pst1.setString(7, distributorManagerDropDown.getSelectedItem().toString());
+                pst1.setString(8, dEmail);
+                pst1.setString(9, location.getText());
+//               ResultSet rs =  pst1.ex();
+                pst1.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
 
             JOptionPane.showMessageDialog(this, "Distributor Company Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -722,6 +774,126 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_AddDistributorButtonActionPerformed
+
+    private void FindDistributorUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindDistributorUpdateActionPerformed
+        String findUpdate = findByCombo.getSelectedItem().toString();
+        if (findUpdate.matches("ID")) {
+
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from distributor Where DistributorID = ?");
+                pst.setString(1, findBy.getText());
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    dissName.setText(rs.getString(1));
+                    disContact.setText(rs.getString(2));
+                    disEmail.setText(rs.getString(3));
+                    disCity.setText(rs.getString(4));
+                    disState.setText(rs.getString(5));
+                    disCountry.setText(rs.getString(6));
+                    disAdmin.setText(rs.getString(7));
+                    disLocation.setText(rs.getString(8));
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+//                clinicAdminDropDown.setModel(new DefaultComboBoxModel<String>(clinicAdmins.toArray(new String[0])));
+        } else {
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from distributor Where Email = ?");
+                pst.setString(1, findBy.getText());
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    dissName.setText(rs.getString(1));
+                    disContact.setText(rs.getString(2));
+                    disEmail.setText(rs.getString(3));
+                    disCity.setText(rs.getString(4));
+                    disState.setText(rs.getString(5));
+                    disCountry.setText(rs.getString(6));
+                    disAdmin.setText(rs.getString(7));
+                    disLocation.setText(rs.getString(8));
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(this, "Distributor Delete Successfully", "Welcome",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }// TODO add your handling code here:
+
+
+    }//GEN-LAST:event_FindDistributorUpdateActionPerformed
+
+    private void disAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disAdminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_disAdminActionPerformed
+
+    private void UpdateDistributorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateDistributorButtonActionPerformed
+PreparedStatement pst;
+        try {
+            pst = sqlConn.prepareStatement("UPDATE distributor SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where DistributorID = ?");
+            pst.setString(1, dissName.getText());
+            pst.setString(2,disContact.getText());
+            pst.setString(3, disEmail.getText());
+            pst.setString(4, disCity.getText());
+            pst.setString(5, disState.getText());
+            pst.setString(6,disCountry.getText());
+            pst.setString(7, disAdmin.getText());
+            pst.setString(8, disLocation.getText());
+            pst.setString(9, findBy.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Distributor Updated Successfully", "Welcome",
+                    JOptionPane.INFORMATION_MESSAGE);
+            dissName.setText("");
+            disContact.setText("");
+            disEmail.setText("");
+            disCity.setText("");
+            disState.setText("");
+            disCountry.setText("");
+            disAdmin.setText("");
+            disLocation.setText("");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_UpdateDistributorButtonActionPerformed
+
+    private void DeleteDistributorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteDistributorButtonActionPerformed
+        String findUpdate = deleteByCombo.getSelectedItem().toString();
+        if (findUpdate.matches("ID")) {
+
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("Delete from distributor Where DistributorID = ?");
+                pst.setString(1, deleteBy.getText());
+                pst.executeUpdate();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+
+//                clinicAdminDropDown.setModel(new DefaultComboBoxModel<String>(clinicAdmins.toArray(new String[0])));
+        } else {
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("DELETE from distributor Where Email = ?");
+                pst.setString(1, deleteBy.getText());
+                pst.executeUpdate();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        } // TODO add your handling code here:
+    }//GEN-LAST:event_DeleteDistributorButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -737,16 +909,24 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManageDistributorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageDistributorForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManageDistributorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageDistributorForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManageDistributorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageDistributorForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManageDistributorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageDistributorForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -763,7 +943,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     private javax.swing.JPanel AddDistributorPanel;
     private javax.swing.JButton DeleteDistributorButton;
     private javax.swing.JPanel DeleteDistributorPanel;
-    private javax.swing.JButton FindDistributorButton;
     private javax.swing.JButton FindDistributorUpdate;
     private javax.swing.JPanel ParentPanel;
     private javax.swing.JButton UpdateDistributorButton;
@@ -772,18 +951,26 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     private javax.swing.JTextField cityField;
     private javax.swing.JTextField contactField;
     private javax.swing.JTextField countryField;
+    private javax.swing.JTextField deleteBy;
+    private javax.swing.JComboBox<String> deleteByCombo;
+    private javax.swing.JTextField disAdmin;
+    private javax.swing.JTextField disCity;
+    private javax.swing.JTextField disContact;
+    private javax.swing.JTextField disCountry;
+    private javax.swing.JTextField disEmail;
+    private javax.swing.JTextField disLocation;
+    private javax.swing.JTextField disState;
+    private javax.swing.JTextField dissName;
     private javax.swing.JComboBox<String> distributorManagerDropDown;
     private javax.swing.JTextField distributorNameField;
     private javax.swing.JTextField emailField;
+    private javax.swing.JTextField findBy;
+    private javax.swing.JComboBox<String> findByCombo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -791,7 +978,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -810,18 +996,8 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField location;
     private javax.swing.JTextField stateField;
-    private javax.swing.JTextField streetField;
+    private javax.swing.JTable storageTable;
     // End of variables declaration//GEN-END:variables
 }

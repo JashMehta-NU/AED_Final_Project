@@ -422,36 +422,85 @@ public class HospitalMainFrame extends javax.swing.JFrame {
     private void vaccineNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vaccineNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_vaccineNameActionPerformed
+    private void showJtableData(ResultSet rs) throws SQLException {
+        while (myOrderTable.getRowCount() > 0) {
+            ((DefaultTableModel) myOrderTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
 
+        while (rs.next()) {
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+                row[i - 1] = rs.getObject(i);
+
+            }
+
+            ((DefaultTableModel) myOrderTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+    }
     private void orderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderBtnActionPerformed
         DefaultTableModel tableModel = (DefaultTableModel) myOrderTable.getModel();
 
         String VaccineName = vaccineName.getSelectedItem().toString();
-        String Quantity = quantity.getText();
-        int quantity = Integer.parseInt(Quantity);
-        String disName = distributorNameCombo.getSelectedItem().toString();
+        String vaccineQuantity = quantity.getText();
+        int quantity = Integer.parseInt(vaccineQuantity);
+        String distributorName = distributorNameCombo.getSelectedItem().toString();
 
-        Object[] rowData = new Object[]{VaccineName, quantity, disName};
+        try {
+            System.out.println("Here");
+            String q = "INSERT INTO `vds`.`order` (VaccineType, Quantity, DistributorName, OrderBy, OrderByName) VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement ps;
+            ps = sqlConn.prepareStatement(q);
 
-        tableModel.addRow(rowData);
-//        try {
-//            System.out.println("Here");
-//            String q = "UPDATE hospital SET VaccineInStock = VaccineInStock + ? WHERE VaccineType =? ";
-//            PreparedStatement ps;
-//            ps = sqlConn.prepareStatement(q);
-//            ps.setInt(1, quantity);
-//            ps.setString(2, VaccineName);
-//            ps.executeUpdate();
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+            ps.setString(1, VaccineName);
+            ps.setString(2, vaccineQuantity);
+            //ps.setString(3,"Pending");
+            ps.setString(3, distributorName);
+            ps.setString(4, "Hospital");
+            ps.setString(5, SignInForm.orgName);
+
+            int count = ps.executeUpdate();
+
+            if (count > 0) {
+                JOptionPane.showMessageDialog(this, "Order Placed", "Congratulations", 1);
+
+                // fetching data from order table
+                PreparedStatement pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,Status,DistributorName,OrderBy,OrderByName from `vds`.`order` WHERE OrderByName=?");
+                pst.setString(1, SignInForm.orgName);
+
+                ResultSet rs = pst.executeQuery();
+                showJtableData(rs);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Server Error", "Warning", 2);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // TODO add your handling code here:
+    
     }//GEN-LAST:event_orderBtnActionPerformed
 
     private void distributorNameComboKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_distributorNameComboKeyPressed
+            vaccineName.removeAllItems();
+        try {
+            String dName = distributorNameCombo.getSelectedItem().toString();
 
+            PreparedStatement ps = sqlConn.prepareStatement("SELECT * from `distributor` Where Name = ?  ");
+            ps.setString(1, dName);
+            ResultSet rs1 = ps.executeQuery();
+
+            while (rs1.next()) {
+                vaccineName.addItem(rs1.getString(5));
+
+            }
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(HospitalMainFrame.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_distributorNameComboKeyPressed
 

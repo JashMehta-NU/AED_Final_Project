@@ -114,6 +114,7 @@ public class UserAccount {
             userEmail = rs.getString("Email");
             userContact = rs.getString("Contact");
             userCity = rs.getString("City");
+            
         }
        
         

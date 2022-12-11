@@ -15,7 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import vds.Database.DBConnection;
+import vds.UI.Distributor.DistributorMainFrame;
 
 /**
  *
@@ -30,6 +32,8 @@ public class ManageNGOForm extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs;
     PreparedStatementWrapper pst = null;
+    String ngoAdminEmail;
+
     public ManageNGOForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -38,14 +42,14 @@ public class ManageNGOForm extends javax.swing.JFrame {
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
-        }else{
+        } else {
             PreparedStatement pst;
             try {
                 pst = sqlConn.prepareStatement("SELECT * from `vds`.`user` WHERE Role=?");
                 pst.setString(1, "NgoAdmin");
                 ResultSet rs = pst.executeQuery();
-                ArrayList<String> NgoAdmins = new ArrayList<String>(); 
-                while(rs.next()){
+                ArrayList<String> NgoAdmins = new ArrayList<String>();
+                while (rs.next()) {
                     NgoAdmins.add(rs.getString(2));
                     System.out.println(rs.getString(2));
                 }
@@ -53,7 +57,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
     }
 
@@ -82,7 +86,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        streetField = new javax.swing.JTextField();
+        location = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cityField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -97,39 +101,35 @@ public class ManageNGOForm extends javax.swing.JFrame {
         DeleteNGOPanel = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField9 = new javax.swing.JTextField();
+        deleteByCombo = new javax.swing.JComboBox<>();
+        deleteBy = new javax.swing.JTextField();
         DeleteNGOButton = new javax.swing.JButton();
         ViewNGOPanel = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField10 = new javax.swing.JTextField();
-        FindNGOButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        storageTable = new javax.swing.JTable();
         UpdateNGOPanel = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jTextField11 = new javax.swing.JTextField();
+        findByCombo = new javax.swing.JComboBox<>();
+        findBy = new javax.swing.JTextField();
         FindNGOUpdate = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
+        ngoContact = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        ngoEmail = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        ngoLocation = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        ngoCity = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
+        ngoState = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
+        ngoCountry = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        ngoName = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
         UpdateNGOButton = new javax.swing.JButton();
+        ngoAdmin = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -234,7 +234,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel7.setText("STREET:");
+        jLabel7.setText("Location:");
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(97, 212, 195));
@@ -257,6 +257,11 @@ public class ManageNGOForm extends javax.swing.JFrame {
         jLabel11.setText("ADMIN:");
 
         ngoAdminDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " " }));
+        ngoAdminDropDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ngoAdminDropDownActionPerformed(evt);
+            }
+        });
 
         AddNGOButton.setText("ADD");
         AddNGOButton.addActionListener(new java.awt.event.ActionListener() {
@@ -299,7 +304,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
                     .addGroup(AddNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(contactField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                        .addComponent(streetField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                        .addComponent(location, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(cityField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(stateField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addComponent(countryField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
@@ -334,7 +339,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
                     .addGap(18, 18, 18)
                     .addGroup(AddNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
-                        .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(location, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(AddNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
@@ -362,9 +367,14 @@ public class ManageNGOForm extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(97, 212, 195));
         jLabel15.setText("SELECT:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
+        deleteByCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
 
         DeleteNGOButton.setText("DELETE");
+        DeleteNGOButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteNGOButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DeleteNGOPanelLayout = new javax.swing.GroupLayout(DeleteNGOPanel);
         DeleteNGOPanel.setLayout(DeleteNGOPanelLayout);
@@ -376,9 +386,9 @@ public class ManageNGOForm extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DeleteNGOPanelLayout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(deleteByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(deleteBy, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(154, 154, 154))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DeleteNGOPanelLayout.createSequentialGroup()
                         .addComponent(jLabel14)
@@ -394,8 +404,8 @@ public class ManageNGOForm extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addGap(26, 26, 26)
                 .addGroup(DeleteNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
                 .addGap(32, 32, 32)
                 .addComponent(DeleteNGOButton)
@@ -406,15 +416,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
 
         ViewNGOPanel.setBackground(new java.awt.Color(0, 0, 102));
 
-        jLabel16.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel16.setText("FIND BY-");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
-
-        FindNGOButton.setText("FIND");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        storageTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -422,38 +424,20 @@ public class ManageNGOForm extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "NGO Name", "Contact", "Email", "Street", "City", "State", "Country", "Admin"
+                "NGO Name", "Contact", "Email", "Location", "City", "State", "Country", "Admin"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(storageTable);
 
         javax.swing.GroupLayout ViewNGOPanelLayout = new javax.swing.GroupLayout(ViewNGOPanel);
         ViewNGOPanel.setLayout(ViewNGOPanelLayout);
         ViewNGOPanelLayout.setHorizontalGroup(
             ViewNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ViewNGOPanelLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(jLabel16)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(FindNGOButton)
-                .addContainerGap(103, Short.MAX_VALUE))
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
         ViewNGOPanelLayout.setVerticalGroup(
             ViewNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ViewNGOPanelLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(ViewNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FindNGOButton))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
         );
 
         ParentPanel.add(ViewNGOPanel, "card4");
@@ -464,9 +448,14 @@ public class ManageNGOForm extends javax.swing.JFrame {
         jLabel17.setForeground(new java.awt.Color(97, 212, 195));
         jLabel17.setText("FIND BY-");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
+        findByCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Email" }));
 
         FindNGOUpdate.setText("FIND");
+        FindNGOUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FindNGOUpdateActionPerformed(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(97, 212, 195));
@@ -482,7 +471,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
 
         jLabel19.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel19.setText("STREET:");
+        jLabel19.setText("Location:");
 
         jLabel20.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(97, 212, 195));
@@ -504,23 +493,33 @@ public class ManageNGOForm extends javax.swing.JFrame {
         jLabel23.setForeground(new java.awt.Color(97, 212, 195));
         jLabel23.setText("ADMIN:");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " " }));
-
         UpdateNGOButton.setText("UPDATE");
+        UpdateNGOButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateNGOButtonActionPerformed(evt);
+            }
+        });
+
+        ngoAdmin.setText("jTextField1");
+        ngoAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ngoAdminActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout UpdateNGOPanelLayout = new javax.swing.GroupLayout(UpdateNGOPanel);
         UpdateNGOPanel.setLayout(UpdateNGOPanelLayout);
         UpdateNGOPanelLayout.setHorizontalGroup(
             UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UpdateNGOPanelLayout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
+                .addContainerGap(106, Short.MAX_VALUE)
                 .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdateNGOPanelLayout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(findByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(findBy, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(FindNGOUpdate)
                         .addGap(80, 80, 80))
@@ -539,14 +538,14 @@ public class ManageNGOForm extends javax.swing.JFrame {
                             .addComponent(jLabel12))
                         .addGap(18, 18, 18)
                         .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                            .addComponent(jTextField16, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField15)
-                            .addComponent(jTextField14)
-                            .addComponent(jTextField13)
-                            .addComponent(jTextField12)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                            .addComponent(ngoCountry, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                            .addComponent(ngoState, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ngoCity)
+                            .addComponent(ngoLocation)
+                            .addComponent(ngoEmail)
+                            .addComponent(ngoContact)
+                            .addComponent(ngoName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                            .addComponent(ngoAdmin))
                         .addGap(212, 212, 212))))
             .addGroup(UpdateNGOPanelLayout.createSequentialGroup()
                 .addGap(283, 283, 283)
@@ -559,45 +558,45 @@ public class ManageNGOForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(findByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(findBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(FindNGOUpdate))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel18)
                 .addGap(28, 28, 28)
                 .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ngoName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdateNGOPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ngoContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ngoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ngoLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ngoCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ngoState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ngoCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(UpdateNGOPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ngoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(UpdateNGOButton)
                 .addContainerGap(26, Short.MAX_VALUE))
@@ -660,6 +659,36 @@ public class ManageNGOForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        PreparedStatement pst;
+        while (storageTable.getRowCount() > 0) {
+            ((DefaultTableModel) storageTable.getModel()).removeRow(0);
+        }
+        try {
+
+            pst = sqlConn.prepareStatement("SELECT `Name`, `Contact`, `Email`,  `City`, `State`, `Country`, `Admin`, `AdminEmail`, `Location` from `ngo` ");
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String Name = rs.getString(1);
+                String contact = rs.getString(2);
+                String email = rs.getString(3);
+                String city = rs.getString(4);
+                String state = rs.getString(5);
+                String country = rs.getString(6);
+                String admin = rs.getString(7);
+                String adminEmail = rs.getString(8);
+                String Location = rs.getString(9);
+
+                Object[] rowData = new Object[]{Name, contact, email, Location, city, state, country, admin, adminEmail};
+                ((DefaultTableModel) storageTable.getModel()).addRow(rowData);
+            }
+
+            //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // TODO add your handling code here:
         ParentPanel.removeAll();
         ParentPanel.add(ViewNGOPanel);
@@ -680,22 +709,36 @@ public class ManageNGOForm extends javax.swing.JFrame {
         String ngoName = ngoNameField.getText();
         String email = emailField.getText();
         String contact = contactField.getText();
-        String street = streetField.getText();
+        String street = location.getText();
         String city = cityField.getText();
         String state = stateField.getText();
         String country = countryField.getText();
         //String date = dateFormat.format(dobDate.getDate());
         String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
+        String ngoAdmin = String.valueOf(ngoAdminDropDown.getSelectedItem());
         String phonePattern = "(0|91)?[6-9][0-9]{9}";
 
         String namePattern = "[a-zA-Z_ ]+";
+        PreparedStatement pst;
+        try {
+            pst = sqlConn.prepareStatement("SELECT Email from `vds`.`user` WHERE fName =?");
+            pst.setString(1, ngoAdmin);
+            ResultSet rs = pst.executeQuery();
 
-        if(ngoName.isEmpty()|| email.isEmpty()||contact.isEmpty()||street.isEmpty()||city.isEmpty()||state.isEmpty()||country.isBlank()){
+            while (rs.next()) {
+
+                ngoAdminEmail = rs.getString(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (ngoName.isEmpty() || email.isEmpty() || contact.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty() || country.isBlank()) {
             JOptionPane.showMessageDialog(this, "Enter All Details", "Warning",
                     JOptionPane.ERROR_MESSAGE);
-        }else if (!ngoName.matches(namePattern)) {
+        } else if (!ngoName.matches(namePattern)) {
             JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else if (!email.matches(emailPattern)) {
@@ -705,12 +748,150 @@ public class ManageNGOForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Enter a Valid Phone Number", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-
+            try {
+                PreparedStatement pst1 = sqlConn.prepareStatement("INSERT INTO `vds`.`ngo` (Name, Contact, Email, City, State, Country, Admin, AdminEmail,Location) VALUES (?, ?, ? ,?,?, ?, ?, ?, ?);");
+                pst1.setString(1, ngoName);
+                pst1.setString(2, contact);
+                pst1.setString(3, email);
+                pst1.setString(4, city);
+                pst1.setString(5, state);
+                pst1.setString(6, country);
+                pst1.setString(7, ngoAdmin);
+                pst1.setString(8, ngoAdminEmail);
+                pst1.setString(9, location.getText());
+                
+                pst1.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
             JOptionPane.showMessageDialog(this, "NGO Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
 
         }
     }//GEN-LAST:event_AddNGOButtonActionPerformed
+
+    private void ngoAdminDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ngoAdminDropDownActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ngoAdminDropDownActionPerformed
+
+    private void DeleteNGOButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteNGOButtonActionPerformed
+        String findUpdate = deleteByCombo.getSelectedItem().toString();
+        if (findUpdate.matches("ID")) {
+
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("Delete from ngo Where NgoID = ?");
+                pst.setString(1, deleteBy.getText());
+                pst.executeUpdate();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+
+//                clinicAdminDropDown.setModel(new DefaultComboBoxModel<String>(clinicAdmins.toArray(new String[0])));
+        } else {
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("DELETE from ngo Where Email = ?");
+                pst.setString(1, deleteBy.getText());
+                pst.executeUpdate();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }            // TODO add your handling code here:
+    }//GEN-LAST:event_DeleteNGOButtonActionPerformed
+
+    private void FindNGOUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindNGOUpdateActionPerformed
+        String findUpdate = findByCombo.getSelectedItem().toString();
+        if (findUpdate.matches("ID")) {
+
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from ngo Where NgoID = ?");
+                pst.setString(1, findBy.getText());
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    ngoName.setText(rs.getString(1));
+                    ngoContact.setText(rs.getString(2));
+                    ngoEmail.setText(rs.getString(3));
+                    ngoCity.setText(rs.getString(4));
+                    ngoState.setText(rs.getString(5));
+                    ngoCountry.setText(rs.getString(6));
+                    ngoAdmin.setText(rs.getString(7));
+                    ngoLocation.setText(rs.getString(8));
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+//                clinicAdminDropDown.setModel(new DefaultComboBoxModel<String>(clinicAdmins.toArray(new String[0])));
+        } else {
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from ngo Where Email = ?");
+                pst.setString(1, findBy.getText());
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    ngoName.setText(rs.getString(1));
+                    ngoContact.setText(rs.getString(2));
+                    ngoEmail.setText(rs.getString(3));
+                    ngoCity.setText(rs.getString(4));
+                    ngoState.setText(rs.getString(5));
+                    ngoCountry.setText(rs.getString(6));
+                    ngoAdmin.setText(rs.getString(7));
+                    ngoLocation.setText(rs.getString(8));
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(this, "Distributor Delete Successfully", "Welcome",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }// TODO add your handling code here:
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FindNGOUpdateActionPerformed
+
+    private void ngoAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ngoAdminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ngoAdminActionPerformed
+
+    private void UpdateNGOButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateNGOButtonActionPerformed
+   PreparedStatement pst;
+        try {
+            pst = sqlConn.prepareStatement("UPDATE ngo SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where NgoID = ?");
+            pst.setString(1, ngoName.getText());
+            pst.setString(2, ngoContact.getText());
+            pst.setString(3, ngoEmail.getText());
+            pst.setString(4, ngoCity.getText());
+            pst.setString(5, ngoState.getText());
+            pst.setString(6, ngoCountry.getText());
+            pst.setString(7, ngoAdmin.getText());
+            pst.setString(8, ngoLocation.getText());
+            pst.setString(9, findBy.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "NGO Updated Successfully", "Welcome",
+                    JOptionPane.INFORMATION_MESSAGE);
+            ngoName.setText("");
+            ngoContact.setText("");
+            ngoEmail.setText("");
+            ngoCity.setText("");
+            ngoState.setText("");
+            ngoCountry.setText("");
+            ngoAdmin.setText("");
+            ngoLocation.setText("");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your        // TODO add your handling code here:
+    }//GEN-LAST:event_UpdateNGOButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -752,7 +933,6 @@ public class ManageNGOForm extends javax.swing.JFrame {
     private javax.swing.JPanel AddNGOPanel;
     private javax.swing.JButton DeleteNGOButton;
     private javax.swing.JPanel DeleteNGOPanel;
-    private javax.swing.JButton FindNGOButton;
     private javax.swing.JButton FindNGOUpdate;
     private javax.swing.JPanel ParentPanel;
     private javax.swing.JButton UpdateNGOButton;
@@ -761,16 +941,16 @@ public class ManageNGOForm extends javax.swing.JFrame {
     private javax.swing.JTextField cityField;
     private javax.swing.JTextField contactField;
     private javax.swing.JTextField countryField;
+    private javax.swing.JTextField deleteBy;
+    private javax.swing.JComboBox<String> deleteByCombo;
     private javax.swing.JTextField emailField;
+    private javax.swing.JTextField findBy;
+    private javax.swing.JComboBox<String> findByCombo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -778,7 +958,6 @@ public class ManageNGOForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -797,20 +976,18 @@ public class ManageNGOForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField location;
+    private javax.swing.JTextField ngoAdmin;
     private javax.swing.JComboBox<String> ngoAdminDropDown;
+    private javax.swing.JTextField ngoCity;
+    private javax.swing.JTextField ngoContact;
+    private javax.swing.JTextField ngoCountry;
+    private javax.swing.JTextField ngoEmail;
+    private javax.swing.JTextField ngoLocation;
+    private javax.swing.JTextField ngoName;
     private javax.swing.JTextField ngoNameField;
+    private javax.swing.JTextField ngoState;
     private javax.swing.JTextField stateField;
-    private javax.swing.JTextField streetField;
+    private javax.swing.JTable storageTable;
     // End of variables declaration//GEN-END:variables
 }

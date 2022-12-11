@@ -4,10 +4,6 @@
  */
 package vds.UI.SystemAdmin;
 
-import vds.Business.UserAccount.UserAccount;
-import vds.UI.MainFrame;
-import vds.UI.Patient.PatientMainFrame;
-import vds.UI.Profile.MyProfile;
 import vds.UI.SignUpForm;
 
 /**
@@ -132,7 +128,7 @@ public class SysAdminMainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton4)
                     .addComponent(jButton3))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton3, jButton4});
@@ -520,18 +516,8 @@ public class SysAdminMainFrame extends javax.swing.JFrame {
         jPanel10Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton17, jButton18});
 
         jButton1.setText("PROFILE");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
-        jButton2.setText("Logout");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        jButton2.setText("BACK");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -623,11 +609,11 @@ public class SysAdminMainFrame extends javax.swing.JFrame {
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
-        ManageLogisticsForm mp = new ManageLogisticsForm();
-        SysAdminMainFrame sa = new SysAdminMainFrame();
-        mp.setVisible(true);
-        sa.setVisible(false);
-        super.dispose();
+//        ManageLogisticsForm mp = new ManageLogisticsForm();
+//        SysAdminMainFrame sa = new SysAdminMainFrame();
+//        mp.setVisible(true);
+//        sa.setVisible(false);
+//        super.dispose();
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -719,25 +705,6 @@ public class SysAdminMainFrame extends javax.swing.JFrame {
         openSignUpForm();
         Urole = "NgoAdmin";
     }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        UserAccount.userFullName=("");
-        MainFrame mf = new MainFrame();
-        SysAdminMainFrame sam = new SysAdminMainFrame();
-        mf.setVisible(true);
-        sam.setVisible(false);
-        super.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        MyProfile mp = new MyProfile();
-        PatientMainFrame pm = new PatientMainFrame();
-        mp.setVisible(true);
-        pm.setVisible(false);
-        super.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
