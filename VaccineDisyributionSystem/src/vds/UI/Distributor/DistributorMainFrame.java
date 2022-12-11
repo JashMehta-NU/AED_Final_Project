@@ -418,7 +418,31 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
     
+=======
+    private void showJtableData(ResultSet rs) throws SQLException {
+        String vaccineAvailableStock;
+        PreparedStatement pst;
+
+        while (orderTable.getRowCount() > 0) {
+            ((DefaultTableModel) orderTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
+
+        while (rs.next()) {
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+                row[i - 1] = rs.getObject(i);
+
+            }
+            row[4] = "Send Order";
+
+            ((DefaultTableModel) orderTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+    }
+
+>>>>>>> 7fc9aa20a475cd8f3f807f0da5f77095d1119108
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         ParentPanel.removeAll();
@@ -492,8 +516,13 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 
             while (rs1.next()) {
                 vaccineName.addItem(rs1.getString(5));
+<<<<<<< HEAD
             }
 
+=======
+
+            }
+>>>>>>> 7fc9aa20a475cd8f3f807f0da5f77095d1119108
             // TODO add your handling code here:
         } catch (SQLException ex) {
             Logger.getLogger(DistributorMainFrame.class
@@ -503,6 +532,7 @@ public class DistributorMainFrame extends javax.swing.JFrame {
 
     private void orderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseClicked
         // TODO add your handling code here:
+<<<<<<< HEAD
          
         
         int row = orderTable.getSelectedRow();
@@ -538,6 +568,13 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         
 
 
+=======
+        int row = orderTable.getSelectedRow();
+        int column = orderTable.getColumnCount();
+        for (int i = 0; i < column; i++) {
+            System.out.println(orderTable.getValueAt(row, i));
+        }
+>>>>>>> 7fc9aa20a475cd8f3f807f0da5f77095d1119108
     }//GEN-LAST:event_orderTableMouseClicked
 
     /**
