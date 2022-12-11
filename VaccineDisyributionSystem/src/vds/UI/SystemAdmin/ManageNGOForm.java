@@ -834,7 +834,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
         } else {
             PreparedStatement pst;
             try {
-                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from distributor Where Email = ?");
+                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from ngo Where Email = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
 
