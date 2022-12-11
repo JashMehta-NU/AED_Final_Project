@@ -43,7 +43,9 @@
                   <Component id="cmdAdd" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="cmdClear" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="417" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" pref="97" max="-2" attributes="0"/>
+                  <EmptySpace pref="315" max="32767" attributes="0"/>
                   <Component id="comboMapType" min="-2" pref="125" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -57,6 +59,7 @@
                       <Component id="comboMapType" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cmdAdd" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cmdClear" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="464" max="32767" attributes="0"/>
               </Group>
@@ -84,7 +87,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="cmdAdd">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add Waypoint"/>
+            <Property name="text" type="java.lang.String" value="Show Location"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdAddActionPerformed"/>
@@ -92,10 +95,18 @@
         </Component>
         <Component class="javax.swing.JButton" name="cmdClear">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Clear Waypoint"/>
+            <Property name="text" type="java.lang.String" value="Clear Location"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdClearActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Back"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

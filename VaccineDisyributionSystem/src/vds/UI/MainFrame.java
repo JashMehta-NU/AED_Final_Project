@@ -4,14 +4,7 @@
  */
 package vds.UI;
 
-import vds.UI.Clinic.ClinicLandingFrame;
-import vds.UI.Distributor.DistributorLandingFrame;
-import vds.UI.Enterprise.EnterpriseLandingFrame;
-import vds.UI.Hospital.HospitalLandingFrame;
-import vds.UI.Logistics.LogisticsLandingFrame;
-import vds.UI.NGO.NGOLandingFrame;
-import vds.UI.Patient.PatientLandingFrame;
-import vds.UI.Supplier.SupplierLandingFrame;
+
 
 
 /**

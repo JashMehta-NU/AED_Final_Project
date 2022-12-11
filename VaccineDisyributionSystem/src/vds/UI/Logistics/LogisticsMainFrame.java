@@ -4,6 +4,8 @@
  */
 package vds.UI.Logistics;
 
+import vds.UI.MainFrame;
+
 /**
  *
  * @author jigne
@@ -61,7 +63,12 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
 
         UpdateStatusButton.setText("UPDATE");
 
-        jButton2.setText("BACK");
+        jButton2.setText("Logout");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("PROFILE");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -152,6 +159,15 @@ public class LogisticsMainFrame extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        MainFrame mf = new MainFrame();
+        LogisticsMainFrame em = new LogisticsMainFrame();
+        mf.setVisible(true);
+        em.setVisible(false);
+        super.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

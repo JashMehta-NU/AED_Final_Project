@@ -37,8 +37,9 @@ import vds.Business.Role.Patient.Patient;
 import vds.Business.Role.SupplyManager.SupplyManager;
 import vds.Business.Role.SystemAdmin;
 import vds.Database.DBConnection;
+import vds.UI.SystemAdmin.SysAdminMainFrame;
 
-import vds.UI.SysAdmin.SysMainFrame;
+
 
 /**
  *
@@ -59,7 +60,7 @@ public class SignUpForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         conn = new DBConnection();
         sqlConn = DBConnection.connectDB();
-        System.out.println("Urole from admin page" + SysMainFrame.Urole);
+        System.out.println("Urole from admin page" + SysAdminMainFrame.Urole);
         if (conn == null) {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
@@ -91,6 +92,7 @@ public class SignUpForm extends javax.swing.JFrame {
         cityFeild = new javax.swing.JTextField();
         stateFeild = new javax.swing.JTextField();
         countryFeild1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -405,6 +407,14 @@ public class SignUpForm extends javax.swing.JFrame {
         });
         jPanel1.add(countryFeild1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 170, 40));
 
+        jButton1.setText("Home");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, -1, -1));
+
         jPanel2.setBackground(new java.awt.Color(36, 47, 65));
         jPanel2.setForeground(new java.awt.Color(97, 212, 195));
 
@@ -557,7 +567,7 @@ public class SignUpForm extends javax.swing.JFrame {
     }//GEN-LAST:event_signInBtnActionPerformed
 
     private void signUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBtnActionPerformed
-        String role = SysMainFrame.Urole;
+        String role = SysAdminMainFrame.Urole;
         if (role == null) {
             role = MainFrame.role;
         }
@@ -770,6 +780,10 @@ public class SignUpForm extends javax.swing.JFrame {
         } // TODO add your handling code here:
     }//GEN-LAST:event_countryFeildFocusGained
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -816,6 +830,7 @@ public class SignUpForm extends javax.swing.JFrame {
     private javax.swing.JTextField emailFeild;
     private javax.swing.JTextField fNameFeild;
     private javax.swing.JRadioButton femaleRadio;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;

@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import vds.Business.UserAccount.UserAccount;
 import vds.Database.DBConnection;
 import vds.UI.SignInForm;
 
@@ -36,7 +37,7 @@ public class PatientViewNearby extends javax.swing.JFrame {
     public static String orgEmail;
     public static String orgContact;
     public static String orgLocation;
-
+    
     public PatientViewNearby() {
         initComponents();
         conn = new DBConnection();
@@ -46,7 +47,7 @@ public class PatientViewNearby extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
         } else {
-            String cityLocation = "Boston";
+            String cityLocation = UserAccount.userCity;
             fetchAndFillJTableWithNearByValues(viewNearBy, cityLocation);
         }
     }
