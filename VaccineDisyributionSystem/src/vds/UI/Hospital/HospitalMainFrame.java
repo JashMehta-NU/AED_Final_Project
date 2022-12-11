@@ -57,10 +57,23 @@ public class HospitalMainFrame extends javax.swing.JFrame {
                     distributorNameCombo.addItem(rs.getString(2));
 
                 }
+                
 
                 //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                           
+            try {
+                PreparedStatement upst;
+                upst = sqlConn.prepareStatement("SELECT OrgName, OrgEmail, OrgContact, PatientName, PatientEmail, PatientContact, AppointmentDate from `vds`.`patientappointment` where OrgName=?");
+                upst.setString(1, SignInForm.orgName);
+                ResultSet urs = upst.executeQuery();
+
+                showtableData(urs);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(HospitalMainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -115,7 +128,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Patient Name", "Age", "Vaccine Name", "Date"
+                "OrgName", "OrgEmail", "OrgContact", "PatientName", "PatientEmail", "patientContact", "Date"
             }
         ));
         jScrollPane1.setViewportView(appointmentTable);
@@ -124,7 +137,9 @@ public class HospitalMainFrame extends javax.swing.JFrame {
         appointmentScreen.setLayout(appointmentScreenLayout);
         appointmentScreenLayout.setHorizontalGroup(
             appointmentScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+            .addGroup(appointmentScreenLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 855, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         appointmentScreenLayout.setVerticalGroup(
             appointmentScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +165,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
         storageScreen.setLayout(storageScreenLayout);
         storageScreenLayout.setHorizontalGroup(
             storageScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE)
         );
         storageScreenLayout.setVerticalGroup(
             storageScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,7 +220,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
         orderScreen.setLayout(orderScreenLayout);
         orderScreenLayout.setHorizontalGroup(
             orderScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE)
             .addGroup(orderScreenLayout.createSequentialGroup()
                 .addGroup(orderScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(orderScreenLayout.createSequentialGroup()
@@ -438,6 +453,24 @@ public class HospitalMainFrame extends javax.swing.JFrame {
             ((DefaultTableModel) myOrderTable.getModel()).insertRow(rs.getRow() - 1, row);
         }
     }
+    
+    private void showtableData(ResultSet rs) throws SQLException {
+        while (appointmentTable.getRowCount() > 0) {
+            ((DefaultTableModel) appointmentTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
+
+        while (rs.next()) {
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+                row[i - 1] = rs.getObject(i);
+
+            }
+
+            ((DefaultTableModel) appointmentTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+    }
+    
     private void orderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderBtnActionPerformed
         DefaultTableModel tableModel = (DefaultTableModel) myOrderTable.getModel();
 
