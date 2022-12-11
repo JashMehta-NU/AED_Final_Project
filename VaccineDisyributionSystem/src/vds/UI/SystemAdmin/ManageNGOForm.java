@@ -500,7 +500,6 @@ public class ManageNGOForm extends javax.swing.JFrame {
             }
         });
 
-        ngoAdmin.setText("jTextField1");
         ngoAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ngoAdminActionPerformed(evt);
@@ -766,7 +765,12 @@ public class ManageNGOForm extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(this, "NGO Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
-
+            ngoNameField.setText("");
+            emailField.setText("");
+            contactField.setText("");
+            cityField.setText("");
+            stateField.setText("");
+            countryField.setText("");
         }
     }//GEN-LAST:event_AddNGOButtonActionPerformed
 

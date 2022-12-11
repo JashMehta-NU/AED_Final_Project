@@ -560,21 +560,20 @@ public class ManagePatientForm extends javax.swing.JFrame {
                 .addContainerGap(163, Short.MAX_VALUE))
             .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
                 .addGap(200, 200, 200)
-                .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel21)
-                    .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
-                        .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel22)
-                            .addComponent(jLabel23))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(uage, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ustate, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ucity, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ustate, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel21)
+                            .addGap(43, 43, 43)
+                            .addComponent(uage, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
+                            .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel22)
+                                .addComponent(jLabel23))
+                            .addGap(21, 21, 21)
+                            .addComponent(ucity, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 422, Short.MAX_VALUE))
             .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(UpdatePatientsPanelLayout.createSequentialGroup()
                     .addGap(161, 161, 161)
@@ -611,19 +610,19 @@ public class ManagePatientForm extends javax.swing.JFrame {
                     .addComponent(FindPatientUpdate))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel29)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(uage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21))
                 .addGap(18, 18, 18)
-                .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ucity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23))
+                .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(ucity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ustate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
+                .addGap(80, 80, 80)
                 .addComponent(UpdatePatientButton)
                 .addGap(45, 45, 45))
             .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -780,7 +779,15 @@ public class ManagePatientForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Patient Updated Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
             
-
+            fname.setText(""); 
+            lname.setText("");
+            uemail.setText("");
+            ucontact.setText("");
+            uage.setText("");
+            ucity.setText("");
+            ustate.setText("");
+            ucountry.setText("");
+       
         } catch (SQLException ex) {
             Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
         }          // TODO add your handling code here:
@@ -841,7 +848,15 @@ public class ManagePatientForm extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(this, "Patient Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
-
+            fname.setText(""); 
+            lname.setText("");
+            email.setText("");
+            contact.setText("");
+            age.setText("");
+            city.setText("");
+            state.setText("");
+            country.setText("");
+            password.setText("");
         }                    // TODO add your handling code here:
     }//GEN-LAST:event_AddPatientButtonActionPerformed
 
@@ -855,21 +870,25 @@ public class ManagePatientForm extends javax.swing.JFrame {
                 pst.setString(1, deleteBy.getText());
                 pst.setString(2, "Patient");
                 pst.executeUpdate();
+                deleteBy.setText("");
+               
                 JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
                         JOptionPane.INFORMATION_MESSAGE);
+                
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
 
 //                clinicAdminDropDown.setModel(new DefaultComboBoxModel<String>(clinicAdmins.toArray(new String[0])));
-        } else {
+        } else if(findUpdate.matches("Email") ){
             PreparedStatement pst;
             try {
                 pst = sqlConn.prepareStatement("DELETE from user Where Email = ? AND Role = ?");
                 pst.setString(1, deleteBy.getText());
                 pst.setString(2, "Patient");
                 pst.executeUpdate();
+                deleteBy.setText("");
                 JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
                         JOptionPane.INFORMATION_MESSAGE);
 
@@ -877,7 +896,10 @@ public class ManagePatientForm extends javax.swing.JFrame {
                 Logger.getLogger(ManageHospitalForm.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
-        }             // TODO add your handling code here:
+        }else{
+             JOptionPane.showMessageDialog(this, "Patient Not Found", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+        }// TODO add your handling code here:
     }//GEN-LAST:event_DeletePatientButtonActionPerformed
 
     private void FindPatientUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindPatientUpdateActionPerformed

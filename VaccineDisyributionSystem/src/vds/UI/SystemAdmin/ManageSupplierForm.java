@@ -742,7 +742,13 @@ PreparedStatement pst;
             }
             JOptionPane.showMessageDialog(this, "Supplier Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
-
+            
+            supplierNameField.setText("");
+            emailField.setText("");
+            contactField.setText("");
+            cityField.setText("");
+            stateField.setText("");
+            countryField.setText("");
         }
     }//GEN-LAST:event_AddSupplierButtonActionPerformed
 
@@ -755,6 +761,7 @@ PreparedStatement pst;
                 pst = sqlConn.prepareStatement("Delete from supplier Where SupplierID = ?");
                 pst.setString(1, deleteBy.getText());
                 pst.executeUpdate();
+                deleteBy.setText("");
                 JOptionPane.showMessageDialog(this, "Supplier Deleted Successfully", "Welcome",
                         JOptionPane.INFORMATION_MESSAGE);
 
@@ -770,6 +777,7 @@ PreparedStatement pst;
                 pst = sqlConn.prepareStatement("DELETE from supplier Where Email = ?");
                 pst.setString(1, deleteBy.getText());
                 pst.executeUpdate();
+                deleteBy.setText("");
                 JOptionPane.showMessageDialog(this, "Supplier Deleted Successfully", "Welcome",
                         JOptionPane.INFORMATION_MESSAGE);
 

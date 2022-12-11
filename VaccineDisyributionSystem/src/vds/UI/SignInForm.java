@@ -13,6 +13,7 @@ import vds.Business.Role.ClinicAdmin.ClinicAdmin;
 import vds.Business.Role.DistributingManager.DistributingManager;
 import vds.Business.Role.EnterpriseManager.EnterpriseManager;
 import vds.Business.Role.HospitalAdmin.HospitalAdmin;
+import vds.Business.Role.LogisticsManager.LogisticsManager;
 import vds.Business.Role.NgoAdmin.NgoAdmin;
 import vds.Business.Role.Patient.Patient;
 import vds.Business.Role.SupplyManager.SupplyManager;
@@ -23,6 +24,7 @@ import vds.UI.Clinic.ClinicMainFrame;
 import vds.UI.Distributor.DistributorMainFrame;
 import vds.UI.Enterprise.EnterpriseMainFrame;
 import vds.UI.Hospital.HospitalMainFrame;
+import vds.UI.Logistics.LogisticsMainFrame;
 import vds.UI.NGO.NGOMainFrame;
 import vds.UI.Patient.PatientMainFrame;
 import vds.UI.Supplier.SupplierMainFrame;
@@ -263,7 +265,7 @@ public class SignInForm extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
                                 JOptionPane.INFORMATION_MESSAGE);
                         SignInForm mf = new SignInForm();
-                        SysAdminMainFrame nl = new  SysAdminMainFrame ();
+                        SysAdminMainFrame nl = new SysAdminMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
@@ -286,7 +288,7 @@ public class SignInForm extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
                                 JOptionPane.INFORMATION_MESSAGE);
                         SignInForm mf = new SignInForm();
-                        PatientMainFrame nl = new  PatientMainFrame();
+                        PatientMainFrame nl = new PatientMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
@@ -309,14 +311,14 @@ public class SignInForm extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
                                 JOptionPane.INFORMATION_MESSAGE);
                         PreparedStatement Hpst = sqlConn.prepareStatement("SELECT Name from `vds`.`hospital` WHERE AdminEmail=?");
-                            Hpst.setString(1, userEmail);
-                            ResultSet Hrs = Hpst.executeQuery();
+                        Hpst.setString(1, userEmail);
+                        ResultSet Hrs = Hpst.executeQuery();
 
-                            if (Hrs.next()) {
-                                orgName = Hrs.getString("Name");
-                            }
+                        if (Hrs.next()) {
+                            orgName = Hrs.getString("Name");
+                        }
                         SignInForm mf = new SignInForm();
-                        HospitalMainFrame nl = new  HospitalMainFrame();
+                        HospitalMainFrame nl = new HospitalMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
@@ -324,11 +326,11 @@ public class SignInForm extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             } else if (role.equals("ClinicAdmin")) {
                 ClinicAdmin sa = new ClinicAdmin(email, password, role);
                 try {
-                   sa.checkValidUser();
+                    sa.checkValidUser();
                     userFullName = UserAccount.userFullName;
                     userEmail = UserAccount.userEmail;
                     userContact = UserAccount.userContact;
@@ -338,8 +340,15 @@ public class SignInForm extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
                                 JOptionPane.INFORMATION_MESSAGE);
+                        PreparedStatement Hpst = sqlConn.prepareStatement("SELECT Name from `vds`.`clinic` WHERE AdminEmail=?");
+                        Hpst.setString(1, userEmail);
+                        ResultSet Hrs = Hpst.executeQuery();
+
+                        if (Hrs.next()) {
+                            orgName = Hrs.getString("Name");
+                        }
                         SignInForm mf = new SignInForm();
-                        ClinicMainFrame nl = new  ClinicMainFrame();
+                        ClinicMainFrame nl = new ClinicMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
@@ -347,7 +356,7 @@ public class SignInForm extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-               
+
             } else if (role.equals("NgoAdmin")) {
                 NgoAdmin sa = new NgoAdmin(email, password, role);
                 try {
@@ -361,8 +370,15 @@ public class SignInForm extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
                                 JOptionPane.INFORMATION_MESSAGE);
+                        PreparedStatement Hpst = sqlConn.prepareStatement("SELECT Name from `vds`.`ngo` WHERE AdminEmail=?");
+                        Hpst.setString(1, userEmail);
+                        ResultSet Hrs = Hpst.executeQuery();
+
+                        if (Hrs.next()) {
+                            orgName = Hrs.getString("Name");
+                        }
                         SignInForm mf = new SignInForm();
-                        NGOMainFrame nl = new  NGOMainFrame();
+                        NGOMainFrame nl = new NGOMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
@@ -370,7 +386,7 @@ public class SignInForm extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-               
+
             } else if (role.equals("EnterpriseAdmin")) {
                 EnterpriseManager sa = new EnterpriseManager(email, password, role);
                 try {
@@ -384,8 +400,15 @@ public class SignInForm extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
                                 JOptionPane.INFORMATION_MESSAGE);
+                        PreparedStatement Hpst = sqlConn.prepareStatement("SELECT Name from `enterprise`.`hospital` WHERE AdminEmail=?");
+                        Hpst.setString(1, userEmail);
+                        ResultSet Hrs = Hpst.executeQuery();
+
+                        if (Hrs.next()) {
+                            orgName = Hrs.getString("Name");
+                        }
                         SignInForm mf = new SignInForm();
-                        EnterpriseMainFrame nl = new  EnterpriseMainFrame();
+                        EnterpriseMainFrame nl = new EnterpriseMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
@@ -393,7 +416,7 @@ public class SignInForm extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             } else if (role.equals("DistributorAdmin")) {
                 DistributingManager sa = new DistributingManager(email, password, role);
                 try {
@@ -414,7 +437,7 @@ public class SignInForm extends javax.swing.JFrame {
                             orgName = Drs.getString("Name");
                         }
                         SignInForm mf = new SignInForm();
-                        DistributorMainFrame nl = new  DistributorMainFrame();
+                        DistributorMainFrame nl = new DistributorMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
@@ -422,7 +445,7 @@ public class SignInForm extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-              
+
             } else if (role.equals("SupplierAdmin")) {
                 SupplyManager sa = new SupplyManager(email, password, role);
                 try {
@@ -436,8 +459,15 @@ public class SignInForm extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
                                 JOptionPane.INFORMATION_MESSAGE);
+                        PreparedStatement Hpst = sqlConn.prepareStatement("SELECT Name from `vds`.`supplier` WHERE AdminEmail=?");
+                        Hpst.setString(1, userEmail);
+                        ResultSet Hrs = Hpst.executeQuery();
+
+                        if (Hrs.next()) {
+                            orgName = Hrs.getString("Name");
+                        }
                         SignInForm mf = new SignInForm();
-                        SupplierMainFrame nl = new  SupplierMainFrame();
+                        SupplierMainFrame nl = new SupplierMainFrame();
                         mf.setVisible(false);
                         nl.setVisible(true);
                         super.dispose();
@@ -445,8 +475,39 @@ public class SignInForm extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-            } else {
+
+            } else if (role.equals("LogisticsAdmin")) {
+                LogisticsManager sa = new LogisticsManager(email, password, role);
+                try {
+                    sa.checkValidUser();
+                    userFullName = UserAccount.userFullName;
+                    userEmail = UserAccount.userEmail;
+                    userContact = UserAccount.userContact;
+                    if (userFullName == null) {
+                        JOptionPane.showMessageDialog(this, "Enter correct details", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Login SuccessFull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        PreparedStatement Hpst = sqlConn.prepareStatement("SELECT Name from `vds`.`logistics` WHERE AdminEmail=?");
+                        Hpst.setString(1, userEmail);
+                        ResultSet Hrs = Hpst.executeQuery();
+
+                        if (Hrs.next()) {
+                            orgName = Hrs.getString("Name");
+                        }
+                        SignInForm mf = new SignInForm();
+                        LogisticsMainFrame nl = new LogisticsMainFrame();
+                        mf.setVisible(false);
+                        nl.setVisible(true);
+                        super.dispose();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+            else {
                 JOptionPane.showMessageDialog(this, "Other Role", "Warning", 2);
             }
         }

@@ -770,7 +770,12 @@ PreparedStatement pst;
 
             JOptionPane.showMessageDialog(this, "Distributor Company Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
-
+            distributorNameField.setText("");
+            emailField.setText("");
+            contactField.setText("");
+            cityField.setText("");
+            stateField.setText("");
+            countryField.setText("");
         }
 
     }//GEN-LAST:event_AddDistributorButtonActionPerformed
@@ -874,6 +879,7 @@ PreparedStatement pst;
                 pst = sqlConn.prepareStatement("Delete from distributor Where DistributorID = ?");
                 pst.setString(1, deleteBy.getText());
                 pst.executeUpdate();
+                deleteBy.setText("");
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
@@ -887,7 +893,7 @@ PreparedStatement pst;
                 pst = sqlConn.prepareStatement("DELETE from distributor Where Email = ?");
                 pst.setString(1, deleteBy.getText());
                 pst.executeUpdate();
-
+                deleteBy.setText("");
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
                         .getName()).log(Level.SEVERE, null, ex);

@@ -454,7 +454,7 @@ public class HospitalMainFrame extends javax.swing.JFrame {
 
             ps.setString(1, VaccineName);
             ps.setString(2, vaccineQuantity);
-            //ps.setString(3,"Pending");
+            
             ps.setString(3, distributorName);
             ps.setString(4, "Hospital");
             ps.setString(5, SignInForm.orgName);

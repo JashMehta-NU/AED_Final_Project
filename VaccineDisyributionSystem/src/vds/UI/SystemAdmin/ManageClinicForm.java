@@ -269,11 +269,9 @@ public class ManageClinicForm extends javax.swing.JFrame {
         AddClinicPanel.setLayout(AddClinicPanelLayout);
         AddClinicPanelLayout.setHorizontalGroup(
             AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(AddClinicPanelLayout.createSequentialGroup()
                 .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AddClinicPanelLayout.createSequentialGroup()
-                        .addGap(277, 277, 277)
-                        .addComponent(AddClinicButton))
                     .addGroup(AddClinicPanelLayout.createSequentialGroup()
                         .addGap(183, 183, 183)
                         .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -284,9 +282,11 @@ public class ManageClinicForm extends javax.swing.JFrame {
                         .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(locationTextField)
                             .addComponent(clinicNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                            .addComponent(clinicAdminDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(228, Short.MAX_VALUE))
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(clinicAdminDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(AddClinicPanelLayout.createSequentialGroup()
+                        .addGap(271, 271, 271)
+                        .addComponent(AddClinicButton)))
+                .addContainerGap(232, Short.MAX_VALUE))
             .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(AddClinicPanelLayout.createSequentialGroup()
                     .addGap(209, 209, 209)
@@ -318,13 +318,13 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(locationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel25))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                 .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(clinicAdminDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(clinicAdminDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(26, 26, 26)
                 .addComponent(AddClinicButton)
-                .addGap(55, 55, 55))
+                .addGap(139, 139, 139))
             .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(AddClinicPanelLayout.createSequentialGroup()
                     .addGap(132, 132, 132)
@@ -748,7 +748,12 @@ public class ManageClinicForm extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Clinic Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
-
+            clinicNameField.setText("");
+            emailField.setText("");
+            contactField.setText("");
+            cityField.setText("");
+            stateField.setText("");
+            countryField.setText("");
         }
 
     }//GEN-LAST:event_AddClinicButtonActionPerformed
@@ -852,7 +857,7 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 pst.setString(1, clinicDelete.getText());
                  pst.executeUpdate();
 
-               
+               clinicDelete.setText("");
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -865,7 +870,7 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 pst.setString(1, clinicDelete.getText());
                 pst.executeUpdate();
 
-                
+                clinicDelete.setText("");
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);

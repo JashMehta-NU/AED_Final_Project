@@ -778,7 +778,12 @@ public class ManageHospitalForm extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(this, "Hospital Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
-
+            hospitalNameField.setText("");
+            emailField.setText("");
+            contactField.setText("");
+            cityField.setText("");
+            stateField.setText("");
+            countryField.setText("");
         }
     }//GEN-LAST:event_AddHospitalButtonActionPerformed
 
@@ -852,6 +857,7 @@ public class ManageHospitalForm extends javax.swing.JFrame {
                 pst = sqlConn.prepareStatement("Delete from hospital Where HospitalID = ?");
                 pst.setString(1, deleteBy.getText());
                 pst.executeUpdate();
+                deleteBy.setText("");
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
@@ -865,7 +871,7 @@ public class ManageHospitalForm extends javax.swing.JFrame {
                 pst = sqlConn.prepareStatement("DELETE from hospital Where Email = ?");
                 pst.setString(1, deleteBy.getText());
                 pst.executeUpdate();
-
+                deleteBy.setText("");
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
                         .getName()).log(Level.SEVERE, null, ex);
