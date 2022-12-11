@@ -4,21 +4,57 @@
  */
 package vds.UI.Enterprise;
 
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
+import com.mysql.cj.protocol.Resultset;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import vds.Database.DBConnection;
 import vds.UI.Distributor.*;
+import vds.UI.SignInForm;
 
 /**
  *
  * @author JUBIN,JASH,AAYUSH
  */
 public class EnterpriseMainFrame extends javax.swing.JFrame {
-
+    DBConnection conn;
+    Connection sqlConn;
+    Resultset rs = null;
+    PreparedStatementWrapper pst;
     /**
      * Creates new form DistributorMainFrame
      */
     public EnterpriseMainFrame() {
         initComponents();
         setLocationRelativeTo(null);
-    }
+        conn = new DBConnection();
+        sqlConn = DBConnection.connectDB();
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
+        } else {
+            PreparedStatement pst;
+            try {
+                pst = sqlConn.prepareStatement("SELECT * from `Supplier` ");
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    supplierName.addItem(rs.getString(2));
+
+                }
+
+                //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
+            } catch (SQLException ex) {
+                Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,22 +83,21 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         Storage = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        storageTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jTextField2 = new javax.swing.JTextField();
         FindVaccineButton = new javax.swing.JButton();
         Purchase = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        myOrderTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        rawMaterial = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        supplierName = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
+        quantity = new javax.swing.JTextField();
         OrderVaccineButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -195,18 +230,18 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
 
         Storage.setBackground(new java.awt.Color(0, 0, 153));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        storageTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Vaccine ID", "Vaccine Name", "Amount"
+                "Vaccine ID", "Vaccine Name"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(storageTable);
 
         jLabel3.setBackground(new java.awt.Color(97, 212, 195));
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -231,7 +266,7 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(FindVaccineButton)
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
         StorageLayout.setVerticalGroup(
             StorageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +285,7 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
 
         Purchase.setBackground(new java.awt.Color(0, 0, 204));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        myOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -261,7 +296,7 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
                 "ID", "Raw Material", "Supplier", "Quantity", "Price"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(myOrderTable);
 
         jLabel4.setBackground(new java.awt.Color(97, 212, 195));
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -276,15 +311,22 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(97, 212, 195));
         jLabel6.setText("Supplier");
 
+        supplierName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                supplierNameItemStateChanged(evt);
+            }
+        });
+
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(97, 212, 195));
         jLabel7.setText("Quantity:");
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel8.setText("Date:");
-
         OrderVaccineButton.setText("ORDER");
+        OrderVaccineButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OrderVaccineButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PurchaseLayout = new javax.swing.GroupLayout(Purchase);
         Purchase.setLayout(PurchaseLayout);
@@ -292,7 +334,7 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
             PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PurchaseLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PurchaseLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -301,27 +343,26 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
             .addGroup(PurchaseLayout.createSequentialGroup()
                 .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PurchaseLayout.createSequentialGroup()
+                        .addGap(331, 331, 331)
+                        .addComponent(OrderVaccineButton))
+                    .addGroup(PurchaseLayout.createSequentialGroup()
                         .addGap(189, 189, 189)
                         .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PurchaseLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PurchaseLayout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                .addGroup(PurchaseLayout.createSequentialGroup()
+                                    .addComponent(jLabel7)
+                                    .addGap(8, 8, 8)))
                             .addGroup(PurchaseLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(8, 8, 8)))
+                                .addComponent(jLabel6)
+                                .addGap(44, 44, 44)))
                         .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField3)
-                            .addComponent(jComboBox3, 0, 130, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PurchaseLayout.createSequentialGroup()
-                        .addGap(332, 332, 332)
-                        .addComponent(OrderVaccineButton)))
-                .addContainerGap(139, Short.MAX_VALUE))
+                            .addComponent(quantity)
+                            .addComponent(rawMaterial, 0, 130, Short.MAX_VALUE)
+                            .addComponent(supplierName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PurchaseLayout.setVerticalGroup(
             PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,20 +371,24 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(supplierName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PurchaseLayout.createSequentialGroup()
+                        .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rawMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PurchaseLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(12, 12, 12)))
                 .addComponent(OrderVaccineButton)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addGap(42, 42, 42))
         );
 
         ParentPanel.add(Purchase, "card4");
@@ -394,12 +439,71 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+ PreparedStatement pst;
+        while (storageTable.getRowCount() > 0) {
+            ((DefaultTableModel) storageTable.getModel()).removeRow(0);
+        }
+        try {
+            String aEmail = SignInForm.name;
+            System.out.println("Hello");
+            System.out.println(aEmail);
+            pst = sqlConn.prepareStatement("SELECT * from `Enterprise` WHERE AdminEmail = ?");
+            pst.setString(1, aEmail);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String vName = rs.getString(5);
+                int quan = rs.getInt(6);
+                Object[] rowData = new Object[]{vName, quan};
+                ((DefaultTableModel) storageTable.getModel()).addRow(rowData);
+            }
+
+            //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }        // TODO add your handling code here:
          ParentPanel.removeAll();
         ParentPanel.add(Storage);
         ParentPanel.repaint();
         ParentPanel.revalidate();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void supplierNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_supplierNameItemStateChanged
+              
+ rawMaterial.removeAllItems();
+        try {
+            String dName = supplierName.getSelectedItem().toString();
+
+            PreparedStatement ps = sqlConn.prepareStatement("SELECT * from `Supplier` Where Name = ?  ");
+            ps.setString(1, dName);
+            ResultSet rs1 = ps.executeQuery();
+
+            while (rs1.next()) {
+                supplierName.addItem(rs1.getString(5));
+
+            }
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }    
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supplierNameItemStateChanged
+
+    private void OrderVaccineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderVaccineButtonActionPerformed
+        DefaultTableModel tableModel = (DefaultTableModel) myOrderTable.getModel();
+
+        String VaccineName = rawMaterial.getSelectedItem().toString();
+        String Quantity = quantity.getText();
+        int quantity = Integer.parseInt(Quantity);
+        String disName = supplierName.getSelectedItem().toString();
+
+        Object[] rowData = new Object[]{VaccineName, quantity, disName};
+
+        tableModel.addRow(rowData);           // TODO add your handling code here:
+    }//GEN-LAST:event_OrderVaccineButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -452,8 +556,6 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -461,17 +563,18 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable myOrderTable;
+    private javax.swing.JTextField quantity;
+    private javax.swing.JComboBox<String> rawMaterial;
+    private javax.swing.JTable storageTable;
+    private javax.swing.JComboBox<String> supplierName;
     // End of variables declaration//GEN-END:variables
 }

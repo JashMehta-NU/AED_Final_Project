@@ -162,10 +162,9 @@ public class ManagePatientForm extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton4)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(23, 23, 23))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,6 +258,11 @@ public class ManagePatientForm extends javax.swing.JFrame {
 
         AddPatientButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         AddPatientButton.setText("ADD");
+        AddPatientButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddPatientButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout AddPatientPanelLayout = new javax.swing.GroupLayout(AddPatientPanel);
         AddPatientPanel.setLayout(AddPatientPanelLayout);
@@ -722,6 +726,10 @@ public class ManagePatientForm extends javax.swing.JFrame {
     private void UpdatePatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdatePatientButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_UpdatePatientButtonActionPerformed
+
+    private void AddPatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPatientButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AddPatientButtonActionPerformed
 
     /**
      * @param args the command line arguments
