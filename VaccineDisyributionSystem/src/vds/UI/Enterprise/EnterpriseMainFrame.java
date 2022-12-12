@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import vds.Database.DBConnection;
 import vds.UI.Distributor.*;
+import vds.UI.Hospital.HospitalMainFrame;
 import vds.UI.SignInForm;
 
 /**
@@ -23,10 +24,12 @@ import vds.UI.SignInForm;
  * @author JUBIN,JASH,AAYUSH
  */
 public class EnterpriseMainFrame extends javax.swing.JFrame {
+
     DBConnection conn;
     Connection sqlConn;
     Resultset rs = null;
     PreparedStatementWrapper pst;
+    String sAdmin;
     /**
      * Creates new form DistributorMainFrame
      */
@@ -41,11 +44,11 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
         } else {
             PreparedStatement pst;
             try {
-                pst = sqlConn.prepareStatement("SELECT * from `Supplier` ");
+                pst = sqlConn.prepareStatement("SELECT Name from `Supplier` ");
                 ResultSet rs = pst.executeQuery();
 
-                while (rs.next()) {
-                    supplierName.addItem(rs.getString(2));
+                if (rs.next()) {
+                    supplierName.addItem(rs.getString("Name"));
 
                 }
 
@@ -54,7 +57,8 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
                 Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        }    }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -287,13 +291,10 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
 
         myOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Raw Material", "Supplier", "Quantity", "Price"
+                "Raw Material", "Supplier", "Quantity"
             }
         ));
         jScrollPane3.setViewportView(myOrderTable);
@@ -306,6 +307,12 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(97, 212, 195));
         jLabel5.setText("Raw Material");
+
+        rawMaterial.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rawMaterialItemStateChanged(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(97, 212, 195));
@@ -343,9 +350,6 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
             .addGroup(PurchaseLayout.createSequentialGroup()
                 .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PurchaseLayout.createSequentialGroup()
-                        .addGap(331, 331, 331)
-                        .addComponent(OrderVaccineButton))
-                    .addGroup(PurchaseLayout.createSequentialGroup()
                         .addGap(189, 189, 189)
                         .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,7 +365,10 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
                         .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(quantity)
                             .addComponent(rawMaterial, 0, 130, Short.MAX_VALUE)
-                            .addComponent(supplierName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(supplierName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(PurchaseLayout.createSequentialGroup()
+                        .addGap(315, 315, 315)
+                        .addComponent(OrderVaccineButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PurchaseLayout.setVerticalGroup(
@@ -381,14 +388,14 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
                         .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rawMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
+                        .addGap(46, 46, 46)
+                        .addComponent(OrderVaccineButton)
+                        .addGap(42, 42, 42))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PurchaseLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(12, 12, 12)))
-                .addComponent(OrderVaccineButton)
-                .addGap(42, 42, 42))
+                        .addGroup(PurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(75, 75, 75))))
         );
 
         ParentPanel.add(Purchase, "card4");
@@ -424,7 +431,7 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-         ParentPanel.removeAll();
+        ParentPanel.removeAll();
         ParentPanel.add(Purchase);
         ParentPanel.repaint();
         ParentPanel.revalidate();
@@ -439,7 +446,7 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
- PreparedStatement pst;
+        PreparedStatement pst;
         while (storageTable.getRowCount() > 0) {
             ((DefaultTableModel) storageTable.getModel()).removeRow(0);
         }
@@ -462,32 +469,33 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }        // TODO add your handling code here:
-         ParentPanel.removeAll();
+        ParentPanel.removeAll();
         ParentPanel.add(Storage);
         ParentPanel.repaint();
         ParentPanel.revalidate();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void supplierNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_supplierNameItemStateChanged
-              
- rawMaterial.removeAllItems();
+
+        rawMaterial.removeAllItems();
         try {
             String dName = supplierName.getSelectedItem().toString();
 
             PreparedStatement ps = sqlConn.prepareStatement("SELECT * from `Supplier` Where Name = ?  ");
             ps.setString(1, dName);
+            
             ResultSet rs1 = ps.executeQuery();
 
             while (rs1.next()) {
-                supplierName.addItem(rs1.getString(5));
-
+                rawMaterial.addItem(rs1.getString(5));
+                sAdmin = rs1.getString("Admin");
+                System.out.println("Name : "+sAdmin);
             }
             // TODO add your handling code here:
         } catch (SQLException ex) {
             Logger.getLogger(DistributorMainFrame.class
                     .getName()).log(Level.SEVERE, null, ex);
-        }    
-
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_supplierNameItemStateChanged
@@ -498,12 +506,56 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
         String VaccineName = rawMaterial.getSelectedItem().toString();
         String Quantity = quantity.getText();
         int quantity = Integer.parseInt(Quantity);
+
         String disName = supplierName.getSelectedItem().toString();
 
-        Object[] rowData = new Object[]{VaccineName, quantity, disName};
+        Object[] rowData = new Object[]{VaccineName, disName, quantity};
 
-        tableModel.addRow(rowData);           // TODO add your handling code here:
+        tableModel.addRow(rowData);
+        try {
+
+            PreparedStatement pd = sqlConn.prepareStatement("UPDATE enterprise SET InStock = InStock+? WHERE SupplierName = ? AND rawMaterial = ?");
+
+            pd.setInt(1, quantity);
+            pd.setString(2, sAdmin);
+            pd.setString(3, VaccineName);
+            System.out.println("update");
+            pd.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, e);
+        }
+try {
+
+            PreparedStatement pd = sqlConn.prepareStatement("UPDATE supplier SET InStock = InStock-? WHERE rawMaterial = ?");
+
+            pd.setInt(1, quantity);
+       
+            pd.setString(2, VaccineName);
+            System.out.println("update");
+            pd.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, e);
+        }// TO// TODO add your handling code here:
     }//GEN-LAST:event_OrderVaccineButtonActionPerformed
+
+    private void rawMaterialItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rawMaterialItemStateChanged
+        try {
+            String dName = supplierName.getSelectedItem().toString();
+
+            PreparedStatement ps = sqlConn.prepareStatement("SELECT * from `Supplier` Where Name = ?  ");
+            ps.setString(1, dName);
+            ResultSet rs1 = ps.executeQuery();
+
+            while (rs1.next()) {
+                rawMaterial.addItem(rs1.getString(5));
+
+            }
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(HospitalMainFrame.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_rawMaterialItemStateChanged
 
     /**
      * @param args the command line arguments
