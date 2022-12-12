@@ -87,8 +87,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         contactField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        location = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cityField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -119,8 +117,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         disContact = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         disEmail = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        disLocation = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         disCity = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
@@ -234,10 +230,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(97, 212, 195));
         jLabel6.setText("EMAIL:");
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel7.setText("Location:");
-
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(97, 212, 195));
         jLabel8.setText("CITY:");
@@ -273,14 +265,13 @@ public class ManageDistributorForm extends javax.swing.JFrame {
             AddDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddDistributorPanelLayout.createSequentialGroup()
-                .addContainerGap(161, Short.MAX_VALUE)
+                .addContainerGap(169, Short.MAX_VALUE)
                 .addGroup(AddDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddDistributorPanelLayout.createSequentialGroup()
                         .addGroup(AddDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -291,7 +282,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                             .addComponent(distributorNameField)
                             .addComponent(contactField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(location, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cityField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(stateField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(countryField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
@@ -317,11 +307,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                 .addGroup(AddDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(AddDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(location, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(58, 58, 58)
                 .addGroup(AddDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -407,13 +393,13 @@ public class ManageDistributorForm extends javax.swing.JFrame {
 
         storageTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Company Name", "Contact", "Email", "Location", "City", "State", "Country", "Manager", "Manager Email"
+                "Company Name", "Contact", "Email", "City", "State", "Country", "Manager", "Manager Email"
             }
         ));
         jScrollPane1.setViewportView(storageTable);
@@ -459,10 +445,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(97, 212, 195));
         jLabel13.setText("EMAIL:");
-
-        jLabel19.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(97, 212, 195));
-        jLabel19.setText("Location");
 
         jLabel20.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(97, 212, 195));
@@ -510,10 +492,9 @@ public class ManageDistributorForm extends javax.swing.JFrame {
             .addGroup(UpdateDistributorPanelLayout.createSequentialGroup()
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(UpdateDistributorPanelLayout.createSequentialGroup()
-                        .addGap(344, 344, 344)
+                        .addGap(346, 346, 346)
                         .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel19)
                             .addComponent(jLabel20)
                             .addComponent(jLabel21)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdateDistributorPanelLayout.createSequentialGroup()
@@ -525,10 +506,9 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                             .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dissName, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                    .addComponent(dissName, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                     .addComponent(disCountry)
                     .addComponent(disState, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(disLocation, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(disCity, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(disContact)
                     .addComponent(disEmail, javax.swing.GroupLayout.Alignment.LEADING)
@@ -576,11 +556,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(disEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(disLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(58, 58, 58)
                 .addGroup(UpdateDistributorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
                     .addComponent(disCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -664,7 +640,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         }
         try {
 
-            pst = sqlConn.prepareStatement("SELECT `Name`, `Contact`, `Email`,  `City`, `State`, `Country`, `Admin`, `AdminEmail`, `Location` from `distributor` ");
+            pst = sqlConn.prepareStatement("SELECT `Name`, `Contact`, `Email`,  `City`, `State`, `Country`, `Admin`, `AdminEmail` from `distributor` ");
 
             ResultSet rs = pst.executeQuery();
 
@@ -677,9 +653,8 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                 String country = rs.getString(6);
                 String admin = rs.getString(7);
                 String adminEmail = rs.getString(8);
-                String Location = rs.getString(9);
 
-                Object[] rowData = new Object[]{Name, contact, email, Location, city, state, country, admin, adminEmail};
+                Object[] rowData = new Object[]{Name, contact, email, city, state, country, admin, adminEmail};
                 ((DefaultTableModel) storageTable.getModel()).addRow(rowData);
             }
 
@@ -711,7 +686,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         String distributorName = distributorNameField.getText();
         String email = emailField.getText();
         String contact = contactField.getText();
-        String street = location.getText();
+
         String city = cityField.getText();
         String state = stateField.getText();
         String country = countryField.getText();
@@ -736,7 +711,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         }
         String namePattern = "[a-zA-Z_ ]+";
 
-        if (distributorName.isEmpty() || email.isEmpty() || contact.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty() || country.isBlank()) {
+        if (distributorName.isEmpty() || email.isEmpty() || contact.isEmpty() || city.isEmpty() || state.isEmpty() || country.isBlank()) {
             JOptionPane.showMessageDialog(this, "Enter All Details", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else if (!distributorName.matches(namePattern)) {
@@ -751,7 +726,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         } else {
             PreparedStatement pst1;
             try {
-                pst1 = sqlConn.prepareStatement("INSERT INTO `distributor`( `Name`, `Contact`, `Email`,  `City`, `State`, `Country`, `Admin`, `AdminEmail`, `Location`)  VALUES  (?,?,?,?,?,?,?,?,?)");
+                pst1 = sqlConn.prepareStatement("INSERT INTO `distributor`( `Name`, `Contact`, `Email`,  `City`, `State`, `Country`, `Admin`, `AdminEmail`)  VALUES  (?,?,?,?,?,?,?,?)");
                 pst1.setString(1, distributorName);
                 System.out.println("here");
                 pst1.setString(2, contact);
@@ -761,7 +736,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                 pst1.setString(6, country);
                 pst1.setString(7, distributorManagerDropDown.getSelectedItem().toString());
                 pst1.setString(8, dEmail);
-                pst1.setString(9, location.getText());
+
 //               ResultSet rs =  pst1.ex();
                 pst1.executeUpdate();
             } catch (SQLException ex) {
@@ -786,7 +761,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
 
             PreparedStatement pst;
             try {
-                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from distributor Where DistributorID = ?");
+                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin from distributor Where DistributorID = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
                 if (rs.next() == false) {
@@ -801,7 +776,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                     disState.setText(rs.getString(5));
                     disCountry.setText(rs.getString(6));
                     disAdmin.setText(rs.getString(7));
-                    disLocation.setText(rs.getString(8));
 
                 }
 
@@ -813,7 +787,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
         } else {
             PreparedStatement pst;
             try {
-                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from distributor Where Email = ?");
+                pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin from distributor Where Email = ?");
                 pst.setString(1, findBy.getText());
                 ResultSet rs = pst.executeQuery();
                 if (rs.next() == false) {
@@ -827,15 +801,13 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                     disState.setText(rs.getString(5));
                     disCountry.setText(rs.getString(6));
                     disAdmin.setText(rs.getString(7));
-                    disLocation.setText(rs.getString(8));
 
                 }
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, "Distributor Delete Successfully", "Welcome",
-                    JOptionPane.INFORMATION_MESSAGE);
+
         }// TODO add your handling code here:
 
 
@@ -848,7 +820,13 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     private void UpdateDistributorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateDistributorButtonActionPerformed
         PreparedStatement pst;
         try {
-            pst = sqlConn.prepareStatement("UPDATE distributor SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where DistributorID = ?");
+            if (findByCombo.getSelectedItem().equals("ID")) {
+
+                pst = sqlConn.prepareStatement("UPDATE distributor SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=? Where DistributorID = ?");
+
+            } else {
+                pst = sqlConn.prepareStatement("UPDATE distributor SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=? Where Email = ?");
+            }
             pst.setString(1, dissName.getText());
             pst.setString(2, disContact.getText());
             pst.setString(3, disEmail.getText());
@@ -856,8 +834,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
             pst.setString(5, disState.getText());
             pst.setString(6, disCountry.getText());
             pst.setString(7, disAdmin.getText());
-            pst.setString(8, disLocation.getText());
-            pst.setString(9, findBy.getText());
+            pst.setString(8, findBy.getText());
             pst.executeUpdate();
             JOptionPane.showMessageDialog(this, "Distributor Updated Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -868,7 +845,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
             disState.setText("");
             disCountry.setText("");
             disAdmin.setText("");
-            disLocation.setText("");
 
         } catch (SQLException ex) {
             Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -904,7 +880,7 @@ public class ManageDistributorForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Error Deleting", "Warning",
                             JOptionPane.ERROR_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
+                    JOptionPane.showMessageDialog(this, "Distributor Deleted Successfully", "Welcome",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
 
@@ -978,7 +954,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     private javax.swing.JTextField disContact;
     private javax.swing.JTextField disCountry;
     private javax.swing.JTextField disEmail;
-    private javax.swing.JTextField disLocation;
     private javax.swing.JTextField disState;
     private javax.swing.JTextField dissName;
     private javax.swing.JComboBox<String> distributorManagerDropDown;
@@ -1000,7 +975,6 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -1010,13 +984,11 @@ public class ManageDistributorForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField location;
     private javax.swing.JTextField stateField;
     private javax.swing.JTable storageTable;
     // End of variables declaration//GEN-END:variables

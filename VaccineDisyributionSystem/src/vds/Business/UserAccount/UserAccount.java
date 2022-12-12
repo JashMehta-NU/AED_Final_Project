@@ -151,7 +151,7 @@ public class UserAccount {
             Transport.send(msg);
             System.out.println("Sent message");
         } catch (Exception e) {
-            System.out.println(e);;
+            System.out.println(e);
         }
         // TODO Auto-generated catch block
     }

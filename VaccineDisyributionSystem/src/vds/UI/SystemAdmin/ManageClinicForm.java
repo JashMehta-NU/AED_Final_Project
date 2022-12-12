@@ -16,8 +16,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 //import vds.Business.Role.ClinicAdmin.ClinicAdmin;
 import vds.Database.DBConnection;
+import vds.UI.Distributor.DistributorMainFrame;
+import vds.UI.SignInForm;
 
 /**
  *
@@ -106,7 +109,7 @@ public class ManageClinicForm extends javax.swing.JFrame {
         DeleteClinicButton = new javax.swing.JButton();
         ViewClinicPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        storageTable = new javax.swing.JTable();
         UpdateClinicPanel = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         findClinic = new javax.swing.JComboBox<>();
@@ -269,9 +272,11 @@ public class ManageClinicForm extends javax.swing.JFrame {
         AddClinicPanel.setLayout(AddClinicPanelLayout);
         AddClinicPanelLayout.setHorizontalGroup(
             AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(AddClinicPanelLayout.createSequentialGroup()
                 .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddClinicPanelLayout.createSequentialGroup()
+                        .addGap(277, 277, 277)
+                        .addComponent(AddClinicButton))
                     .addGroup(AddClinicPanelLayout.createSequentialGroup()
                         .addGap(183, 183, 183)
                         .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -282,11 +287,9 @@ public class ManageClinicForm extends javax.swing.JFrame {
                         .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(locationTextField)
                             .addComponent(clinicNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                            .addComponent(clinicAdminDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(AddClinicPanelLayout.createSequentialGroup()
-                        .addGap(271, 271, 271)
-                        .addComponent(AddClinicButton)))
-                .addContainerGap(232, Short.MAX_VALUE))
+                            .addComponent(clinicAdminDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(228, Short.MAX_VALUE))
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(AddClinicPanelLayout.createSequentialGroup()
                     .addGap(209, 209, 209)
@@ -318,13 +321,13 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(locationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel25))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
                 .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clinicAdminDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addGap(26, 26, 26)
+                    .addComponent(jLabel11)
+                    .addComponent(clinicAdminDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(AddClinicButton)
-                .addGap(139, 139, 139))
+                .addGap(55, 55, 55))
             .addGroup(AddClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(AddClinicPanelLayout.createSequentialGroup()
                     .addGap(132, 132, 132)
@@ -411,7 +414,7 @@ public class ManageClinicForm extends javax.swing.JFrame {
 
         ViewClinicPanel.setBackground(new java.awt.Color(0, 0, 102));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        storageTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
@@ -422,13 +425,13 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 "Clinic Name", "Contact", "Email", "Location", "City", "State", "Country", "Admin", "Admin Email"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(storageTable);
 
         javax.swing.GroupLayout ViewClinicPanelLayout = new javax.swing.GroupLayout(ViewClinicPanel);
         ViewClinicPanel.setLayout(ViewClinicPanelLayout);
         ViewClinicPanelLayout.setHorizontalGroup(
             ViewClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
         );
         ViewClinicPanelLayout.setVerticalGroup(
             ViewClinicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -660,8 +663,40 @@ public class ManageClinicForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+PreparedStatement pst;
+        while (storageTable.getRowCount() > 0) {
+            ((DefaultTableModel) storageTable.getModel()).removeRow(0);
+        }
+        try {
+           
+            pst = sqlConn.prepareStatement("SELECT `Name`, `Contact`, `Email`,  `City`, `State`, `Country`, `Admin`, `AdminEmail`, `Location` from `clinic` ");
+           
+            ResultSet rs = pst.executeQuery();
+            
+            while (rs.next()) {
+            String Name = rs.getString(1);
+            String contact = rs.getString(2);
+            String email = rs.getString(3);
+            String city = rs.getString(4);
+            String state = rs.getString(5);
+            String country = rs.getString(6);
+            String admin = rs.getString(7);
+            String adminEmail = rs.getString(8);
+            String Location = rs.getString(9);
+            
+            
+            
+            
+            
+            
+                Object[] rowData = new Object[]{Name,contact,email,Location,city,state,country,admin,adminEmail};
+                ((DefaultTableModel) storageTable.getModel()).addRow(rowData);
+            }
 
-        // TODO add your handling code here:
+            //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ParentPanel.removeAll();
         ParentPanel.add(ViewClinicPanel);
         ParentPanel.repaint();
@@ -745,17 +780,13 @@ public class ManageClinicForm extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Clinic Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
-            clinicNameField.setText("");
-            emailField.setText("");
-            contactField.setText("");
-            cityField.setText("");
-            stateField.setText("");
-            countryField.setText("");
+
         }
 
     }//GEN-LAST:event_AddClinicButtonActionPerformed
 
     private void UpdateClinicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateClinicButtonActionPerformed
+
         PreparedStatement pst;
         try {
             pst = sqlConn.prepareStatement("UPDATE clinic SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where ClinicID = ?");
@@ -800,11 +831,7 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 pst.setString(1, findClinicBy.getText());
                 ResultSet rs = pst.executeQuery();
 
-                if (rs.next() == false) {
-                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-
+                while (rs.next()) {
                     clinicName.setText(rs.getString(1));
                     clinicContact.setText(rs.getString(2));
                     email.setText(rs.getString(3));
@@ -827,10 +854,8 @@ public class ManageClinicForm extends javax.swing.JFrame {
                 pst = sqlConn.prepareStatement("SELECT Name,Contact,Email,City,State,Country,Admin,Location from clinic Where Email = ?");
                 pst.setString(1, findClinicBy.getText());
                 ResultSet rs = pst.executeQuery();
-                if (rs.next() == false) {
-                    JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
+
+                while (rs.next()) {
                     clinicName.setText(rs.getString(1));
                     clinicContact.setText(rs.getString(2));
                     email.setText(rs.getString(3));
@@ -845,7 +870,7 @@ public class ManageClinicForm extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, "Clinic Delete Successfully", "Welcome",
+            JOptionPane.showMessageDialog(this, "Clinic Updated Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
         }// TODO add your handling code here:
     }//GEN-LAST:event_FindClinicUpdateActionPerformed
@@ -858,17 +883,16 @@ public class ManageClinicForm extends javax.swing.JFrame {
             try {
                 pst = sqlConn.prepareStatement("Delete from clinic Where ClinicID = ?");
                 pst.setString(1, clinicDelete.getText());
-                int deleted = pst.executeUpdate();
-                clinicDelete.setText("");
+                 int count = pst.executeUpdate();
+                 if(count == 0){
+                     JOptionPane.showMessageDialog(this, "Clinic Deletion Error", "Warning",
+                    JOptionPane.ERROR_MESSAGE);
+                 }else{
+                     JOptionPane.showMessageDialog(this, "Clinic Deletion Successfully", "Welcome",
+                    JOptionPane.INFORMATION_MESSAGE);
+                 }
 
-                if (deleted == 0) {
-                    JOptionPane.showMessageDialog(this, "Error Deleting", "Warning",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Clinic Deleted Successfully", "Welcome",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
-                clinicDelete.setText("");
+               
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -877,11 +901,11 @@ public class ManageClinicForm extends javax.swing.JFrame {
         } else {
             PreparedStatement pst;
             try {
-                pst = sqlConn.prepareStatement("DELETE from clinic Where Email = ?");
+                pst = sqlConn.prepareStatement("DELETE from clinic Where AdminEmail = ?");
                 pst.setString(1, clinicDelete.getText());
                 pst.executeUpdate();
 
-                clinicDelete.setText("");
+                
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -982,9 +1006,9 @@ public class ManageClinicForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField location;
     private javax.swing.JTextField locationTextField;
     private javax.swing.JTextField stateField;
+    private javax.swing.JTable storageTable;
     // End of variables declaration//GEN-END:variables
 }

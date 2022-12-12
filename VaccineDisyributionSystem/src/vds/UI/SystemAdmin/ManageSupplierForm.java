@@ -844,15 +844,18 @@ public class ManageSupplierForm extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, "Distributor Delete Successfully", "Welcome",
-                    JOptionPane.INFORMATION_MESSAGE);
+           
         }        // TODO add your handling code here:
     }//GEN-LAST:event_FindSupplierUpdateActionPerformed
 
     private void UpdateSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateSupplierButtonActionPerformed
         PreparedStatement pst;
         try {
-            pst = sqlConn.prepareStatement("UPDATE supplier SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?  Where SupplierID = ?");
+            if(findByCombo.getSelectedItem().equals("Email")){
+                pst = sqlConn.prepareStatement("UPDATE supplier SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?  Where Email = ?");
+            }else{
+                pst = sqlConn.prepareStatement("UPDATE supplier SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?  Where SupplierID = ?");
+            }
             pst.setString(1, supName.getText());
             pst.setString(2, supContact.getText());
             pst.setString(3, supEmail.getText());

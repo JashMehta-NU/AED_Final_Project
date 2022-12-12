@@ -807,7 +807,16 @@ public class ManageNGOForm extends javax.swing.JFrame {
             try {
                 pst = sqlConn.prepareStatement("DELETE from ngo Where Email = ?");
                 pst.setString(1, deleteBy.getText());
-                pst.executeUpdate();
+                int deleted = pst.executeUpdate();
+                deleteBy.setText("");
+
+                if (deleted == 0) {
+                    JOptionPane.showMessageDialog(this, "Error Deleting", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
@@ -869,8 +878,7 @@ public class ManageNGOForm extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, "Distributor Delete Successfully", "Welcome",
-                    JOptionPane.INFORMATION_MESSAGE);
+
         }// TODO add your handling code here:
         // TODO add your handling code here:
     }//GEN-LAST:event_FindNGOUpdateActionPerformed
@@ -882,7 +890,11 @@ public class ManageNGOForm extends javax.swing.JFrame {
     private void UpdateNGOButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateNGOButtonActionPerformed
         PreparedStatement pst;
         try {
-            pst = sqlConn.prepareStatement("UPDATE ngo SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where NgoID = ?");
+            if(findByCombo.getSelectedItem().equals("ID")){
+                pst = sqlConn.prepareStatement("UPDATE ngo SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where NgoID = ?");
+            }else{
+                pst = sqlConn.prepareStatement("UPDATE ngo SET Name = ?,Contact = ?,Email = ?,City =? ,State = ?,Country =?,Admin=?,Location=?   Where Email = ?");
+            }
             pst.setString(1, ngoName.getText());
             pst.setString(2, ngoContact.getText());
             pst.setString(3, ngoEmail.getText());
@@ -892,17 +904,22 @@ public class ManageNGOForm extends javax.swing.JFrame {
             pst.setString(7, ngoAdmin.getText());
             pst.setString(8, ngoLocation.getText());
             pst.setString(9, findBy.getText());
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(this, "NGO Updated Successfully", "Welcome",
-                    JOptionPane.INFORMATION_MESSAGE);
-            ngoName.setText("");
-            ngoContact.setText("");
-            ngoEmail.setText("");
-            ngoCity.setText("");
-            ngoState.setText("");
-            ngoCountry.setText("");
-            ngoAdmin.setText("");
-            ngoLocation.setText("");
+            int count = pst.executeUpdate();
+            if (count == 0) {
+                JOptionPane.showMessageDialog(this, "NGO Updation Error", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "NGO Updated Successfully", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+                ngoName.setText("");
+                ngoContact.setText("");
+                ngoEmail.setText("");
+                ngoCity.setText("");
+                ngoState.setText("");
+                ngoCountry.setText("");
+                ngoAdmin.setText("");
+                ngoLocation.setText("");
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);

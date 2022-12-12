@@ -57,14 +57,13 @@ public class HospitalMainFrame extends javax.swing.JFrame {
                     distributorNameCombo.addItem(rs.getString(2));
 
                 }
-                
-
                 //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
                            
             try {
+                System.out.println(SignInForm.orgName);
                 PreparedStatement upst;
                 upst = sqlConn.prepareStatement("SELECT OrgName, OrgEmail, OrgContact, PatientName, PatientEmail, PatientContact, AppointmentDate from `vds`.`patientappointment` where OrgName=?");
                 upst.setString(1, SignInForm.orgName);

@@ -10,9 +10,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Properties;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.Authenticator;
@@ -38,8 +40,6 @@ import vds.Business.Role.SupplyManager.SupplyManager;
 import vds.Business.Role.SystemAdmin;
 import vds.Database.DBConnection;
 import vds.UI.SystemAdmin.SysAdminMainFrame;
-
-
 
 /**
  *
@@ -571,7 +571,7 @@ public class SignUpForm extends javax.swing.JFrame {
         if (role == null) {
             role = MainFrame.role;
         }
-        System.out.println("in sign up"+role);
+        System.out.println("in sign up" + role);
         String fName = fNameFeild.getText();
         String lName = lNameFeild.getText();
         String email = emailFeild.getText();
@@ -612,50 +612,142 @@ public class SignUpForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Password should contain atleast 1 special character and number", "Warning",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            
-                if(role.equals("Patient")){
-                    Patient p = new Patient(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
-                    p.addToDB();
-                }else if(role.equals("HospitalAdmin")){
-                    HospitalAdmin p = new HospitalAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
-     
-                    p.addToDB();
-                }else if(role.equals("ClinicAdmin")){
-                    ClinicAdmin p = new ClinicAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
-                    p.addToDB();
-                }else if(role.equals("NgoAdmin")){
-                    NgoAdmin p = new NgoAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
-                    p.addToDB();
-                }else if(role.equals("SystemAdmin")){
-                    SystemAdmin p = new SystemAdmin(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
-                    p.addToDB();
-                }else if(role.equals("SupplierAdmin")){
-                    SupplyManager p = new SupplyManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
-                    p.addToDB();
-                }else if(role.equals("EnterpriseAdmin")){
-                    EnterpriseManager p = new EnterpriseManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
-                    p.addToDB();
-                }else if(role.equals("DistributorAdmin")){
-                    DistributingManager p = new DistributingManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
-                    p.addToDB();
-                }else{
-                    LogisticsManager p = new LogisticsManager(fName,lName,email,contact,Integer.parseInt(age),city,state,country,password,gender,date,role);
-                    p.addToDB();
+
+            if (role.equals("Patient")) {
+                DecimalFormat df = new DecimalFormat("0000");
+                Random ran = new Random();
+                String code = df.format(ran.nextInt(1000));
+                System.out.println("Generated random code" + code);
+                String userName = "vaccinematrixx@gmail.com";
+                String epassword = "etvhbqcdmkkqyqfe";
+                Properties properties = System.getProperties();
+                properties.put("mail.smtp.auth", "true");
+                properties.put("mail.smtp.starttls.enable", "true");
+                properties.put("mail.smtp.host", "smtp.gmail.com");
+                properties.put("mail.smtp.port", "587");
+                properties.put("mail.smtp.user", userName);
+                properties.put("mail.smtp.password", epassword);
+                Session session = Session.getDefaultInstance(properties, new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(userName, epassword);
+                    }
+                }); //Start our mail message
+                Message msg = new MimeMessage(session);
+                try {
+
+                    msg.setFrom(new InternetAddress(userName));
+                    msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+                    msg.setSubject("Welcome to Vaccine Matrix");
+                    msg.setText("Hello \n Enter The 4 Digit Code To Verify Your Account " + code);
+
+                    Transport.send(msg);
+                    System.out.println("Sent message");
+                    String Icode = JOptionPane.showInputDialog("4 Digit Code has been mailed");
+                    if (code.equals(Icode)) {
+                        Patient p = new Patient(fName, lName, email, contact, Integer.parseInt(age), city, state, country, password, gender, date, role);
+                        p.addToDB();
+                        JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        SignInForm sr = new SignInForm();
+                        sr.setVisible(true);
+                        super.dispose();
+                        this.setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Verification Failed", "Warning",
+                                JOptionPane.ERROR_MESSAGE);
+                        MainFrame mf = new MainFrame();
+                    SignUpForm su = new SignUpForm();
+                    mf.setVisible(true);
+                    su.setVisible(false);
+                    super.dispose();
+                    }
+                } catch (Exception e) {
+                    MainFrame mf = new MainFrame();
+                    SignUpForm su = new SignUpForm();
+                    mf.setVisible(true);
+                    su.setVisible(false);
+                    super.dispose();
                 }
-                
+
+            } else if (role.equals("HospitalAdmin")) {
+                HospitalAdmin p = new HospitalAdmin(fName, lName, email, contact, Integer.parseInt(age), city, state, country, password, gender, date, role);
+                p.addToDB();
                 JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
                         JOptionPane.INFORMATION_MESSAGE);
                 SignInForm sr = new SignInForm();
                 sr.setVisible(true);
                 super.dispose();
                 this.setVisible(false);
-             
+            } else if (role.equals("ClinicAdmin")) {
+                ClinicAdmin p = new ClinicAdmin(fName, lName, email, contact, Integer.parseInt(age), city, state, country, password, gender, date, role);
+                p.addToDB();
+                JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+                SignInForm sr = new SignInForm();
+                sr.setVisible(true);
+                super.dispose();
+                this.setVisible(false);
+            } else if (role.equals("NgoAdmin")) {
+                NgoAdmin p = new NgoAdmin(fName, lName, email, contact, Integer.parseInt(age), city, state, country, password, gender, date, role);
+                p.addToDB();
+                JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+                SignInForm sr = new SignInForm();
+                sr.setVisible(true);
+                super.dispose();
+                this.setVisible(false);
+            } else if (role.equals("SystemAdmin")) {
+                SystemAdmin p = new SystemAdmin(fName, lName, email, contact, Integer.parseInt(age), city, state, country, password, gender, date, role);
+                p.addToDB();
+                JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+                SignInForm sr = new SignInForm();
+                sr.setVisible(true);
+                super.dispose();
+                this.setVisible(false);
+            } else if (role.equals("SupplierAdmin")) {
+                SupplyManager p = new SupplyManager(fName, lName, email, contact, Integer.parseInt(age), city, state, country, password, gender, date, role);
+                p.addToDB();
+                JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+                SignInForm sr = new SignInForm();
+                sr.setVisible(true);
+                super.dispose();
+                this.setVisible(false);
+            } else if (role.equals("EnterpriseAdmin")) {
+                EnterpriseManager p = new EnterpriseManager(fName, lName, email, contact, Integer.parseInt(age), city, state, country, password, gender, date, role);
+                p.addToDB();
+                JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+                SignInForm sr = new SignInForm();
+                sr.setVisible(true);
+                super.dispose();
+                this.setVisible(false);
+            } else if (role.equals("DistributorAdmin")) {
+                DistributingManager p = new DistributingManager(fName, lName, email, contact, Integer.parseInt(age), city, state, country, password, gender, date, role);
+                p.addToDB();
+                JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+                SignInForm sr = new SignInForm();
+                sr.setVisible(true);
+                super.dispose();
+                this.setVisible(false);
+            } else {
+                LogisticsManager p = new LogisticsManager(fName, lName, email, contact, Integer.parseInt(age), city, state, country, password, gender, date, role);
+                p.addToDB();
+                JOptionPane.showMessageDialog(this, "Registration Successfull", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+                SignInForm sr = new SignInForm();
+                sr.setVisible(true);
+                super.dispose();
+                this.setVisible(false);
+            }
 
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_signUpBtnActionPerformed
 
-    
 
     private void passwordFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusGained
         if (passwordField.getText().equals("Password")) {

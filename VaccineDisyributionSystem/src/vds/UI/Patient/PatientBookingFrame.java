@@ -18,6 +18,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
+import vds.Business.UserAccount.UserAccount;
 import vds.Database.DBConnection;
 import vds.UI.SignInForm;
 
@@ -45,9 +46,9 @@ public class PatientBookingFrame extends javax.swing.JFrame {
                     "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
         } else {
             // user details
-            userNameTextField.setText(SignInForm.userFullName);
-            userContactTextField.setText(SignInForm.userContact);
-            userEmailTextField.setText(SignInForm.userEmail);
+            userNameTextField.setText(UserAccount.userFullName);
+            userContactTextField.setText(UserAccount.userContact);
+            userEmailTextField.setText(UserAccount.userEmail);
 
             // organization details
             orgNameTextField.setText(PatientViewNearby.orgName);

@@ -192,7 +192,7 @@ public class PatientViewNearby extends javax.swing.JFrame {
                 showJtableData(rs);
             }
         } catch (Exception ex) {
-            Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error: "+ex);
         }
     }
 

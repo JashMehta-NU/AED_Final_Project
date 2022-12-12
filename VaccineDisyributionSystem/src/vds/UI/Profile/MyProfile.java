@@ -423,10 +423,16 @@ public class MyProfile extends javax.swing.JFrame {
                     pm.setVisible(true);
                     super.dispose();
                 }else if(role.equals("DistributorAdmin")){
-                    DistributorMainFrame pm = new DistributorMainFrame();
+                    DistributorMainFrame pm;
+            try {
+                pm = new DistributorMainFrame();
+                pm.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(MyProfile.class.getName()).log(Level.SEVERE, null, ex);
+            }
                     MyProfile mp = new MyProfile();
                     mp.setVisible(false);
-                    pm.setVisible(true);
+                    
                     super.dispose();
                 }else{
                     LogisticsMainFrame pm = new LogisticsMainFrame();

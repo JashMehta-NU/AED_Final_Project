@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import vds.Business.Order.Order;
 import vds.Business.UserAccount.UserAccount;
 import vds.Database.DBConnection;
 import vds.UI.MainFrame;
@@ -38,7 +39,7 @@ public class DistributorMainFrame extends javax.swing.JFrame {
      */
     public static String VaccineType;
 
-    public DistributorMainFrame() {
+    public DistributorMainFrame() throws SQLException {
         initComponents();
         setLocationRelativeTo(null);
         conn = new DBConnection();
@@ -49,17 +50,14 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         } else {
 
             PreparedStatement pst;
-            try {
-                System.out.println(SignInForm.orgName);
-                pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status,OrderID from `vds`.`order` WHERE DistributorName=?");
-                pst.setString(1, SignInForm.orgName);
-                ResultSet rs = pst.executeQuery();
 
-                showJtableData(rs);
-
-            } catch (SQLException ex) {
-                Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            System.out.println(SignInForm.orgName);
+            pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status,OrderID from `vds`.`order` WHERE DistributorName=?");
+            pst.setString(1, SignInForm.orgName);
+            System.out.println("***********" + SignInForm.orgName);
+            ResultSet rs = pst.executeQuery();
+            //ResultSet rs = Order.fetchOrderFromDB();
+            showJtableData(rs);
 
         }
     }
@@ -449,6 +447,33 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         System.out.println("cols" + columns);
         while (rs.next()) {
             orderID = rs.getString("OrderID");
+            //System.out.println("Order id set"+orerID);
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+
+                row[i - 1] = rs.getObject(i);
+
+            }
+            row[4] = "Send Order";
+
+            row[5] = rs.getString("OrderID");
+
+            ((DefaultTableModel) orderTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+    }
+
+    private void showtableData(ResultSet rs) throws SQLException {
+
+        PreparedStatement pst;
+
+        while (myOrderTable.getRowCount() > 0) {
+            ((DefaultTableModel) myOrderTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
+        System.out.println("cols" + columns);
+        while (rs.next()) {
+            orderID = rs.getString("OrderID");
+            //System.out.println("Order id set"+orerID);
             Object[] row = new Object[columns + 1];
             for (int i = 1; i <= columns; i++) {
 
@@ -459,7 +484,30 @@ public class DistributorMainFrame extends javax.swing.JFrame {
             row[5] = rs.getString("OrderID");
             //row[5] =rs.getString("OrderID");
 
-            ((DefaultTableModel) orderTable.getModel()).insertRow(rs.getRow() - 1, row);
+            ((DefaultTableModel) myOrderTable.getModel()).insertRow(rs.getRow() - 1, row);
+        }
+    }
+
+    private void showJMYtableData(ResultSet rs) throws SQLException {
+
+        PreparedStatement pst;
+
+        while (myOrderTable.getRowCount() > 0) {
+            ((DefaultTableModel) myOrderTable.getModel()).removeRow(0);
+        }
+        int columns = rs.getMetaData().getColumnCount();
+        System.out.println("cols" + columns);
+        while (rs.next()) {
+            orderID = rs.getString("OrderID");
+            //System.out.println("Order id set"+orerID);
+            Object[] row = new Object[columns + 1];
+            for (int i = 1; i <= columns; i++) {
+
+                row[i - 1] = rs.getObject(i);
+
+            }
+
+            ((DefaultTableModel) myOrderTable.getModel()).insertRow(rs.getRow() - 1, row);
         }
     }
 
@@ -489,11 +537,13 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         PreparedStatement pst;
         try {
-            pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status from `vds`.`order` WHERE DistributorName=?");
+            pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status,OrderID from `vds`.`order` WHERE DistributorName=?");
             pst.setString(1, SignInForm.orgName);
+
+            System.out.println("************" + SignInForm.orgName);
             ResultSet rs = pst.executeQuery();
 
-            showJtableData(rs);
+            showtableData(rs);
 
         } catch (SQLException ex) {
             Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -537,46 +587,33 @@ public class DistributorMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void OrderVaccineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderVaccineButtonActionPerformed
+
+        String Vaccinetype = vaccineNameComboBox.getSelectedItem().toString();
+        String quantity = quantityTextfield.getText();
+        String status = "Pending";
+        String orderByName = SignInForm.orgName;
+        String orderBy = "Distributor";
+        String orgName = enterpriseNameComboBox.getSelectedItem().toString();
+        System.out.println(orgName);
+
         try {
             System.out.println("Here");
             String q = "INSERT INTO `vds`.`order` (VaccineType, Quantity, DistributorName, OrderBy, OrderByName) VALUES (?, ?, ?, ?, ?);";
             PreparedStatement ps;
             ps = sqlConn.prepareStatement(q);
 
-            ps.setString(1, vaccineNameComboBox.getSelectedItem().toString());
-            ps.setString(2, quantityTextfield.getText());
-            ps.setString(3, enterpriseNameComboBox.getSelectedItem().toString());
+            ps.setString(1, Vaccinetype);
+            ps.setString(2, quantity);
+
+            ps.setString(3, orgName);
             ps.setString(4, "Distributor");
-            ps.setString(5, SignInForm.orgName);
+            ps.setString(5, orderByName);
 
             int count = ps.executeUpdate();
-
-            if (count > 0) {
-                JOptionPane.showMessageDialog(this, "Order Placed", "Congratulations", 1);
-
-                // fetching data from order table
-                PreparedStatement pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,Status,DistributorName,OrderBy,OrderByName from `vds`.`order` WHERE OrderByName=?");
-                pst.setString(1, SignInForm.orgName);
-
-                ResultSet rs = pst.executeQuery();
-
-//                while (orderTable.getRowCount() > 0) {
-//                    ((DefaultTableModel) myOrderTable.getModel()).removeRow(0);
-//                }
-//                int columns = rs.getMetaData().getColumnCount();
-//
-//                while (rs.next()) {
-//                    Object[] row = new Object[columns + 1];
-//                    for (int i = 1; i <= columns; i++) {
-//                        row[i - 1] = rs.getObject(i);
-//
-//                    }
-//                    row[4] = "Send Order";
-//
-//                    ((DefaultTableModel) orderTable.getModel()).insertRow(rs.getRow() - 1, row);
-//                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Server Error", "Warning", 2);
+            System.out.println("Count" + count);
+            
+            if(count > 0){
+                JOptionPane.showMessageDialog(this, "Order Placed", "Success", 1);
             }
 
         } catch (SQLException ex) {
@@ -659,9 +696,15 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         UserAccount.userFullName = ("");
         MainFrame mf = new MainFrame();
-        DistributorMainFrame dm = new DistributorMainFrame();
+        DistributorMainFrame dm;
+        try {
+            dm = new DistributorMainFrame();
+            dm.setVisible(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         mf.setVisible(true);
-        dm.setVisible(false);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -703,7 +746,11 @@ public class DistributorMainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DistributorMainFrame().setVisible(true);
+                try {
+                    new DistributorMainFrame().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

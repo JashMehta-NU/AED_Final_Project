@@ -31,6 +31,7 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
     Connection sqlConn;
     Resultset rs = null;
     PreparedStatementWrapper pst;
+    String sAdmin;
     /**
      * Creates new form DistributorMainFrame
      */
@@ -51,10 +52,12 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
 
                 while (rs.next()) {
                     supplierName.addItem(rs.getString(2));
+                    
                 }
            
                 upst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,OrderByName,Status from `vds`.`order` WHERE DistributorName=?");
                 upst.setString(1, SignInForm.orgName);
+                System.out.println("org name"+SignInForm.orgName);
                 ResultSet prs = upst.executeQuery();
 
                 showtableData(prs);
@@ -533,6 +536,7 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
 
             while (rs1.next()) {
                 supplierName.addItem(rs1.getString(5));
+                sAdmin= rs1.getString("Admin");
 
             }
             // TODO add your handling code here:
@@ -546,48 +550,43 @@ public class EnterpriseMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_supplierNameItemStateChanged
 
     private void OrderVaccineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderVaccineButtonActionPerformed
-        DefaultTableModel tableModel = (DefaultTableModel) myOrderTable.getModel();
+       DefaultTableModel tableModel = (DefaultTableModel) myOrderTable.getModel();
 
-//        String VaccineName = rawMaterial.getSelectedItem().toString();
-//        String Quantity = quantity.getText();
-//        int quantity = Integer.parseInt(Quantity);
-//        String disName = supplierName.getSelectedItem().toString();
-//
-//        Object[] rowData = new Object[]{VaccineName, quantity, disName};
-//
-//        tableModel.addRow(rowData);           
-          
+        String VaccineName = rawMaterial.getSelectedItem().toString();
+        String Quantity = quantity.getText();
+        int quantity = Integer.parseInt(Quantity);
+
+        String disName = supplierName.getSelectedItem().toString();
+
+        Object[] rowData = new Object[]{VaccineName, disName, quantity};
+
+        tableModel.addRow(rowData);
         try {
-            System.out.println("Here");
-            String q = "INSERT INTO `vds`.`order` (VaccineType, Quantity, DistributorName, OrderBy, OrderByName) VALUES (?, ?, ?, ?, ?);";
-            PreparedStatement ps;
-            ps = sqlConn.prepareStatement(q);
 
-            ps.setString(1, rawMaterial.getSelectedItem().toString());
-            ps.setString(2, quantity.getText());
-            ps.setString(3, supplierName.getSelectedItem().toString());
-            ps.setString(4, "Enterprise");
-            ps.setString(5, SignInForm.orgName);
+            PreparedStatement pd = sqlConn.prepareStatement("UPDATE enterprise SET InStock = InStock+? WHERE SupplierName = ? AND rawMaterial = ?");
 
-            int count = ps.executeUpdate();
-
-            if (count > 0) {
-                JOptionPane.showMessageDialog(this, "Order Placed", "Congratulations", 1);
-
-                // fetching data from order table
-                PreparedStatement pst = sqlConn.prepareStatement("SELECT VaccineType,Quantity,Status,DistributorName,OrderBy,OrderByName from `vds`.`order` WHERE OrderByName=?");
-                pst.setString(1, SignInForm.orgName);
-
-                ResultSet rs = pst.executeQuery();
-                showJtableData(rs);
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Server Error", "Warning", 2);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(EnterpriseMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            pd.setInt(1, quantity);
+            pd.setString(2, sAdmin);
+            pd.setString(3, VaccineName);
+            System.out.println("update");
+            pd.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, e);
         }
+try {
+
+            PreparedStatement pd = sqlConn.prepareStatement("UPDATE supplier SET InStock = InStock-? WHERE rawMaterial = ?");
+
+            pd.setInt(1, quantity);
+       
+            pd.setString(2, VaccineName);
+            System.out.println("update");
+            pd.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DistributorMainFrame.class.getName()).log(Level.SEVERE, null, e);
+        }// TO// TODO add your handling code here:
+                         
+
     }//GEN-LAST:event_OrderVaccineButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

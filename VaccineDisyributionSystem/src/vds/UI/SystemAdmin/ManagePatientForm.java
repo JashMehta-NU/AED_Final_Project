@@ -417,7 +417,7 @@ public class ManagePatientForm extends javax.swing.JFrame {
         DeletePatientPanelLayout.setHorizontalGroup(
             DeletePatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DeletePatientPanelLayout.createSequentialGroup()
-                .addContainerGap(262, Short.MAX_VALUE)
+                .addContainerGap(264, Short.MAX_VALUE)
                 .addComponent(jLabel15)
                 .addGap(18, 18, 18)
                 .addComponent(deleteByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -587,7 +587,7 @@ public class ManagePatientForm extends javax.swing.JFrame {
                                 .addComponent(jLabel23))
                             .addGap(21, 21, 21)
                             .addComponent(ucity, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 422, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdatePatientsPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(UpdatePatientsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -801,25 +801,45 @@ public class ManagePatientForm extends javax.swing.JFrame {
             } else {
                 gender = "Female";
             }
-            pst = sqlConn.prepareStatement("UPDATE user SET Fname = ? , Lname = ?, Email = ? ,Contact = ?, Age = ? , City = ? , State =? , Country = ?, Gender =?   Where UID  = ? AND Role = ?");
-            pst.setString(1, fname.getText());
-            pst.setString(2, lname.getText());
-            pst.setString(3, ucontact.getText());
-            pst.setString(4, uemail.getText());
-            pst.setString(5, uage.getText());
-            pst.setString(6, ucity.getText());
+            if (findByCombo.getSelectedItem().equals("ID")) {
+                pst = sqlConn.prepareStatement("UPDATE user SET Fname = ? , Lname = ?, Email = ? ,Contact = ?, Age = ? , City = ? , State =? , Country = ?, Gender =?   Where UID  = ? AND Role = ?");
+                pst.setString(1, fname.getText());
+                pst.setString(2, lname.getText());
+                pst.setString(3, ucontact.getText());
+                pst.setString(4, uemail.getText());
+                pst.setString(5, uage.getText());
+                pst.setString(6, ucity.getText());
 
-            pst.setString(7, ustate.getText());
-            pst.setString(8, ucountry.getText());
-            pst.setString(9, gender);
-            pst.setString(10, findBy.getText());
-             pst.setString(11, "Patient");
-            
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Patient Updated Successfully", "Welcome",
-                    JOptionPane.INFORMATION_MESSAGE);
-            
-            fname.setText(""); 
+                pst.setString(7, ustate.getText());
+                pst.setString(8, ucountry.getText());
+                pst.setString(9, gender);
+                pst.setString(10, findBy.getText());
+                pst.setString(11, "Patient");
+
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Patient Updated Successfully", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                pst = sqlConn.prepareStatement("UPDATE user SET Fname = ? , Lname = ?, Email = ? ,Contact = ?, Age = ? , City = ? , State =? , Country = ?, Gender =?   Where Email  = ? AND Role = ?");
+                pst.setString(1, fname.getText());
+                pst.setString(2, lname.getText());
+                pst.setString(3, ucontact.getText());
+                pst.setString(4, uemail.getText());
+                pst.setString(5, uage.getText());
+                pst.setString(6, ucity.getText());
+
+                pst.setString(7, ustate.getText());
+                pst.setString(8, ucountry.getText());
+                pst.setString(9, gender);
+                pst.setString(10, findBy.getText());
+                pst.setString(11, "Patient");
+
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Patient Updated Successfully", "Welcome",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            fname.setText("");
             lname.setText("");
             uemail.setText("");
             ucontact.setText("");
@@ -827,7 +847,7 @@ public class ManagePatientForm extends javax.swing.JFrame {
             ucity.setText("");
             ustate.setText("");
             ucountry.setText("");
-       
+
         } catch (SQLException ex) {
             Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
         }          // TODO add your handling code here:
@@ -888,8 +908,8 @@ public class ManagePatientForm extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(this, "Patient Added Successfully", "Welcome",
                     JOptionPane.INFORMATION_MESSAGE);
-            fname.setText(""); 
-            lname.setText("");
+            fName.setText("");
+            lName.setText("");
             email.setText("");
             contact.setText("");
             age.setText("");
@@ -911,39 +931,45 @@ public class ManagePatientForm extends javax.swing.JFrame {
                 pst.setString(2, "Patient");
                 int deleted = pst.executeUpdate();
                 deleteBy.setText("");
-               
-                if(deleted == 0){
+
+                if (deleted == 0) {
                     JOptionPane.showMessageDialog(this, "Error Deleting", "Warning",
-                        JOptionPane.ERROR_MESSAGE);
-                }else{
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
                     JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
-                        JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
 
 //                clinicAdminDropDown.setModel(new DefaultComboBoxModel<String>(clinicAdmins.toArray(new String[0])));
-        } else if(findUpdate.matches("Email") ){
+        } else if (findUpdate.matches("Email")) {
             PreparedStatement pst;
             try {
                 pst = sqlConn.prepareStatement("DELETE from user Where Email = ? AND Role = ?");
                 pst.setString(1, deleteBy.getText());
                 pst.setString(2, "Patient");
-                pst.executeUpdate();
+                int count = pst.executeUpdate();
                 deleteBy.setText("");
-                JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
-                        JOptionPane.INFORMATION_MESSAGE);
+
+                if (count == 0) {
+                    JOptionPane.showMessageDialog(this, "Error", "Warning",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Patient Deleted Successfully", "Welcome",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
-             JOptionPane.showMessageDialog(this, "Patient Not Found", "Welcome",
-                        JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Patient Not Found", "Welcome",
+                    JOptionPane.INFORMATION_MESSAGE);
         }// TODO add your handling code here:
     }//GEN-LAST:event_DeletePatientButtonActionPerformed
 
@@ -957,11 +983,11 @@ public class ManagePatientForm extends javax.swing.JFrame {
                 pst.setString(1, findBy.getText());
                 pst.setString(2, "Patient");
                 ResultSet rs = pst.executeQuery();
-               
-                if(rs.next()==false){
+
+                if (rs.next() == false) {
                     JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
-                        JOptionPane.ERROR_MESSAGE);
-                }else{
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
                     fname.setText(rs.getString(2));
                     lname.setText(rs.getString(3));
                     uemail.setText(rs.getString(4));
@@ -971,14 +997,14 @@ public class ManagePatientForm extends javax.swing.JFrame {
                     ustate.setText(rs.getString(8));
                     ucountry.setText(rs.getString(9));
                     upass.setText(rs.getString(10));
-                    if(rs.getString(11).equals("Male")){
+                    if (rs.getString(11).equals("Male")) {
                         maleradio.setSelected(true);
-                    }else{
+                    } else {
                         femaleRadio.setSelected(false);
                     }
                     userDOB.setDate(rs.getDate(12));
-                    
-            }
+
+                }
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -988,15 +1014,16 @@ public class ManagePatientForm extends javax.swing.JFrame {
         } else {
             PreparedStatement pst;
             try {
-                pst = sqlConn.prepareStatement("SELECT * from user Where Email = ?");
+                pst = sqlConn.prepareStatement("SELECT * from user Where Email = ? AND Role=?");
                 pst.setString(1, findBy.getText());
                 pst.setString(2, "Patient");
                 ResultSet rs = pst.executeQuery();
 
-                if(rs.next()==false){
+                if (rs.next() == false) {
                     JOptionPane.showMessageDialog(this, "Error Finding", "Warning",
-                        JOptionPane.ERROR_MESSAGE);
-                }else{
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    System.out.println("lllll" + rs.getString(2));
                     fname.setText(rs.getString(2));
                     lname.setText(rs.getString(3));
                     uemail.setText(rs.getString(4));
@@ -1006,20 +1033,19 @@ public class ManagePatientForm extends javax.swing.JFrame {
                     ustate.setText(rs.getString(8));
                     ucountry.setText(rs.getString(9));
                     upass.setText(rs.getString(10));
-                    if(rs.getString(11).equals("Male")){
+                    if (rs.getString(11).equals("Male")) {
                         maleradio.setSelected(true);
-                    }else{
+                    } else {
                         femaleRadio.setSelected(false);
                     }
                     userDOB.setDate(rs.getDate(12));
-                    
-            }
+
+                }
 
             } catch (SQLException ex) {
                 Logger.getLogger(ManageHospitalForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, "Distributor Delete Successfully", "Welcome",
-                    JOptionPane.INFORMATION_MESSAGE);
+
         }  // TODO add your handling code here:
     }//GEN-LAST:event_FindPatientUpdateActionPerformed
 

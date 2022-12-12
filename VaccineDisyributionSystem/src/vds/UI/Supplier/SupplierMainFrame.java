@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import vds.Business.UserAccount.UserAccount;
 import vds.Database.DBConnection;
@@ -28,17 +29,48 @@ import vds.UI.Profile.MyProfile;
  */
 public class SupplierMainFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form DistributorMainFrame
-     */
-    DBConnection conn;
+ DBConnection conn;
     Connection sqlConn;
-    Resultset rs = null;
+    Resultset rs;
     PreparedStatementWrapper pst;
 
     public SupplierMainFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        conn = new DBConnection();
+        sqlConn = DBConnection.connectDB();
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Database Error", "Failure", JOptionPane.ERROR_MESSAGE);
+        } else {
+            PreparedStatement pst;
+            try {
+                // PreparedStatement pst;
+                while (storageTable.getRowCount() > 0) {
+                    ((DefaultTableModel) storageTable.getModel()).removeRow(0);
+                }
+                String aEmail = SignInForm.userEmail;
+                System.out.println("Hello _____ " +aEmail);
+               
+                pst = sqlConn.prepareStatement("SELECT * from `vds`.`supplier` WHERE AdminEmail = ? ");
+                pst.setString(1, aEmail);
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    System.out.println("In here" +rs.getString(5));
+                    //                tableStorageModel.setRowCount(-);
+                    String vName = rs.getString(5);
+                    int quan = rs.getInt(6);
+                    Object[] rowData = new Object[]{vName, quan};
+                    ((DefaultTableModel) storageTable.getModel()).addRow(rowData);
+                }
+
+                //.setModel(new DefaultComboBoxModel<String>(SupplierAdmins.toArray(new String[0])));
+            } catch (SQLException ex) {
+                Logger.getLogger(SupplierMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }       // TODO add your handling code here:
+
+        }
     }
 
     /**
@@ -54,13 +86,9 @@ public class SupplierMainFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         ParentPanel = new javax.swing.JPanel();
-        Orders = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         Storage = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         storageTable = new javax.swing.JTable();
@@ -80,13 +108,6 @@ public class SupplierMainFrame extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 102));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Welcome Supplier");
-
-        jButton2.setText("ORDERS");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jButton3.setText("STORAGE");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +134,6 @@ public class SupplierMainFrame extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
@@ -127,9 +147,7 @@ public class SupplierMainFrame extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(39, 39, 39)
-                .addComponent(jButton2)
-                .addGap(52, 52, 52)
+                .addGap(114, 114, 114)
                 .addComponent(jButton3)
                 .addGap(51, 51, 51)
                 .addComponent(jButton5)
@@ -137,34 +155,6 @@ public class SupplierMainFrame extends javax.swing.JFrame {
         );
 
         ParentPanel.setLayout(new java.awt.CardLayout());
-
-        Orders.setBackground(new java.awt.Color(0, 51, 102));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Raw Material", "Amount", "Ordered By", "Date"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        javax.swing.GroupLayout OrdersLayout = new javax.swing.GroupLayout(Orders);
-        Orders.setLayout(OrdersLayout);
-        OrdersLayout.setHorizontalGroup(
-            OrdersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
-        );
-        OrdersLayout.setVerticalGroup(
-            OrdersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
-        );
-
-        ParentPanel.add(Orders, "card2");
 
         Storage.setBackground(new java.awt.Color(0, 0, 153));
 
@@ -176,7 +166,7 @@ public class SupplierMainFrame extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "ID", "Raw Material"
+                "Quantity", "Raw Material"
             }
         ));
         jScrollPane2.setViewportView(storageTable);
@@ -222,14 +212,6 @@ public class SupplierMainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        ParentPanel.removeAll();
-        ParentPanel.add(Orders);
-        ParentPanel.repaint();
-        ParentPanel.revalidate();
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
@@ -323,19 +305,15 @@ public class SupplierMainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Orders;
     private javax.swing.JPanel ParentPanel;
     private javax.swing.JPanel Storage;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable storageTable;
     // End of variables declaration//GEN-END:variables
 }

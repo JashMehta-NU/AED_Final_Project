@@ -190,14 +190,13 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="161" max="32767" attributes="0"/>
+                          <EmptySpace pref="169" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel10" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel9" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -209,7 +208,6 @@
                                       <Component id="distributorNameField" max="32767" attributes="0"/>
                                       <Component id="contactField" alignment="0" max="32767" attributes="0"/>
                                       <Component id="emailField" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="location" alignment="0" max="32767" attributes="0"/>
                                       <Component id="cityField" alignment="0" max="32767" attributes="0"/>
                                       <Component id="stateField" alignment="0" max="32767" attributes="0"/>
                                       <Component id="countryField" alignment="1" pref="127" max="32767" attributes="0"/>
@@ -244,12 +242,7 @@
                               <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="emailField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="location" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cityField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -314,19 +307,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="emailField">
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel7">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Times New Roman" size="14" style="1"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="c3" green="d4" red="61" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Location:"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="location">
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel8">
                   <Properties>
@@ -560,11 +540,10 @@
                     <Component class="javax.swing.JTable" name="storageTable">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="9" rowCount="4">
+                          <Table columnCount="8" rowCount="4">
                             <Column editable="true" title="Company Name" type="java.lang.Object"/>
                             <Column editable="true" title="Contact" type="java.lang.Object"/>
                             <Column editable="true" title="Email" type="java.lang.Object"/>
-                            <Column editable="true" title="Location" type="java.lang.Object"/>
                             <Column editable="true" title="City" type="java.lang.Object"/>
                             <Column editable="true" title="State" type="java.lang.Object"/>
                             <Column editable="true" title="Country" type="java.lang.Object"/>
@@ -574,11 +553,6 @@
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
@@ -648,10 +622,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="344" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="346" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="jLabel13" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel19" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel20" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel21" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -668,10 +641,9 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="dissName" pref="114" max="32767" attributes="0"/>
+                              <Component id="dissName" pref="117" max="32767" attributes="0"/>
                               <Component id="disCountry" alignment="1" max="32767" attributes="0"/>
                               <Component id="disState" alignment="0" max="32767" attributes="0"/>
-                              <Component id="disLocation" alignment="0" max="32767" attributes="0"/>
                               <Component id="disCity" alignment="0" max="32767" attributes="0"/>
                               <Component id="disContact" max="32767" attributes="0"/>
                               <Component id="disEmail" alignment="0" max="32767" attributes="0"/>
@@ -732,12 +704,7 @@
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="disEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="disLocation" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="disCity" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -835,19 +802,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="disEmail">
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel19">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Times New Roman" size="14" style="1"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="c3" green="d4" red="61" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Location"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="disLocation">
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel20">
                   <Properties>
