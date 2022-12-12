@@ -6,6 +6,9 @@
 the process of Vaccine Distribution starting from the Patient to the Enterprise including all the sub components as well.</h2>
 <h3>We have made this application using Java Core and Java Swing Application alongwith MySql Implementation which made the Project more Efficient to use</h3>
 <h5>Class Diagram</h5>
+
+![AEDFinalProj](https://user-images.githubusercontent.com/113202345/206964209-eef4330c-0eeb-4778-b163-b7249d14aec9.jpg)
+
 <h5>Use Case Diagram</h5>
 
 
